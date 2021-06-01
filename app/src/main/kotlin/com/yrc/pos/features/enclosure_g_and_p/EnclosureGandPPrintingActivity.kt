@@ -1,23 +1,16 @@
 package com.yrc.pos.features.enclosure_g_and_p
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.pax.dal.IDAL
-import com.pax.dal.entity.EFontTypeAscii
-import com.pax.dal.entity.EFontTypeExtCode
-import com.pax.dal.exceptions.PrinterDevException
-import com.pax.neptunelite.api.NeptuneLiteUser
 import com.yrc.pos.R
 import com.yrc.pos.core.Prices
+import com.yrc.pos.core.TicketsPrinting
 import com.yrc.pos.core.YrcBaseActivity
-import com.yrc.pos.core.YrcLogger
 import com.yrc.pos.core.bus.RxBus
 import com.yrc.pos.core.bus.RxEvent
 import kotlinx.android.synthetic.main.activity_enclosure_g_and_p_printing.*
-import java.text.DateFormat
-import java.util.*
 
 
 class EnclosureGandPPrintingActivity : YrcBaseActivity() {
@@ -54,73 +47,83 @@ class EnclosureGandPPrintingActivity : YrcBaseActivity() {
         button_racegoer.setOnClickListener {
             selectedButton = 4
         }
-        button_cash.setOnClickListener {
-            dal = NeptuneLiteUser.getInstance().getDal(this)
-            val prn = dal.printer
-            prn.init()
-
-            prn.fontSet(EFontTypeAscii.FONT_24_48, EFontTypeExtCode.FONT_24_48)
-            prn.leftIndent(110)
-//            prn.spaceSet(50.toByte(), 50.toByte())
-            prn.printStr("Adult", null)
-            prn.printStr("\n", null)
-            prn.leftIndent(100)
-
-            prn.printStr("£20.00", null)
-            prn.leftIndent(0)
-            prn.printStr("----------------", null)
-
-            prn.fontSet(EFontTypeAscii.FONT_16_32, EFontTypeExtCode.FONT_16_32)
-            prn.leftIndent(20)
-            prn.spaceSet(0.toByte(), 0.toByte())
-            prn.printStr(DateFormat.getDateTimeInstance().format(Date()), null)
-            prn.printStr("\n", null)
-
-            prn.leftIndent(20)
-            prn.printStr("Receipt only", null)
-            prn.printStr("\n", null)
-
-            prn.printStr("Not valid for entry", null)
-            prn.printStr("\n", null)
-
-            prn.fontSet(EFontTypeAscii.FONT_8_16, EFontTypeExtCode.FONT_16_16)
-            prn.leftIndent(20)
-            prn.dotLine
-            prn.printStr("Retain ticket as a proof", null)
-
-//            prn.invert(true)
-            prn.step(10)
-            prn.leftIndent(0)
-            prn.printBitmapWithMonoThreshold(BitmapFactory.decodeResource(resources, R.drawable.logo), 1)
-
-            val apiResult: Int = dal.printer.start()
-            try {
-                when (apiResult) {
-                    0 -> YrcLogger.d("Submission successfully made")
-                    1 -> YrcLogger.d("Busy, so far so good")
-                    2 -> YrcLogger.d("Out of paper")
-                    else -> YrcLogger.d("Unexpected")
-                }
-            } catch (ex: PrinterDevException) {
-                ex.printStackTrace()
-            }
-
-//            do {// Check every quarter-second for result of print. 
-//                Thread.sleep(250)
-//                apiResult = prn.status
-//            } while (apiResult == 1)
-//            // Paper cutter. 
+//        button_cash.setOnClickListener {
+//            dal = NeptuneLiteUser.getInstance().getDal(this)
+//            val prn = dal.printer
+//            prn.init()
+//
+//            prn.fontSet(EFontTypeAscii.FONT_24_48, EFontTypeExtCode.FONT_24_48)
+//            prn.leftIndent(110)
+////            prn.spaceSet(50.toByte(), 50.toByte())
+//            prn.printStr("Adult", null)
+//            prn.printStr("\n", null)
+//            prn.leftIndent(100)
+//
+//            prn.printStr("£20.00", null)
+//            prn.leftIndent(0)
+//            prn.printStr("----------------", null)
+//
+//            prn.fontSet(EFontTypeAscii.FONT_16_32, EFontTypeExtCode.FONT_16_32)
+//            prn.leftIndent(20)
+//            prn.spaceSet(0.toByte(), 0.toByte())
+//            prn.printStr(DateFormat.getDateTimeInstance().format(Date()), null)
+//            prn.printStr("\n", null)
+//
+//            prn.leftIndent(20)
+//            prn.printStr("Receipt only", null)
+//            prn.printStr("\n", null)
+//
+//            prn.printStr("Not valid for entry", null)
+//            prn.printStr("\n", null)
+//
+//            prn.fontSet(EFontTypeAscii.FONT_8_16, EFontTypeExtCode.FONT_16_16)
+//            prn.leftIndent(20)
+//            prn.dotLine
+//            prn.printStr("Retain ticket as a proof", null)
+//
+////            prn.invert(true)
+//            prn.step(10)
+//            prn.leftIndent(0)
+//            prn.printBitmapWithMonoThreshold(BitmapFactory.decodeResource(resources, R.drawable.logo), 1)
+//
+//            val apiResult: Int = dal.printer.start()
 //            try {
-//                val cutMode: Int = prn.getCutMode()
-//                if ((cutMode == 0) || (cutMode == 2)) {
-//                    // 0=full, or 2=partial/full => full cut. 
-//                    prn.cutPaper(0)
-//                } else if (cutMode == 1) {
-//                    // 1=partial only => partial cut. 
-//                    prn.cutPaper(1)
+//                when (apiResult) {
+//                    0 -> YrcLogger.d("Submission successfully made")
+//                    1 -> YrcLogger.d("Busy, so far so good")
+//                    2 -> YrcLogger.d("Out of paper")
+//                    else -> YrcLogger.d("Unexpected")
 //                }
-//            } catch (pdex: PrinterDevException) {
+//            } catch (ex: PrinterDevException) {
+//                ex.printStackTrace()
 //            }
+//
+////            do {// Check every quarter-second for result of print. 
+////                Thread.sleep(250)
+////                apiResult = prn.status
+////            } while (apiResult == 1)
+////            // Paper cutter. 
+////            try {
+////                val cutMode: Int = prn.getCutMode()
+////                if ((cutMode == 0) || (cutMode == 2)) {
+////                    // 0=full, or 2=partial/full => full cut. 
+////                    prn.cutPaper(0)
+////                } else if (cutMode == 1) {
+////                    // 1=partial only => partial cut. 
+////                    prn.cutPaper(1)
+////                }
+////            } catch (pdex: PrinterDevException) {
+////            }
+//        }
+        button_cash.setOnClickListener {
+            for (n in 1..countAdultTickets)
+                TicketsPrinting.printAdultTicket(this)
+            for (n in 1..countOver65Tickets)
+                TicketsPrinting.printOver65Ticket(this)
+            for (n in 1..count1822Tickets)
+                TicketsPrinting.count1822Tickets(this)
+            for (n in 1..countRacegoerTickets)
+                TicketsPrinting.countRacegoerTickets(this)
         }
         updateUi()
     }

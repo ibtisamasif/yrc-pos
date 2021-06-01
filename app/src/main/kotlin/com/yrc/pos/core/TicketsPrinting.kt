@@ -101,6 +101,90 @@ object TicketsPrinting {
         startPrinting(context, dal)
     }
 
+    internal fun count1822Tickets(context: Context) {
+
+        val dal: IDAL = NeptuneLiteUser.getInstance().getDal(context)
+        val prn = dal.printer
+        prn.init()
+
+        prn.fontSet(EFontTypeAscii.FONT_24_48, EFontTypeExtCode.FONT_24_48)
+        prn.leftIndent(110)
+        prn.printStr("18-22", null)
+        prn.printStr("\n", null)
+        prn.leftIndent(100)
+
+        prn.printStr("£" + Prices.PRICE_1822, null)
+        prn.leftIndent(0)
+        prn.printStr("----------------", null)
+
+        prn.fontSet(EFontTypeAscii.FONT_16_32, EFontTypeExtCode.FONT_16_32)
+        prn.leftIndent(20)
+        prn.spaceSet(0.toByte(), 0.toByte())
+        prn.printStr(DateFormat.getDateTimeInstance().format(Date()), null)
+        prn.printStr("\n", null)
+
+        prn.leftIndent(20)
+        prn.printStr("Receipt only", null)
+        prn.printStr("\n", null)
+
+        prn.printStr("Not valid for entry", null)
+        prn.printStr("\n", null)
+
+        prn.fontSet(EFontTypeAscii.FONT_8_16, EFontTypeExtCode.FONT_16_16)
+        prn.leftIndent(20)
+        prn.dotLine
+        prn.printStr("Retain ticket as a proof", null)
+
+        prn.step(10)
+        prn.leftIndent(100)
+        prn.printBitmapWithMonoThreshold(BitmapFactory.decodeResource(context.resources, R.drawable.qrcode), 1)
+        prn.step(100)
+
+        startPrinting(context, dal)
+    }
+
+    internal fun countRacegoerTickets(context: Context) {
+
+        val dal: IDAL = NeptuneLiteUser.getInstance().getDal(context)
+        val prn = dal.printer
+        prn.init()
+
+        prn.fontSet(EFontTypeAscii.FONT_24_48, EFontTypeExtCode.FONT_24_48)
+        prn.leftIndent(110)
+        prn.printStr("Racegoer", null)
+        prn.printStr("\n", null)
+        prn.leftIndent(100)
+
+        prn.printStr("£" + Prices.PRICE_RACEGOER, null)
+        prn.leftIndent(0)
+        prn.printStr("----------------", null)
+
+        prn.fontSet(EFontTypeAscii.FONT_16_32, EFontTypeExtCode.FONT_16_32)
+        prn.leftIndent(20)
+        prn.spaceSet(0.toByte(), 0.toByte())
+        prn.printStr(DateFormat.getDateTimeInstance().format(Date()), null)
+        prn.printStr("\n", null)
+
+        prn.leftIndent(20)
+        prn.printStr("Receipt only", null)
+        prn.printStr("\n", null)
+
+        prn.printStr("Not valid for entry", null)
+        prn.printStr("\n", null)
+
+        prn.fontSet(EFontTypeAscii.FONT_8_16, EFontTypeExtCode.FONT_16_16)
+        prn.leftIndent(20)
+        prn.dotLine
+        prn.printStr("Retain ticket as a proof", null)
+
+        prn.step(10)
+        prn.leftIndent(100)
+        prn.printBitmapWithMonoThreshold(BitmapFactory.decodeResource(context.resources, R.drawable.qrcode), 1)
+        prn.step(100)
+
+        startPrinting(context, dal)
+    }
+
     private fun startPrinting(context: Context, dal: IDAL) {
         val apiResult: Int = dal.printer.start()
         try {
