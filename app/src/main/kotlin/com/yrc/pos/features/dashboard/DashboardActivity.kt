@@ -1,6 +1,5 @@
 package com.yrc.pos.features.dashboard
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
@@ -15,19 +14,16 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.yrc.pos.R
-import com.yrc.pos.core.Constants
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.session.Session
-import com.yrc.pos.core.session.User
 import com.yrc.pos.core.views.YrcTextView
-import com.yrc.pos.features.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.content_main.*
 
 class DashboardActivity : YrcBaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-//    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var textViewHeaderTitle: YrcTextView
+    private var drawerLayout: DrawerLayout? = null
+    private var textViewHeaderTitle: YrcTextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,19 +32,48 @@ class DashboardActivity : YrcBaseActivity(), NavigationView.OnNavigationItemSele
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        supportActionBar!!.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-        supportActionBar!!.setCustomView(R.layout.abs_layout)
-        supportActionBar!!.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.header_background))
-        textViewHeaderTitle = supportActionBar!!.customView.findViewById<YrcTextView>(R.id.textViewTitle)
+        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+        supportActionBar?.setCustomView(R.layout.abs_layout)
+        supportActionBar?.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.header_background))
+        textViewHeaderTitle = supportActionBar?.customView?.findViewById<YrcTextView>(R.id.textViewTitle)
 
         bottom_nav_view.setupWithNavController(findNavController(R.id.nav_host_fragment))
         navigationDrawerView.setupWithNavController(findNavController(R.id.nav_host_fragment))
 
-//        drawerLayout = findViewById(R.id.drawer_layout)
-//        NavigationUI.setupActionBarWithNavController(this, findNavController(R.id.nav_host_fragment), drawerLayout)
+        drawerLayout = findViewById(R.id.drawer_layout)
+        NavigationUI.setupActionBarWithNavController(this, findNavController(R.id.nav_host_fragment), drawerLayout)
         navigationDrawerView.setNavigationItemSelectedListener(this)
 
         setNavigationDrawerHeaderData()
+
+        setEnclosure()
+    }
+
+    private fun setEnclosure() {
+        intent.extras?.let {
+            val enclosure: String? = it.getString(ENCLOSURE)
+            if (enclosure == "G&P") {
+                showGandP()
+            } else {
+                showClockTower()
+            }
+        }
+    }
+
+    fun showGandP() {
+        bottom_nav_view?.menu?.clear()
+        bottom_nav_view?.inflateMenu(R.menu.bottom_nav_menu_g_p)
+        findNavController(R.id.nav_host_fragment).navigate(
+            R.id.navigation_enclosure_g_and_p
+        )
+    }
+
+    fun showClockTower() {
+        bottom_nav_view?.menu?.clear()
+        bottom_nav_view?.inflateMenu(R.menu.bottom_nav_menu_clock_tower)
+        findNavController(R.id.nav_host_fragment).navigate(
+            R.id.navigation_enclosure_clock_tower
+        )
     }
 
     private fun setNavigationDrawerHeaderData() {
@@ -56,51 +81,35 @@ class DashboardActivity : YrcBaseActivity(), NavigationView.OnNavigationItemSele
         val headerView = navigationDrawerView.getHeaderView(0)
         val textViewUserName = headerView.findViewById(R.id.textView_userName) as YrcTextView
         val imageViewUserPhoto = headerView.findViewById(R.id.imageView_userPhoto) as ImageView
-
-        if (User.getUserName()!!.isNotEmpty()) {
-            textViewUserName.text = User.getUserName()
-            textViewHeaderTitle.text = getString(R.string.welcome) + Constants.SPACE_STRING + User.getUserName()
-        }
-
-        val resId = resources.getIdentifier(User.getUserProfile()!!.avatar, "drawable", this.packageName)
-        if (resId > 0) {
-            imageViewUserPhoto.setImageResource(resId)
-        } else {
-            imageViewUserPhoto.setImageResource(R.drawable.female_avatar_1)
-        }
     }
 
-//    override fun onSupportNavigateUp(): Boolean {
-//        val navController = findNavController(R.id.nav_host_fragment)
-//        return navController.navigateUp(drawerLayout) || super.onSupportNavigateUp()
-//    }
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment)
+        return navController.navigateUp(drawerLayout) || super.onSupportNavigateUp()
+    }
 
-//    override fun onBackPressed() {
-//        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-//            drawerLayout.closeDrawer(GravityCompat.START)
-//        } else {
-//            super.onBackPressed()
-//        }
-//    }
+    override fun onBackPressed() {
+        if (drawerLayout?.isDrawerOpen(GravityCompat.START) == true) {
+            drawerLayout?.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
+    }
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
 
         menuItem.isChecked = true
-//        drawerLayout.closeDrawers()
+        drawerLayout?.closeDrawers()
 
         when (menuItem.itemId) {
             R.id.item_sign_out -> {
                 Session.clearSession()
-                moveToLoginScreen()
             }
         }
         return true
     }
 
-    private fun moveToLoginScreen() {
-        val loginIntent = Intent(this, LoginActivity::class.java)
-        loginIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(loginIntent)
-        finish()
+    companion object {
+        const val ENCLOSURE = "enclosure"
     }
 }

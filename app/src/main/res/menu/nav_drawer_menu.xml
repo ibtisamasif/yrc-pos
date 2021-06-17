@@ -3,10 +3,10 @@
 
     <group android:checkableBehavior="single">
 
-<!--        <item-->
-<!--                android:id="@+id/item_manage_profile"-->
-<!--                android:icon="@drawable/ic_manage_profile"-->
-<!--                android:title="@string/manage_profile" />-->
+        <!--        <item-->
+        <!--                android:id="@+id/item_manage_profile"-->
+        <!--                android:icon="@drawable/ic_manage_profile"-->
+        <!--                android:title="@string/manage_profile" />-->
     </group>
 
     <group android:checkableBehavior="none">
@@ -15,21 +15,6 @@
                 android:id="@+id/item_sign_out"
                 android:icon="@drawable/ic_logout"
                 android:title="@string/sign_out" />
-
-<!--        <item-->
-<!--                android:id="@+id/item_support"-->
-<!--                android:icon="@drawable/ic_hours_support"-->
-<!--                android:title="@string/support" />-->
-
-<!--        <item-->
-<!--                android:id="@+id/item_faqs"-->
-<!--                android:icon="@drawable/ic_faqs"-->
-<!--                android:title="@string/faqs" />-->
-
-<!--        <item-->
-<!--                android:id="@+id/item_rate_us"-->
-<!--                android:icon="@drawable/ic_star"-->
-<!--                android:title="@string/rate_us" />-->
 
     </group>
 

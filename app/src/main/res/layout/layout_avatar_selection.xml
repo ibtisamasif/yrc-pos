@@ -23,8 +23,7 @@
             android:background="@color/colorGreenDark" />
 
     <RadioGroup
-            android:id="@+id/avatar_genderRadioGroup"
-            android:layout_width="wrap_content"
+        android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/_5sdp"

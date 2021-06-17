@@ -16,13 +16,6 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="LoginButtonStyle">
-        <item name="android:background">@drawable/login_button_background</item>
-        <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:textSize">@dimen/_19sdp</item>
-        <item name="android:textAllCaps">false</item>
-    </style>
-
     <style name="SignupButtonStyle">
         <item name="android:background">@drawable/signup_button_background</item>
         <item name="android:textColor">@color/colorWhite</item>
@@ -38,23 +31,6 @@
         <item name="android:inputType">phone</item>
     </style>
 
-    <style name="CodeVerificationFieldStyle">
-        <item name="android:background">@drawable/code_verification_fields_bg</item>
-        <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:textColorHint">@color/colorWhite</item>
-        <item name="android:textSize">@dimen/_14sdp</item>
-        <item name="android:inputType">number</item>
-        <item name="android:gravity">center</item>
-        <item name="android:maxLength">6</item>
-    </style>
-
-    <style name="VerifyCodeButtonStyle">
-        <item name="android:background">@drawable/signup_button_background</item>
-        <item name="android:textColor">@color/colorGreenMedium</item>
-        <item name="android:textSize">@dimen/_15sdp</item>
-        <item name="android:textAllCaps">false</item>
-    </style>
-
     <style name="ForgetPasswordButtonStyle">
         <item name="android:background">@drawable/forget_password_button_bg</item>
         <item name="android:textColor">@color/colorWhite</item>
@@ -66,18 +42,6 @@
         <item name="android:textSize">@dimen/_12sdp</item>
         <item name="android:textColor">@color/colorGreenLight</item>
         <item name="android:gravity">right</item>
-    </style>
-
-    <style name="ForgetPasswordItsOkayTextStyle" parent="TextAppearance.Design.Counter">
-        <item name="android:textSize">@dimen/_19sdp</item>
-        <item name="android:textColor">@color/colorGreenDark</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-    <style name="ForgetPasswordCodeInstructsTextStyle" parent="TextAppearance.Design.Counter">
-        <item name="android:textSize">@dimen/_15sdp</item>
-        <item name="android:textColor">@color/colorGreenLight</item>
-        <item name="android:gravity">center</item>
     </style>
 
     <style name="CurrentLocationTextStyle">
@@ -106,34 +70,6 @@
         <item name="android:textSize">@dimen/_9sdp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorRedError</item>
-    </style>
-
-    <style name="ProfileScreenLabelTextStyle">
-        <item name="android:textColor">@color/colorGreenLight</item>
-        <item name="android:textSize">@dimen/_12sdp</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-    <style name="ProfileScreenDarkDropDownStyle">
-        <item name="android:background">@drawable/spinner_background_dark</item>
-        <item name="android:drawablePadding">@dimen/_40sdp</item>
-        <item name="android:paddingStart">@dimen/_12sdp</item>
-        <item name="android:paddingLeft">@dimen/_12sdp</item>
-        <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:textColorHint">@color/colorWhite</item>
-        <item name="android:textSize">@dimen/_12sdp</item>
-        <item name="android:textAllCaps">false</item>
-    </style>
-
-    <style name="ProfileScreenLightDropDownStyle">
-        <item name="android:background">@drawable/spinner_background_light</item>
-        <item name="android:drawablePadding">@dimen/_40sdp</item>
-        <item name="android:paddingStart">@dimen/_12sdp</item>
-        <item name="android:paddingLeft">@dimen/_12sdp</item>
-        <item name="android:textColor">@color/colorGreenLight</item>
-        <item name="android:textColorHint">@color/colorGreenLight</item>
-        <item name="android:textSize">@dimen/_12sdp</item>
-        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="ProfileScreenDarkDropDownItemStyle">

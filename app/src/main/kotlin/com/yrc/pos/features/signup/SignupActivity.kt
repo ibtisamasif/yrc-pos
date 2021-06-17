@@ -9,10 +9,7 @@ import com.yrc.pos.R
 import com.yrc.pos.core.Constants
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.enums.DialogTheme
-import com.yrc.pos.core.enums.UserType
 import com.yrc.pos.core.providers.AlertDialogProvider
-import com.yrc.pos.core.services.YrcBaseApiResponse
-import com.yrc.pos.features.signup.sign_up_service.SignUpResponse
 import kotlinx.android.synthetic.main.activity_signup.*
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException

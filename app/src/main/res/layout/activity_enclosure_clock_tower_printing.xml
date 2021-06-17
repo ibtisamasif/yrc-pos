@@ -189,7 +189,6 @@
         app:layout_constraintTop_toTopOf="@+id/button_cash" />
 
     <com.yrc.pos.core.views.YrcButton
-        android:id="@+id/button_card"
         style="@style/CreditButtonStyle"
         android:layout_width="@dimen/_94sdp"
         android:layout_height="@dimen/_45sdp"

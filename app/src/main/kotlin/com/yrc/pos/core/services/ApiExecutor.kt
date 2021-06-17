@@ -18,7 +18,7 @@ class ApiExecutor<T> : Callback<T> {
         mApiCallbacks.doAfterApiCall()
 
         if (response.isSuccessful){
-            var apiResponse = response.body() as YrcBaseApiResponse
+            val apiResponse = response.body() as YrcBaseApiResponse
             apiResponse.statusCode = response.code()
             apiResponse.statusMessage = response.message()
             mApiCallbacks.onApiSuccess(apiResponse)

@@ -3,57 +3,18 @@
     <string name="copyrights_notice">Copyright © 2019 YRC POS. All Rights Reserved</string>
 
     <!--User Module Content-->
-    <string name="email_hint">Email / +971xxxx</string>
-    <string name="sign_in">Sign In</string>
-    <string name="forgot_password">Forgot Password?</string>
-    <string name="create_an_account">Create an Account</string>
-    <string name="welcome">Welcome</string>
     <string name="welcome_to_yrc">Welcome to YRC POS</string>
     <string name="phone_number">Phone Number</string>
     <string name="sign_up">Sign Up</string>
     <string name="or">Or</string>
     <string name="enter_mobile_number">Enter mobile no</string>
     <string name="login_with_gmail">Login with gmail</string>
-    <string name="enter_code">ENTER CODE</string>
-    <string name="code_instructions_email_and_number">We\'ve sent you code on registered number and email. To verify
-        your number and email please enter 6-digit code
-    </string>
-    <string name="code_instructions_email">We\'ve sent you code on registered email. To verify your email please enter
-        6-digit code
-    </string>
-    <string name="code_instructions_number">We\'ve sent you code on registered number. To verify your number please
-        enter 6-digit code
-    </string>
-    <string name="enter_code_for_email">Enter 6-digit code for email</string>
-    <string name="enter_code_for_number">Enter 6-digit code for number</string>
-    <string name="problem_receiving_a_code">
-        <u>PROBLEM RECEIVING A CODE?</u>
-    </string>
-    <string name="verify_code">Verify Code</string>
     <string name="please_enter_name">Please Enter Name</string>
     <string name="what">What</string>
     <string name="is_your_good_name">is your good name?</string>
     <string name="enter">Enter</string>
-    <string name="its_okay">It\'s okay!</string>
-    <string name="reset_your_password">Reset your password</string>
-    <string name="continue_">Continue</string>
-    <string name="code_instructions">we have sent you six digit code</string>
-    <string name="on_your_email">on your email</string>
-    <string name="send_me_again">
-        <u>send me again</u>
-    </string>
-    <string name="enter_four_digit_code">Enter six digit code</string>
-    <string name="new_password">New Password</string>
-    <string name="confirm_password">Confirm Password</string>
-    <string name="reset_password">Reset Password</string>
     <string name="done">Done</string>
-    <string name="your_password_has_reset">Your Password has reset successfully!</string>
-    <string name="login_with_new_password">Login with new password</string>
-    <string name="login">Login</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
     <string name="counter_text">%1$d/12</string>
-    <string name="session_not_available">Session not available!</string>
 
     <!--Dashboard Screen Content-->
     <string name="nav_header_title">Steven Clarkson</string>
@@ -64,62 +25,17 @@
     <!--API Module Content-->
     <string name="error">Error</string>
     <string name="alert">Alert</string>
-    <string name="verify">Verify</string>
     <string name="sorry_something_went_wrong">Sorry something went wrong!</string>
     <string name="no_network_available">No Network Available</string>
-    <string name="password_incorrect">Your cell number or password is incorrect.</string>
-    <string name="please_enter_cell_number_or_email">Please Enter Cell Number or Email</string>
     <string name="please_enter_valid_cell_number">Please Enter valid Cell Number</string>
-    <string name="please_enter_email">Please Enter Email Address</string>
-    <string name="please_enter_valid_email">Please Enter Valid Email Address</string>
-    <string name="please_enter_otp_code">Please Enter 6 Digit OTP Code</string>
-    <string name="please_enter_password">Please Enter Password</string>
-    <string name="please_enter_new_password">Please Enter New Password</string>
-    <string name="please_confirm_password">Please Confirm Password</string>
-    <string name="confirm_password_should_match_new_password">Confirm Password Should Match New Password</string>
-    <string name="please_enter_first_name">Please Enter First Name</string>
-    <string name="please_enter_last_name">Please Enter Last Name</string>
 
     <!--User Profile Content-->
-    <string name="edit_profile">Edit Profile</string>
-    <string name="prefix">Prefix</string>
-    <string name="select_prefix">Select Prefix</string>
-    <string name="middle_name">Middle Name</string>
-    <string name="date_of_birth">Date of Birth</string>
-    <string name="i_am">I am</string>
     <string name="female">Female</string>
-    <string name="nationality">Nationality</string>
-    <string name="select_nationality">Select Nationality</string>
-    <string name="email">Email</string>
-    <string name="phone">Phone</string>
-    <string name="type_phone_number">Type phone number</string>
-    <string name="country">Country</string>
-    <string name="select_country">Select Country</string>
-    <string name="city">City</string>
-    <string name="zip_code">Zip Code</string>
-    <string name="select_address_type">Select Address Type</string>
-    <string name="enter_address">Enter Address</string>
-    <string name="interests">Interests</string>
-    <string name="select_interest">Select Interests</string>
-    <string name="push_notifications">Push Notifications</string>
-    <string name="show_my_mobile_number">Show my mobile number</string>
-    <string name="others_can_see_my_age">Others can see my age</string>
-    <string name="save">Save</string>
-    <string name="address_type">Address Type</string>
-    <string name="please_select_date_of_birth">Please select date of birth</string>
-    <string name="please_enter_city_name">Please enter city name</string>
-    <string name="action_unauthorized">Action Unauthorized</string>
-    <string name="action_forbidden">Action Forbidden</string>
-    <string name="not_found">Not Found</string>
-    <string name="record_updated_successfully">Record Updated Successfully!!</string>
-    <string name="please_select_valid_date">Please select valid date!!</string>
-    <string name="you_are_signed_in_as_guest_please_login">You are signed in as a guest. Please login!</string>
-    <string name="sorry_you_are_under_age">Sorry, You are under age!!</string>
     <string name="support_number">+447405291492</string>
     <string name="support_email">support@yrc.io</string>
     <string name="customer_support_required">Customer Support Required</string>
     <string name="mail_to">mailto:</string>
     <string name="tel">tel:</string>
     <string name="title_enclosure_g_and_p"><![CDATA[G & P]]></string>
-    <string name="title_clocktower">Clock Tower</string>
+    <string name="title_enclosure_clocktower">Clock Tower</string>
 </resources>
