@@ -24,9 +24,9 @@ class YrcFrameActivity : YrcBaseActivity() {
         setupActionBar()
 
         if (intent.extras != null) {
-            activityTitle = intent.extras.getString(ACTIVITY_TITLE)
-            fragmentName = intent.extras.getString(FRAGMENT_NAME_STRING)
-            inflateOptionsMenu = intent.extras.getBoolean(INFLATE_OPTIONS_MENU)
+            activityTitle = intent?.extras?.getString(ACTIVITY_TITLE)
+            fragmentName = intent?.extras?.getString(FRAGMENT_NAME_STRING)
+            inflateOptionsMenu = intent?.extras?.getBoolean(INFLATE_OPTIONS_MENU) == true
         }
 
         if (fragmentName != null) {

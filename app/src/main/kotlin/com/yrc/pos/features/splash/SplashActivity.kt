@@ -8,6 +8,7 @@ import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.services.APiManager
 import com.yrc.pos.core.services.YrcBaseApiResponse
 import com.yrc.pos.features.dashboard.DashboardActivity
+import com.yrc.pos.features.login.login_service.Enclosure
 import com.yrc.pos.features.login.login_service.LoginRequest
 import com.yrc.pos.features.login.login_service.LoginResponse
 
@@ -27,6 +28,8 @@ class SplashActivity : YrcBaseActivity() {
     private val mRunnable: Runnable = Runnable {
         if (!isFinishing) {
             APiManager.loginApi(this, this, LoginRequest("123456789"))
+            APiManager.grandStand(this, this)
+            APiManager.clockTower(this, this)
         }
     }
 
@@ -39,7 +42,7 @@ class SplashActivity : YrcBaseActivity() {
         }
     }
 
-    private fun moveToDashboardActivity(enclosure: String) {
+    private fun moveToDashboardActivity(enclosure: Enclosure) {
         val dashboardIntent = Intent(this, DashboardActivity::class.java)
         dashboardIntent.putExtra(DashboardActivity.ENCLOSURE, enclosure)
         startActivity(dashboardIntent)

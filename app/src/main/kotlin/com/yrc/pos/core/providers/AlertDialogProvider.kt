@@ -81,11 +81,11 @@ object AlertDialogProvider {
 
     private fun createAlertDialog(context: Context, dialogView: View) : AlertDialog {
         val alertDialog = AlertDialog.Builder(context).setView(dialogView).create()
-        alertDialog.window.attributes.windowAnimations = R.style.DialogAnimation
+        alertDialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
         alertDialog.setCancelable(false)
         alertDialog.show()
 
-        alertDialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return alertDialog
     }
 }

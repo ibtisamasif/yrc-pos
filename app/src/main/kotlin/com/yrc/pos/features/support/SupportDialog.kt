@@ -22,8 +22,8 @@ class SupportDialog : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         isCancelable = false
-        dialog!!.window.attributes.windowAnimations = R.style.DialogAnimation
-        dialog!!.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         return inflater.inflate(R.layout.layout_support_dialog, container, false)
     }
@@ -38,7 +38,7 @@ class SupportDialog : DialogFragment() {
 
     private fun sendEmailToSupport() {
         dialog!!.dismiss()
-        var emailIntent = Intent(Intent.ACTION_SENDTO)
+        val emailIntent = Intent(Intent.ACTION_SENDTO)
         emailIntent.data = Uri.parse(getString(R.string.mail_to) + getString(R.string.support_email))
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.customer_support_required))
         startActivity(emailIntent)

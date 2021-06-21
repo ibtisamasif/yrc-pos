@@ -19,11 +19,7 @@ object Session {
         preferenceEditor.apply()
     }
 
-    fun isSessionAvailable() : Boolean {
-        return sessionPreferences.getString(SessionConstants.Key_AccessToken, Constants.EMPTY_STRING).isNotEmpty()
-    }
-
-    fun getAccessToken() : String {
+    fun getAccessToken() : String? {
         return sessionPreferences.getString(SessionConstants.Key_AccessToken, Constants.EMPTY_STRING)
     }
 

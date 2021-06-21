@@ -16,6 +16,8 @@ object Fonts {
 
 object EndPoints {
     const val API_LOGIN = "/api/auth/login"
+    const val API_GRANDSTAND = "/api/tickets/grandstand?device_id=123456789"
+    const val API_CLOCKTOWER = "/api/tickets/clocktower?device_id=123456789"
 }
 
 object Prices {

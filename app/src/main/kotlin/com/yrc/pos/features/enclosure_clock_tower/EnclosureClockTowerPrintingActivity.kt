@@ -114,6 +114,12 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
         finish()
     }
 
+    fun onGVOldButtonClicked(view: View) {
+    }
+
+    fun onGVNewButtonClicked(view: View) {
+    }
+
     fun onCardButtonClicked(view: View) {
         finish()
     }

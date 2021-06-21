@@ -174,25 +174,56 @@
 
     <com.yrc.pos.core.views.YrcButton
         android:id="@+id/button_cross"
-        android:layout_width="@dimen/_94sdp"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/_45sdp"
         android:layout_marginHorizontal="@dimen/_55sdp"
-        android:layout_marginStart="8dp"
         android:background="@drawable/cancel_button_background"
         android:onClick="onCrossButtonClicked"
         android:text="X"
         android:textAllCaps="true"
+        android:layout_marginBottom="8dp"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_16sdp"
         app:fontType="Regular"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button_cash" />
+        app:layout_constraintBottom_toTopOf="@+id/button_cash"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.yrc.pos.core.views.YrcButton
+        android:id="@+id/button_gv_old"
         style="@style/CreditButtonStyle"
-        android:layout_width="@dimen/_94sdp"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/_45sdp"
-        android:layout_marginHorizontal="@dimen/_55sdp"
+        android:layout_marginBottom="32dp"
+        android:onClick="onGVOldButtonClicked"
+        android:text="GV OLD"
+        android:textAllCaps="true"
+        app:fontType="Regular"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_gv_new"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.yrc.pos.core.views.YrcButton
+        android:id="@+id/button_gv_new"
+        style="@style/CreditButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_marginBottom="32dp"
+        android:onClick="onGVNewButtonClicked"
+        android:text="GV New"
+        android:textAllCaps="true"
+        app:fontType="Regular"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_card"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_gv_old" />
+
+    <com.yrc.pos.core.views.YrcButton
+        android:id="@+id/button_card"
+        style="@style/CreditButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_45sdp"
         android:layout_marginBottom="32dp"
         android:onClick="onCardButtonClicked"
         android:text="card"
@@ -200,14 +231,14 @@
         app:fontType="Regular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_cash"
-        app:layout_constraintStart_toEndOf="@+id/button_cross" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_gv_new" />
 
     <com.yrc.pos.core.views.YrcButton
         android:id="@+id/button_cash"
         style="@style/CashButtonStyle"
-        android:layout_width="@dimen/_94sdp"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/_45sdp"
-        android:layout_marginHorizontal="@dimen/_55sdp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
         android:onClick="onCashButtonClicked"
@@ -215,7 +246,8 @@
         android:textAllCaps="true"
         app:fontType="Regular"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_card" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

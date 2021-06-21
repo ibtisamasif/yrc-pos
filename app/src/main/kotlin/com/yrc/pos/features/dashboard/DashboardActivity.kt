@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
@@ -17,6 +18,7 @@ import com.yrc.pos.R
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.session.Session
 import com.yrc.pos.core.views.YrcTextView
+import com.yrc.pos.features.login.login_service.Enclosure
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -28,6 +30,8 @@ class DashboardActivity : YrcBaseActivity(), NavigationView.OnNavigationItemSele
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
+        setEnclosure()
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -45,35 +49,43 @@ class DashboardActivity : YrcBaseActivity(), NavigationView.OnNavigationItemSele
         navigationDrawerView.setNavigationItemSelectedListener(this)
 
         setNavigationDrawerHeaderData()
-
-        setEnclosure()
     }
 
     private fun setEnclosure() {
         intent.extras?.let {
-            val enclosure: String? = it.getString(ENCLOSURE)
-            if (enclosure == "G&P") {
-                showGandP()
-            } else {
-                showClockTower()
+            when (it.getSerializable(ENCLOSURE) as Enclosure?) {
+                Enclosure.grandstand -> {
+                    showGrandStand()
+                }
+                Enclosure.clocktower -> {
+                    showClockTower()
+                }
             }
         }
     }
 
-    fun showGandP() {
+    private fun showGrandStand() {
         bottom_nav_view?.menu?.clear()
         bottom_nav_view?.inflateMenu(R.menu.bottom_nav_menu_g_p)
-        findNavController(R.id.nav_host_fragment).navigate(
-            R.id.navigation_enclosure_g_and_p
-        )
+        setNavigationStartDestination(R.id.navigation_enclosure_g_and_p)
     }
 
-    fun showClockTower() {
+    private fun showClockTower() {
         bottom_nav_view?.menu?.clear()
         bottom_nav_view?.inflateMenu(R.menu.bottom_nav_menu_clock_tower)
-        findNavController(R.id.nav_host_fragment).navigate(
-            R.id.navigation_enclosure_clock_tower
-        )
+        setNavigationStartDestination(R.id.navigation_enclosure_clock_tower)
+    }
+
+    private fun setNavigationStartDestination(destination: Int) {
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
+        val graphInflater = navHostFragment?.navController?.navInflater
+        val navGraph = graphInflater?.inflate(R.navigation.dashboard_nav_graph)
+        val navController = navHostFragment?.navController
+        navGraph?.startDestination = destination
+        if (navGraph != null) {
+            navController?.graph = navGraph
+        }
     }
 
     private fun setNavigationDrawerHeaderData() {
