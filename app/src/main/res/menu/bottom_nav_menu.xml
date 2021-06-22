@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_enclosure_g_and_p"
+        android:id="@+id/navigation_enclosure_grand_stand"
         android:title="@string/title_enclosure_g_and_p" />
 
     <item

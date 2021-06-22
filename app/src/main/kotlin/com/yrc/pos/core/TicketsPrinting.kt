@@ -28,7 +28,7 @@ object TicketsPrinting {
         prn.printStr("\n", null)
         prn.leftIndent(100)
 
-        prn.printStr("£" + Prices.PRICE_ADULT, null)
+        prn.printStr("£" + Prices.tickets[0].price, null)
         prn.leftIndent(0)
         prn.printStr("----------------", null)
 
@@ -56,7 +56,7 @@ object TicketsPrinting {
         prn.printBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.qrcode))
         prn.step(100)
 
-        startPrinting(context, dal)
+        startPrinting(dal)
     }
 
     internal fun printOver65Ticket(context: Context) {
@@ -71,7 +71,7 @@ object TicketsPrinting {
         prn.printStr("\n", null)
         prn.leftIndent(100)
 
-        prn.printStr("£" + Prices.PRICE_OVER65, null)
+        prn.printStr("£" + Prices.tickets[1].price, null)
         prn.leftIndent(0)
         prn.printStr("----------------", null)
 
@@ -98,7 +98,7 @@ object TicketsPrinting {
         prn.printBitmapWithMonoThreshold(BitmapFactory.decodeResource(context.resources, R.drawable.qrcode), 1)
         prn.step(100)
 
-        startPrinting(context, dal)
+        startPrinting(dal)
     }
 
     internal fun count1822Tickets(context: Context) {
@@ -113,7 +113,7 @@ object TicketsPrinting {
         prn.printStr("\n", null)
         prn.leftIndent(100)
 
-        prn.printStr("£" + Prices.PRICE_1822, null)
+        prn.printStr("£" + Prices.tickets[1].price, null)
         prn.leftIndent(0)
         prn.printStr("----------------", null)
 
@@ -140,7 +140,7 @@ object TicketsPrinting {
         prn.printBitmapWithMonoThreshold(BitmapFactory.decodeResource(context.resources, R.drawable.qrcode), 1)
         prn.step(100)
 
-        startPrinting(context, dal)
+        startPrinting(dal)
     }
 
     internal fun countRacegoerTickets(context: Context) {
@@ -155,7 +155,7 @@ object TicketsPrinting {
         prn.printStr("\n", null)
         prn.leftIndent(100)
 
-        prn.printStr("£" + Prices.PRICE_RACEGOER, null)
+        prn.printStr("£" + Prices.tickets[3].price, null)
         prn.leftIndent(0)
         prn.printStr("----------------", null)
 
@@ -182,17 +182,100 @@ object TicketsPrinting {
         prn.printBitmapWithMonoThreshold(BitmapFactory.decodeResource(context.resources, R.drawable.qrcode), 1)
         prn.step(100)
 
-        startPrinting(context, dal)
+        startPrinting(dal)
     }
 
-    private fun startPrinting(context: Context, dal: IDAL) {
+    internal fun countBRVoucherTickets(context: Context) {
+
+        val dal: IDAL = NeptuneLiteUser.getInstance().getDal(context)
+        val prn = dal.printer
+        prn.init()
+
+        prn.fontSet(EFontTypeAscii.FONT_24_48, EFontTypeExtCode.FONT_24_48)
+        prn.leftIndent(110)
+        prn.printStr("BR_Voucher", null)
+        prn.printStr("\n", null)
+        prn.leftIndent(100)
+
+        prn.printStr("£" + Prices.tickets[4].price, null)
+        prn.leftIndent(0)
+        prn.printStr("----------------", null)
+
+        prn.fontSet(EFontTypeAscii.FONT_16_32, EFontTypeExtCode.FONT_16_32)
+        prn.leftIndent(20)
+        prn.spaceSet(0.toByte(), 0.toByte())
+        prn.printStr(DateFormat.getDateTimeInstance().format(Date()), null)
+        prn.printStr("\n", null)
+
+        prn.leftIndent(20)
+        prn.printStr("Receipt only", null)
+        prn.printStr("\n", null)
+
+        prn.printStr("Not valid for entry", null)
+        prn.printStr("\n", null)
+
+        prn.fontSet(EFontTypeAscii.FONT_8_16, EFontTypeExtCode.FONT_16_16)
+        prn.leftIndent(20)
+        prn.dotLine
+        prn.printStr("Retain ticket as a proof", null)
+
+        prn.step(10)
+        prn.leftIndent(100)
+        prn.printBitmapWithMonoThreshold(BitmapFactory.decodeResource(context.resources, R.drawable.qrcode), 1)
+        prn.step(100)
+
+        startPrinting(dal)
+    }
+
+    internal fun countU18STickets(context: Context) {
+
+        val dal: IDAL = NeptuneLiteUser.getInstance().getDal(context)
+        val prn = dal.printer
+        prn.init()
+
+        prn.fontSet(EFontTypeAscii.FONT_24_48, EFontTypeExtCode.FONT_24_48)
+        prn.leftIndent(110)
+        prn.printStr("U18S", null)
+        prn.printStr("\n", null)
+        prn.leftIndent(100)
+
+        prn.printStr("£" + Prices.tickets[5].price, null)
+        prn.leftIndent(0)
+        prn.printStr("----------------", null)
+
+        prn.fontSet(EFontTypeAscii.FONT_16_32, EFontTypeExtCode.FONT_16_32)
+        prn.leftIndent(20)
+        prn.spaceSet(0.toByte(), 0.toByte())
+        prn.printStr(DateFormat.getDateTimeInstance().format(Date()), null)
+        prn.printStr("\n", null)
+
+        prn.leftIndent(20)
+        prn.printStr("Receipt only", null)
+        prn.printStr("\n", null)
+
+        prn.printStr("Not valid for entry", null)
+        prn.printStr("\n", null)
+
+        prn.fontSet(EFontTypeAscii.FONT_8_16, EFontTypeExtCode.FONT_16_16)
+        prn.leftIndent(20)
+        prn.dotLine
+        prn.printStr("Retain ticket as a proof", null)
+
+        prn.step(10)
+        prn.leftIndent(100)
+        prn.printBitmapWithMonoThreshold(BitmapFactory.decodeResource(context.resources, R.drawable.qrcode), 1)
+        prn.step(100)
+
+        startPrinting(dal)
+    }
+    private fun startPrinting(dal: IDAL) {
         val apiResult: Int = dal.printer.start()
         try {
             when (apiResult) {
-                0 -> Toast.makeText(context, "Submission successfully made", Toast.LENGTH_SHORT).show()
-                1 -> Toast.makeText(context, "Busy, so far so good", Toast.LENGTH_SHORT).show()
-                2 -> Toast.makeText(context, "Out of paper", Toast.LENGTH_SHORT).show()
-                else -> Toast.makeText(context, "Unexpected", Toast.LENGTH_SHORT).show()
+//                0 -> Toast.makeText(context, "Submission successfully made", Toast.LENGTH_SHORT).show()
+//                1 -> Toast.makeText(context, "Busy, so far so good", Toast.LENGTH_SHORT).show()
+//                2 -> Toast.makeText(context, "Out of paper", Toast.LENGTH_SHORT).show()
+//                else -> Toast.makeText(context, "Unexpected", Toast.LENGTH_SHORT).show()
             }
         } catch (ex: PrinterDevException) {
             ex.printStackTrace()

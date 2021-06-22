@@ -1,6 +1,7 @@
 package com.yrc.pos.core.services
 
 import android.content.Context
+import com.yrc.pos.core.enums.Enclosure
 import com.yrc.pos.core.providers.TicketModel
 import com.yrc.pos.features.login.login_service.LoginRequest
 import com.yrc.pos.features.login.login_service.LoginResponse
@@ -9,11 +10,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object APiManager {
 
-    private lateinit var hambaServices: ApiInterface
+    private lateinit var yrcServices: ApiInterface
     private const val BASE_URL = "https://kiosk.yorkracecourse.co.uk"
 
     fun initialize(){
-        hambaServices = Retrofit.Builder()
+        yrcServices = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -21,17 +22,10 @@ object APiManager {
     }
 
     fun loginApi(context: Context, apiCallbacks: ApiCallbacks, loginRequest: LoginRequest) {
-        val loginApiCall = hambaServices.loginToYrc(loginRequest)
-        ApiExecutor<LoginResponse>().addCallToQueue(context, loginApiCall, apiCallbacks)
+        ApiExecutor<LoginResponse>().addCallToQueue(context, yrcServices.loginToYrc(loginRequest), apiCallbacks)
     }
 
-    fun grandStand(context: Context, apiCallbacks: ApiCallbacks) {
-        val grandStandApiCall = hambaServices.grandStand()
-        ApiExecutor<TicketModel>().addCallToQueue(context, grandStandApiCall, apiCallbacks)
-    }
-
-    fun clockTower(context: Context, apiCallbacks: ApiCallbacks) {
-        val clockTowerApiCall = hambaServices.clockTower()
-        ApiExecutor<TicketModel>().addCallToQueue(context, clockTowerApiCall, apiCallbacks)
+    fun getTicketInfo(context: Context, apiCallbacks: ApiCallbacks, enclosure: Enclosure, id: String) {
+        ApiExecutor<TicketModel>().addCallToQueue(context, yrcServices.getTicketInfo(enclosure, id), apiCallbacks)
     }
 }

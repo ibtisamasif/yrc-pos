@@ -7,6 +7,7 @@
     <color name="colorRedError">#CE1700</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGrayDark">#969696</color>
+    <color name="colorGrayLight">#32969696</color>
     <color name="colorGreenDark">#2A6361</color>
     <color name="colorGreenMedium">#478B87</color>
     <color name="colorGreenLight">#55B1AC</color>

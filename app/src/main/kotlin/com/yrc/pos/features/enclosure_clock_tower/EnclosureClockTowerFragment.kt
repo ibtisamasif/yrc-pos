@@ -12,12 +12,12 @@ import com.yrc.pos.core.YrcBaseFragment
 import com.yrc.pos.core.bus.RxBus
 import com.yrc.pos.core.bus.RxEvent
 import io.reactivex.rxjava3.disposables.Disposable
-import kotlinx.android.synthetic.main.fragment_enclosure_g_and_p.*
+import kotlinx.android.synthetic.main.fragment_enclosure_clock_tower.*
 
 class EnclosureClockTowerFragment : YrcBaseFragment() {
 
-    private var countAdultTickets = 0
-    private var countOver65Tickets = 0
+    private var button1Count = 0
+    private var button2Count = 0
 
     private lateinit var disposableClearAllTickets: Disposable
     private lateinit var disposableMultiplyTicket: Disposable
@@ -30,22 +30,25 @@ class EnclosureClockTowerFragment : YrcBaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        button_Adult.text = "${Prices.tickets[0].name} £ ${Prices.tickets[0].price}"
+        button_Over65.text = "${Prices.tickets[1].name} £ ${Prices.tickets[1].price}"
+
         setAdultButtonListener()
         setOver65ButtonListener()
         setTotalButtonListener()
 
         disposableClearAllTickets = RxBus.listen(RxEvent.buttonFunction::class.java).subscribe {
-            countAdultTickets = 0
-            countOver65Tickets = 0
+            button1Count = 0
+            button2Count = 0
             Toast.makeText(activity, "Cleared all selections and reset", Toast.LENGTH_SHORT).show()
         }
         disposableMultiplyTicket = RxBus.listen(RxEvent.setTicketCount::class.java).subscribe {
             when (it.ticketName) {
                 TICKET_ADULTS -> {
-                    countAdultTickets = it.count
+                    button1Count = it.count
                 }
                 TICKET_OVER65 -> {
-                    countOver65Tickets = it.count
+                    button2Count = it.count
                 }
             }
         }
@@ -53,11 +56,17 @@ class EnclosureClockTowerFragment : YrcBaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        button_total.text = countAdultTickets.plus(countOver65Tickets).toString().plus(" ")
+        val adultPrice = Prices.tickets[0].price?.toDouble()?.toInt()
+        val over65 = Prices.tickets[1].price?.toDouble()?.toInt()
+        button_total.text = button1Count.plus(button2Count).toString().plus(" ")
             .plus(
                 "x Ticket £".plus(
-                    countAdultTickets.times(Prices.PRICE_ADULT)
-                        .plus(countOver65Tickets.times(Prices.PRICE_OVER65))
+                    adultPrice?.let {
+                        over65?.let { it1 -> button2Count.times(it1) }?.let { it2 ->
+                            button1Count.times(it)
+                                .plus(it2)
+                        }
+                    }
                 )
             )
     }
@@ -71,9 +80,9 @@ class EnclosureClockTowerFragment : YrcBaseFragment() {
     private fun setAdultButtonListener() {
         button_Adult.setOnClickListener {
             val intent = Intent(activity, EnclosureClockTowerPrintingActivity::class.java)
-            countAdultTickets += 1
-            intent.putExtra(TICKET_ADULTS, countAdultTickets)
-            intent.putExtra(TICKET_OVER65, countOver65Tickets)
+            button1Count += 1
+            intent.putExtra(TICKET_ADULTS, button1Count)
+            intent.putExtra(TICKET_OVER65, button2Count)
             startActivity(intent)
         }
     }
@@ -81,9 +90,9 @@ class EnclosureClockTowerFragment : YrcBaseFragment() {
     private fun setOver65ButtonListener() {
         button_Over65.setOnClickListener {
             val intent = Intent(activity, EnclosureClockTowerPrintingActivity::class.java)
-            intent.putExtra(TICKET_ADULTS, countAdultTickets)
-            countOver65Tickets += 1
-            intent.putExtra(TICKET_OVER65, countOver65Tickets)
+            intent.putExtra(TICKET_ADULTS, button1Count)
+            button2Count += 1
+            intent.putExtra(TICKET_OVER65, button2Count)
             startActivity(intent)
         }
     }
@@ -91,8 +100,8 @@ class EnclosureClockTowerFragment : YrcBaseFragment() {
     private fun setTotalButtonListener() {
         button_total.setOnClickListener {
             val intent = Intent(activity, EnclosureClockTowerPrintingActivity::class.java)
-            intent.putExtra(TICKET_ADULTS, countAdultTickets)
-            intent.putExtra(TICKET_OVER65, countOver65Tickets)
+            intent.putExtra(TICKET_ADULTS, button1Count)
+            intent.putExtra(TICKET_OVER65, button2Count)
             startActivity(intent)
         }
     }

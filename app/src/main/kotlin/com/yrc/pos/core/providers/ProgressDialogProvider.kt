@@ -8,17 +8,21 @@ object ProgressDialogProvider {
 
     @SuppressLint("StaticFieldLeak")
     private lateinit var progressHud: KProgressHUD
+    private var isAlreadyShowing: Boolean = false
 
     fun show(context: Context) {
-        progressHud = KProgressHUD.create(context)
-            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-            .setCancellable(false)
-            .setAnimationSpeed(2)
-            .setDimAmount(0.5f)
-            .show()
+        if (!isAlreadyShowing)
+            progressHud = KProgressHUD.create(context)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show()
+        isAlreadyShowing = true
     }
 
     fun dismiss() {
-        if(progressHud != null) { progressHud.dismiss() }
+        isAlreadyShowing = false
+        progressHud.dismiss()
     }
 }

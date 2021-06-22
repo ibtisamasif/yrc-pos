@@ -10,9 +10,11 @@ import com.yrc.pos.core.enums.Enclosure
 import com.yrc.pos.core.providers.TicketModel
 import com.yrc.pos.core.services.APiManager
 import com.yrc.pos.core.services.YrcBaseApiResponse
+import com.yrc.pos.core.views.YrcButton
 import com.yrc.pos.features.dashboard.DashboardActivity
 import com.yrc.pos.features.login.login_service.LoginRequest
 import com.yrc.pos.features.login.login_service.LoginResponse
+
 
 class SplashActivity : YrcBaseActivity() {
 
@@ -30,8 +32,6 @@ class SplashActivity : YrcBaseActivity() {
     private val mRunnable: Runnable = Runnable {
         if (!isFinishing) {
             APiManager.loginApi(this, this, LoginRequest("123456789"))
-            APiManager.grandStand(this, this)
-            APiManager.clockTower(this, this)
         }
     }
 
@@ -39,12 +39,12 @@ class SplashActivity : YrcBaseActivity() {
         super.onApiSuccess(apiResponse)
         when (apiResponse) {
             is LoginResponse -> {
-                apiResponse.enclosure?.let { moveToDashboardActivity(it) }
+                apiResponse.enclosure?.let { APiManager.getTicketInfo(this, this, it, "123456789") }
             }
             is TicketModel -> {
-                val price = apiResponse.tickets?.get(0)?.price
-                price?.let {
-                    Prices.PRICE_ADULT = it.toInt()
+                apiResponse.tickets?.let {
+                    Prices.tickets = apiResponse.tickets
+                    apiResponse.enclosure?.let { moveToDashboardActivity(it) }
                 }
             }
         }

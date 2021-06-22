@@ -1,10 +1,11 @@
 package com.yrc.pos.core
 
+import com.yrc.pos.core.providers.Ticket
+
 object Constants {
     const val EMPTY_STRING = ""
     const val SPACE_STRING = " "
     const val LOGGER_TAG = "Yrc App"
-    const val DOB_FORMAT = "MMM/dd/yyyy"
     const val NUMBER_REGULAR_EXPRESSION = "^[\\+\\d]?(?:[\\d-.\\s()]*)\$"
 }
 
@@ -16,13 +17,9 @@ object Fonts {
 
 object EndPoints {
     const val API_LOGIN = "/api/auth/login"
-    const val API_GRANDSTAND = "/api/tickets/grandstand?device_id=123456789"
-    const val API_CLOCKTOWER = "/api/tickets/clocktower?device_id=123456789"
+    const val API_GET_TICKET_INFO = "/api/tickets/{enclosure}"
 }
 
 object Prices {
-    var PRICE_ADULT = 20
-    const val PRICE_OVER65 = 30
-    const val PRICE_1822 = 40
-    const val PRICE_RACEGOER = 50
+    var tickets = listOf<Ticket>()
 }

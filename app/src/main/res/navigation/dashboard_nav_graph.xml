@@ -2,13 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/navigation_enclosure_g_and_p">
+    app:startDestination="@id/navigation_enclosure_grand_stand">
 
     <fragment
-        android:id="@+id/navigation_enclosure_g_and_p"
-        android:name="com.yrc.pos.features.enclosure_g_and_p.EnclosureGandPFragment"
+        android:id="@+id/navigation_enclosure_grand_stand"
+        android:name="com.yrc.pos.features.enclosure_grand_stand.EnclosureGrandStandFragment"
         android:label="@string/title_enclosure_g_and_p"
-        tools:layout="@layout/fragment_enclosure_g_and_p" />
+        tools:layout="@layout/fragment_enclosure_grand_stand" />
 
     <fragment
         android:id="@+id/navigation_enclosure_clock_tower"
