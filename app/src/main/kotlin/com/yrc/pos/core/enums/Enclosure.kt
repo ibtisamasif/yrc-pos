@@ -4,6 +4,7 @@ import java.io.Serializable
 
 
 enum class Enclosure : Serializable {
+    none,
     grandstand,
     clocktower;
 }

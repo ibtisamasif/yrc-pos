@@ -4,5 +4,5 @@ import com.yrc.pos.core.enums.Enclosure
 import com.yrc.pos.core.services.YrcBaseApiResponse
 
 data class LoginResponse(
-    var enclosure: Enclosure? = null
+    var enclosure: Enclosure? = Enclosure.none
 ) : YrcBaseApiResponse()

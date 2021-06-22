@@ -1,6 +1,8 @@
 package com.yrc.pos.features.splash
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import com.yrc.pos.R
@@ -10,7 +12,6 @@ import com.yrc.pos.core.enums.Enclosure
 import com.yrc.pos.core.providers.TicketModel
 import com.yrc.pos.core.services.APiManager
 import com.yrc.pos.core.services.YrcBaseApiResponse
-import com.yrc.pos.core.views.YrcButton
 import com.yrc.pos.features.dashboard.DashboardActivity
 import com.yrc.pos.features.login.login_service.LoginRequest
 import com.yrc.pos.features.login.login_service.LoginResponse
@@ -31,15 +32,16 @@ class SplashActivity : YrcBaseActivity() {
 
     private val mRunnable: Runnable = Runnable {
         if (!isFinishing) {
-            APiManager.loginApi(this, this, LoginRequest("123456789"))
+            APiManager.loginApi(this, this, LoginRequest(Build.SERIAL))
         }
     }
 
+    @SuppressLint("HardwareIds")
     override fun onApiSuccess(apiResponse: YrcBaseApiResponse) {
         super.onApiSuccess(apiResponse)
         when (apiResponse) {
             is LoginResponse -> {
-                apiResponse.enclosure?.let { APiManager.getTicketInfo(this, this, it, "123456789") }
+                apiResponse.enclosure?.let { APiManager.getTicketInfo(this, this, it, Build.SERIAL) }
             }
             is TicketModel -> {
                 apiResponse.tickets?.let {
