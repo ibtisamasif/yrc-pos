@@ -21,7 +21,7 @@ object EndPoints {
 }
 
 object Prices {
-    const val PRICE_ADULT = 20
+    var PRICE_ADULT = 20
     const val PRICE_OVER65 = 30
     const val PRICE_1822 = 40
     const val PRICE_RACEGOER = 50

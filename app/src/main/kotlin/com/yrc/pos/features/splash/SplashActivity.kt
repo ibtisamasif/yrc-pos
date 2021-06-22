@@ -4,11 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import com.yrc.pos.R
+import com.yrc.pos.core.Prices
 import com.yrc.pos.core.YrcBaseActivity
+import com.yrc.pos.core.enums.Enclosure
+import com.yrc.pos.core.providers.TicketModel
 import com.yrc.pos.core.services.APiManager
 import com.yrc.pos.core.services.YrcBaseApiResponse
 import com.yrc.pos.features.dashboard.DashboardActivity
-import com.yrc.pos.features.login.login_service.Enclosure
 import com.yrc.pos.features.login.login_service.LoginRequest
 import com.yrc.pos.features.login.login_service.LoginResponse
 
@@ -38,6 +40,12 @@ class SplashActivity : YrcBaseActivity() {
         when (apiResponse) {
             is LoginResponse -> {
                 apiResponse.enclosure?.let { moveToDashboardActivity(it) }
+            }
+            is TicketModel -> {
+                val price = apiResponse.tickets?.get(0)?.price
+                price?.let {
+                    Prices.PRICE_ADULT = it.toInt()
+                }
             }
         }
     }
