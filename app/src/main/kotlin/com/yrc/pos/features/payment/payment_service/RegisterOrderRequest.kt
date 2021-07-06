@@ -28,8 +28,8 @@ data class GiftVouchers (
     @SerializedName("old_vouchers_redeemed_total")
     val oldVouchersRedeemedTotal: String,
 
-    @SerializedName("new_vouchers_redeeded_total")
-    val newVouchersRedeededTotal: String,
+    @SerializedName("new_vouchers_redeemed_total")
+    val newVouchersRedeemedTotal: String,
 
     @SerializedName("new_vouchers_redeemed")
     val newVouchersRedeemed: List<NewVouchersRedeemed>
