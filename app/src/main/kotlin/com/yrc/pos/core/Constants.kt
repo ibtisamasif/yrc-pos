@@ -18,6 +18,10 @@ object Fonts {
 object EndPoints {
     const val API_LOGIN = "/api/auth/login"
     const val API_GET_TICKET_INFO = "/api/tickets/{enclosure}"
+    const val API_POST_VALIDATE_OLD_VOUCHER = "/api/vouchers/validateOldVoucher"
+    const val API_POST_VALIDATE_NEW_VOUCHER = "/api/vouchers/validateNewVoucher"
+    const val API_POST_REGISTER_ORDER = "/api/orders/registerOrder"
+    const val API_POST_COMPLETE_ORDER = "/api/orders/completeOrder"
 }
 
 object Prices {

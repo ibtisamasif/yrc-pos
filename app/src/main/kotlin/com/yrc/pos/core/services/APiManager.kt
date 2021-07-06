@@ -6,6 +6,14 @@ import com.yrc.pos.core.enums.Enclosure
 import com.yrc.pos.core.providers.TicketModel
 import com.yrc.pos.features.login.login_service.LoginRequest
 import com.yrc.pos.features.login.login_service.LoginResponse
+import com.yrc.pos.features.order_successful.order_successful_service.CompleteOrderRequest
+import com.yrc.pos.features.order_successful.order_successful_service.CompleteOrderResponse
+import com.yrc.pos.features.payment.payment_service.RegisterOrderRequest
+import com.yrc.pos.features.payment.payment_service.RegisterOrderResponse
+import com.yrc.pos.features.voucher.voucher_service.ValidateNewVoucherRequest
+import com.yrc.pos.features.voucher.voucher_service.ValidateNewVoucherResponse
+import com.yrc.pos.features.voucher.voucher_service.ValidateOldVoucherRequest
+import com.yrc.pos.features.voucher.voucher_service.ValidateOldVoucherResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -44,5 +52,21 @@ object APiManager {
 
     fun getTicketInfo(context: Context, apiCallbacks: ApiCallbacks, enclosure: Enclosure, id: String) {
         ApiExecutor<TicketModel>().addCallToQueue(context, yrcServices.getTicketInfo(enclosure, id), apiCallbacks)
+    }
+
+    fun postValidateOldVoucher(context: Context, apiCallbacks: ApiCallbacks, validateOldVoucherRequest: ValidateOldVoucherRequest) {
+        ApiExecutor<ValidateOldVoucherResponse>().addCallToQueue(context, yrcServices.postValidateOldVoucherRequest(validateOldVoucherRequest), apiCallbacks)
+    }
+
+    fun postValidateNewVoucher(context: Context, apiCallbacks: ApiCallbacks, validateNewVoucherRequest: ValidateNewVoucherRequest) {
+        ApiExecutor<ValidateNewVoucherResponse>().addCallToQueue(context, yrcServices.postValidateNewVoucherRequest(validateNewVoucherRequest), apiCallbacks)
+    }
+
+    fun postRegisterOrder(context: Context, apiCallbacks: ApiCallbacks, registerOrderRequest: RegisterOrderRequest) {
+        ApiExecutor<RegisterOrderResponse>().addCallToQueue(context, yrcServices.postRegisterOrder(registerOrderRequest), apiCallbacks)
+    }
+
+    fun postCompleteOrder(context: Context, apiCallbacks: ApiCallbacks, completeOrderRequest: CompleteOrderRequest) {
+        ApiExecutor<CompleteOrderResponse>().addCallToQueue(context, yrcServices.postCompleteOrder(completeOrderRequest), apiCallbacks)
     }
 }

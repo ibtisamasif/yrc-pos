@@ -1,7 +1,6 @@
 package com.yrc.pos.features.dashboard
 
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -12,15 +11,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.navigation.NavigationView
 import com.yrc.pos.R
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.enums.Enclosure
-import com.yrc.pos.core.session.Session
 import com.yrc.pos.core.views.YrcTextView
 import kotlinx.android.synthetic.main.content_main.*
 
-class DashboardActivity : YrcBaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+class DashboardActivity : YrcBaseActivity() {
 
     private var drawerLayout: DrawerLayout? = null
     private var textViewHeaderTitle: YrcTextView? = null
@@ -93,18 +90,6 @@ class DashboardActivity : YrcBaseActivity(), NavigationView.OnNavigationItemSele
         } else {
             super.onBackPressed()
         }
-    }
-
-    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
-        menuItem.isChecked = true
-        drawerLayout?.closeDrawers()
-
-        when (menuItem.itemId) {
-            R.id.item_sign_out -> {
-                Session.clearSession()
-            }
-        }
-        return true
     }
 
     companion object {

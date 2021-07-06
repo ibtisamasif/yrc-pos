@@ -7,6 +7,6 @@ import com.yrc.pos.R
 class LayoutTesting : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_payment_screen)
+        setContentView(R.layout.activity_payment)
     }
 }

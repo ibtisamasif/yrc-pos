@@ -3,23 +3,12 @@
     <string name="copyrights_notice">Copyright © 2019 YRC POS. All Rights Reserved</string>
 
     <!--User Module Content-->
-    <string name="welcome_to_yrc">Welcome to YRC POS</string>
-    <string name="phone_number">Phone Number</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="or">Or</string>
     <string name="enter_mobile_number">Enter mobile no</string>
     <string name="login_with_gmail">Login with gmail</string>
-    <string name="please_enter_name">Please Enter Name</string>
-    <string name="what">What</string>
-    <string name="is_your_good_name">is your good name?</string>
-    <string name="enter">Enter</string>
     <string name="done">Done</string>
     <string name="counter_text">%1$d/12</string>
 
     <!--Dashboard Screen Content-->
-    <string name="nav_header_title">Steven Clarkson</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="sign_out">Sign Out</string>
     <string name="call_or_email_us">Email or Call Us</string>
 
     <!--API Module Content-->
@@ -27,7 +16,6 @@
     <string name="alert">Alert</string>
     <string name="sorry_something_went_wrong">Sorry something went wrong!</string>
     <string name="no_network_available">No Network Available</string>
-    <string name="please_enter_valid_cell_number">Please Enter valid Cell Number</string>
 
     <!--User Profile Content-->
     <string name="female">Female</string>

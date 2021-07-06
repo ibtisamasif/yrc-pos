@@ -11,10 +11,4 @@
     <color name="colorGreenDark">#2A6361</color>
     <color name="colorGreenMedium">#478B87</color>
     <color name="colorGreenLight">#55B1AC</color>
-    <color name="navigation_drawer_item_background_start_color">#17b4ad</color>
-    <color name="navigation_drawer_item_background_center_color">#44c2be</color>
-    <color name="navigation_drawer_item_background_end_color">#17b4ad</color>
-    <color name="side_nav_bar_start">#4DB6AC</color>
-    <color name="side_nav_bar_center">#009688</color>
-    <color name="side_nav_bar_end">#00695C</color>
 </resources>
