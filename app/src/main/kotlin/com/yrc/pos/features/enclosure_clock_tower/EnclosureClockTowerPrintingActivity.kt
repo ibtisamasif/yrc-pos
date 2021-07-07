@@ -7,7 +7,7 @@ import android.widget.Toast
 import com.pax.dal.exceptions.PrinterDevException
 import com.yrc.pos.R
 import com.yrc.pos.core.Prices
-import com.yrc.pos.core.TicketsPrinting
+import com.yrc.pos.core.TicketPrintUtils
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.bus.RxBus
 import com.yrc.pos.core.bus.RxEvent
@@ -48,11 +48,11 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
 
         button_cash.setOnClickListener {
             try {
-            for (n in 1..button1Count)
-                TicketsPrinting.printAdultTicket(this)
-            for (n in 1..button2Count)
-                TicketsPrinting.printOver65Ticket(this)
-             } catch (ex: PrinterDevException) {
+                for (n in 1..button1Count)
+                    TicketPrintUtils.printTicket(this, Prices.tickets[0].name, Prices.tickets[0].price)
+                for (n in 1..button2Count)
+                    TicketPrintUtils.printTicket(this, Prices.tickets[1].name, Prices.tickets[1].price)
+            } catch (ex: PrinterDevException) {
                 ex.printStackTrace()
             }
         }
