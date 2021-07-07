@@ -7,7 +7,7 @@ import android.widget.Toast
 import com.pax.dal.exceptions.PrinterDevException
 import com.yrc.pos.R
 import com.yrc.pos.core.Prices
-import com.yrc.pos.core.TicketsPrinting
+import com.yrc.pos.core.TicketPrintUtils
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.bus.RxBus
 import com.yrc.pos.core.bus.RxEvent
@@ -107,17 +107,17 @@ class EnclosureGrandStandPrintingActivity : YrcBaseActivity() {
         button_cash?.setOnClickListener {
             try {
                 for (n in 1..button1Count)
-                    TicketsPrinting.printAdultTicket(this)
+                    TicketPrintUtils.printTicket(this, Prices.tickets[0].name, Prices.tickets[0].price)
                 for (n in 1..button2Count)
-                    TicketsPrinting.printOver65Ticket(this)
+                    TicketPrintUtils.printTicket(this, Prices.tickets[1].name, Prices.tickets[1].price)
                 for (n in 1..button3Count)
-                    TicketsPrinting.count1822Tickets(this)
+                    TicketPrintUtils.printTicket(this, Prices.tickets[2].name, Prices.tickets[2].price)
                 for (n in 1..button4Count)
-                    TicketsPrinting.countRacegoerTickets(this)
+                    TicketPrintUtils.printTicket(this, Prices.tickets[3].name, Prices.tickets[3].price)
                 for (n in 1..button5Count)
-                    TicketsPrinting.countBRVoucherTickets(this)
+                    TicketPrintUtils.printTicket(this, Prices.tickets[4].name, Prices.tickets[4].price)
                 for (n in 1..button6Count)
-                    TicketsPrinting.countU18STickets(this)
+                    TicketPrintUtils.printTicket(this, Prices.tickets[5].name, Prices.tickets[5].price)
             } catch (ex: PrinterDevException) {
                 ex.printStackTrace()
             }
