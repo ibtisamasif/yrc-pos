@@ -32,7 +32,7 @@ class SplashActivity : YrcBaseActivity() {
 
     private val mRunnable: Runnable = Runnable {
         if (!isFinishing) {
-            APiManager.loginApi(this, this, LoginRequest(Build.SERIAL))
+            APiManager.loginApi(this, this, LoginRequest("0822163315"))
         }
     }
 
@@ -41,7 +41,7 @@ class SplashActivity : YrcBaseActivity() {
         super.onApiSuccess(apiResponse)
         when (apiResponse) {
             is LoginResponse -> {
-                apiResponse.enclosure?.let { APiManager.getTicketInfo(this, this, it, Build.SERIAL) }
+                apiResponse.enclosure?.let { APiManager.getTicketInfo(this, this, it, "0822163315") }
             }
             is TicketModel -> {
                 apiResponse.tickets?.let {
