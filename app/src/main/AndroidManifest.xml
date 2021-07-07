@@ -30,36 +30,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.yrc.pos.features.LayoutTesting"
+            android:name="com.yrc.pos.features.voucher.views.VoucherActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.yrc.pos.features.login.LoginActivity"
+            android:name="com.yrc.pos.features.payment.views.PaymentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.yrc.pos.features.signup.SignupActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoActionBar"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.yrc.pos.features.signup.HelloUserActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoActionBar"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.yrc.pos.features.forget_password.ForgetPasswordActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoActionBar"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.yrc.pos.features.forget_password.PasswordResetStatusActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoActionBar" />
-        <activity
-            android:name="com.yrc.pos.features.forget_password.NewPasswordActivity"
+            android:name="com.yrc.pos.features.order_successful.views.OrderSuccessfulActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBar"
             android:windowSoftInputMode="stateHidden" />

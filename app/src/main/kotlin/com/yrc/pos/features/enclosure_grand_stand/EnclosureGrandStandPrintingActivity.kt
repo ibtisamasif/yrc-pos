@@ -1,5 +1,6 @@
 package com.yrc.pos.features.enclosure_grand_stand
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -10,6 +11,7 @@ import com.yrc.pos.core.TicketsPrinting
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.bus.RxBus
 import com.yrc.pos.core.bus.RxEvent
+import com.yrc.pos.features.voucher.views.VoucherActivity
 import kotlinx.android.synthetic.main.activity_enclosure_grand_stand_printing.*
 
 
@@ -278,6 +280,7 @@ class EnclosureGrandStandPrintingActivity : YrcBaseActivity() {
     }
 
     fun onGVNewButtonClicked(view: View) {
+        startActivity(Intent(this, VoucherActivity::class.java))
     }
 
     fun onCardButtonClicked(view: View) {

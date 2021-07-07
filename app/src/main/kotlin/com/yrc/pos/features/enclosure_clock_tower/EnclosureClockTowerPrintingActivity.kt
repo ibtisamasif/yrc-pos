@@ -1,5 +1,6 @@
 package com.yrc.pos.features.enclosure_clock_tower
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -10,6 +11,7 @@ import com.yrc.pos.core.TicketsPrinting
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.bus.RxBus
 import com.yrc.pos.core.bus.RxEvent
+import com.yrc.pos.features.voucher.views.VoucherActivity
 import kotlinx.android.synthetic.main.activity_enclosure_clock_tower_printing.*
 
 
@@ -128,6 +130,7 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
     }
 
     fun onGVNewButtonClicked(view: View) {
+        startActivity(Intent(this, VoucherActivity::class.java))
     }
 
     fun onCardButtonClicked(view: View) {
