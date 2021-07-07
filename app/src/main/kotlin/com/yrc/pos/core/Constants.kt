@@ -1,12 +1,12 @@
 package com.yrc.pos.core
 
-import com.yrc.pos.core.providers.Ticket
+import com.yrc.pos.core.providers.models.Ticket
+
 
 object Constants {
     const val EMPTY_STRING = ""
     const val SPACE_STRING = " "
     const val LOGGER_TAG = "Yrc App"
-    const val NUMBER_REGULAR_EXPRESSION = "^[\\+\\d]?(?:[\\d-.\\s()]*)\$"
 }
 
 object Fonts {

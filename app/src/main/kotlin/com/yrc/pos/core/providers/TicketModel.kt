@@ -2,6 +2,7 @@ package com.yrc.pos.core.providers
 
 import com.google.gson.annotations.SerializedName
 import com.yrc.pos.core.enums.Enclosure
+import com.yrc.pos.core.providers.models.Ticket
 import com.yrc.pos.core.services.YrcBaseApiResponse
 
 data class TicketModel(
@@ -14,9 +15,3 @@ data class TicketModel(
     val meetDayID: Int? = null,
     val enclosure: Enclosure? = null
 ) : java.io.Serializable, YrcBaseApiResponse()
-
-
-data class Ticket(
-    val name: String? = null,
-    val price: String? = null
-) : java.io.Serializable

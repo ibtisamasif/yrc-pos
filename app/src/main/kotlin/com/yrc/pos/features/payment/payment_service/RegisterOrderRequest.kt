@@ -1,6 +1,7 @@
 package com.yrc.pos.features.payment.payment_service
 
 import com.google.gson.annotations.SerializedName
+import com.yrc.pos.core.providers.models.Ticket
 
 
 data class RegisterOrderRequest (
@@ -38,14 +39,4 @@ data class GiftVouchers (
 data class NewVouchersRedeemed (
     val code: String,
     val value: String
-)
-
-data class Ticket (
-    val name: String,
-    val price: String,
-
-    @SerializedName("ticket_price_id")
-    val ticketPriceID: Long,
-
-    val quantity: Long
 )
