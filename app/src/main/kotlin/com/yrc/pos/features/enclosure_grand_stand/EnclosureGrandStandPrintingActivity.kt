@@ -9,6 +9,7 @@ import com.yrc.pos.core.TicketData
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.bus.RxBus
 import com.yrc.pos.core.bus.RxEvent
+import com.yrc.pos.features.payment.views.PaymentActivity
 import com.yrc.pos.features.voucher.views.VoucherActivity
 import kotlinx.android.synthetic.main.activity_enclosure_grand_stand_printing.*
 
@@ -282,11 +283,11 @@ class EnclosureGrandStandPrintingActivity : YrcBaseActivity() {
     }
 
     fun onCardButtonClicked(view: View) {
-        finish()
+        startActivity(Intent(this, PaymentActivity::class.java))
     }
 
     fun onCashButtonClicked(view: View) {
-        finish()
+        startActivity(Intent(this, PaymentActivity::class.java))
     }
 
     private fun updateUi() {

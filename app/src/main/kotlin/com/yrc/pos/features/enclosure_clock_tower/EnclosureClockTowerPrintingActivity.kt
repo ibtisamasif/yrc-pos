@@ -11,6 +11,7 @@ import com.yrc.pos.core.TicketPrintUtils
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.bus.RxBus
 import com.yrc.pos.core.bus.RxEvent
+import com.yrc.pos.features.payment.views.PaymentActivity
 import com.yrc.pos.features.voucher.views.VoucherActivity
 import kotlinx.android.synthetic.main.activity_enclosure_clock_tower_printing.*
 
@@ -132,11 +133,11 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
     }
 
     fun onCardButtonClicked(view: View) {
-        finish()
+        startActivity(Intent(this, PaymentActivity::class.java))
     }
 
     fun onCashButtonClicked(view: View) {
-        finish()
+        startActivity(Intent(this, PaymentActivity::class.java))
     }
 
     private fun updateUi() {
