@@ -11,6 +11,7 @@ import com.yrc.pos.core.TicketsPrinting
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.bus.RxBus
 import com.yrc.pos.core.bus.RxEvent
+import com.yrc.pos.features.payment.views.PaymentActivity
 import com.yrc.pos.features.voucher.views.VoucherActivity
 import kotlinx.android.synthetic.main.activity_enclosure_grand_stand_printing.*
 
@@ -104,24 +105,24 @@ class EnclosureGrandStandPrintingActivity : YrcBaseActivity() {
                 button_U18s.setBackgroundColor(resources.getColor(R.color.colorGrayLight))
             }
         }
-        button_cash?.setOnClickListener {
-            try {
-                for (n in 1..button1Count)
-                    TicketsPrinting.printAdultTicket(this)
-                for (n in 1..button2Count)
-                    TicketsPrinting.printOver65Ticket(this)
-                for (n in 1..button3Count)
-                    TicketsPrinting.count1822Tickets(this)
-                for (n in 1..button4Count)
-                    TicketsPrinting.countRacegoerTickets(this)
-                for (n in 1..button5Count)
-                    TicketsPrinting.countBRVoucherTickets(this)
-                for (n in 1..button6Count)
-                    TicketsPrinting.countU18STickets(this)
-            } catch (ex: PrinterDevException) {
-                ex.printStackTrace()
-            }
-        }
+//        button_cash?.setOnClickListener {
+//            try {
+//                for (n in 1..button1Count)
+//                    TicketsPrinting.printAdultTicket(this)
+//                for (n in 1..button2Count)
+//                    TicketsPrinting.printOver65Ticket(this)
+//                for (n in 1..button3Count)
+//                    TicketsPrinting.count1822Tickets(this)
+//                for (n in 1..button4Count)
+//                    TicketsPrinting.countRacegoerTickets(this)
+//                for (n in 1..button5Count)
+//                    TicketsPrinting.countBRVoucherTickets(this)
+//                for (n in 1..button6Count)
+//                    TicketsPrinting.countU18STickets(this)
+//            } catch (ex: PrinterDevException) {
+//                ex.printStackTrace()
+//            }
+//        }
         updateUi()
     }
 
@@ -284,11 +285,11 @@ class EnclosureGrandStandPrintingActivity : YrcBaseActivity() {
     }
 
     fun onCardButtonClicked(view: View) {
-        finish()
+        startActivity(Intent(this, PaymentActivity::class.java))
     }
 
     fun onCashButtonClicked(view: View) {
-        finish()
+        startActivity(Intent(this, PaymentActivity::class.java))
     }
 
     private fun updateUi() {

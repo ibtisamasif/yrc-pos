@@ -11,6 +11,7 @@ import com.yrc.pos.core.TicketsPrinting
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.bus.RxBus
 import com.yrc.pos.core.bus.RxEvent
+import com.yrc.pos.features.payment.views.PaymentActivity
 import com.yrc.pos.features.voucher.views.VoucherActivity
 import kotlinx.android.synthetic.main.activity_enclosure_clock_tower_printing.*
 
@@ -46,16 +47,16 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
             }
         }
 
-        button_cash.setOnClickListener {
-            try {
-            for (n in 1..button1Count)
-                TicketsPrinting.printAdultTicket(this)
-            for (n in 1..button2Count)
-                TicketsPrinting.printOver65Ticket(this)
-             } catch (ex: PrinterDevException) {
-                ex.printStackTrace()
-            }
-        }
+//        button_cash.setOnClickListener {
+//            try {
+//            for (n in 1..button1Count)
+//                TicketsPrinting.printAdultTicket(this)
+//            for (n in 1..button2Count)
+//                TicketsPrinting.printOver65Ticket(this)
+//             } catch (ex: PrinterDevException) {
+//                ex.printStackTrace()
+//            }
+//        }
         updateUi()
     }
 
@@ -134,11 +135,11 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
     }
 
     fun onCardButtonClicked(view: View) {
-        finish()
+        startActivity(Intent(this, PaymentActivity::class.java))
     }
 
     fun onCashButtonClicked(view: View) {
-        finish()
+        startActivity(Intent(this, PaymentActivity::class.java))
     }
 
     private fun updateUi() {
