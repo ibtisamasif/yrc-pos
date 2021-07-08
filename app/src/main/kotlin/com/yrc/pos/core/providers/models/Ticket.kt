@@ -10,5 +10,5 @@ data class Ticket(
     @SerializedName("ticket_price_id")
     val ticketPriceID: Int? = null,
 
-    val quantity: Int? = null
+    val quantity: Int? = 0
 ) : Serializable

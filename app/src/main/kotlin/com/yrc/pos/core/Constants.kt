@@ -24,6 +24,7 @@ object EndPoints {
     const val API_POST_COMPLETE_ORDER = "/api/orders/completeOrder"
 }
 
-object Prices {
-    var tickets = listOf<Ticket>()
+object TicketData {
+    var originalTickets = listOf<Ticket>()
+    var selectedTickets = listOf<Ticket>()
 }

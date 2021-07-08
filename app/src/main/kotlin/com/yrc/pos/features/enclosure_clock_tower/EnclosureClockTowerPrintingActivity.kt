@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Toast
 import com.pax.dal.exceptions.PrinterDevException
 import com.yrc.pos.R
-import com.yrc.pos.core.Prices
+import com.yrc.pos.core.TicketData
 import com.yrc.pos.core.TicketPrintUtils
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.bus.RxBus
@@ -49,9 +49,7 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
         button_cash.setOnClickListener {
             try {
                 for (n in 1..button1Count)
-                    TicketPrintUtils.printTicket(this, Prices.tickets[0].name, Prices.tickets[0].price)
-                for (n in 1..button2Count)
-                    TicketPrintUtils.printTicket(this, Prices.tickets[1].name, Prices.tickets[1].price)
+                    TicketPrintUtils.printTicket(this, TicketData.originalTickets)
             } catch (ex: PrinterDevException) {
                 ex.printStackTrace()
             }
@@ -142,8 +140,8 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
     }
 
     private fun updateUi() {
-        val adult = Prices.tickets[0].price?.toDouble()?.toInt()
-        val over65 = Prices.tickets[1].price?.toDouble()?.toInt()
+        val adult = TicketData.originalTickets[0].price?.toDouble()?.toInt()
+        val over65 = TicketData.originalTickets[1].price?.toDouble()?.toInt()
         adult?.let { adultPrice ->
             over65?.let { over65Price ->
                 if (button1Count != 0)

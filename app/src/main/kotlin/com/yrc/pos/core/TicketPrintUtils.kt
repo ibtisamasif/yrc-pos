@@ -2,7 +2,6 @@ package com.yrc.pos.core
 
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.widget.Toast
 import com.pax.dal.IDAL
 import com.pax.dal.IPrinter
 import com.pax.dal.entity.EFontTypeAscii
@@ -10,52 +9,61 @@ import com.pax.dal.entity.EFontTypeExtCode
 import com.pax.dal.exceptions.PrinterDevException
 import com.pax.neptunelite.api.NeptuneLiteUser
 import com.yrc.pos.R
+import com.yrc.pos.core.providers.models.Ticket
 import java.text.DateFormat
 import java.util.*
 
 object TicketPrintUtils {
 
-    internal fun printTicket(context: Context, ticketName: String?, ticketPrice: String?) {
-        val dal: IDAL = NeptuneLiteUser.getInstance().getDal(context)
-        val prn = dal.printer
-        prn.init()
+    internal fun printTicket(context: Context, tickets: List<Ticket>) {
+        tickets.forEach { oneTicket ->
+            oneTicket.quantity?.let {
 
-        prn.fontSet(EFontTypeAscii.FONT_24_48, EFontTypeExtCode.FONT_24_48)
-        prn.leftIndent(110)
+                for (i in 0..it) {
+
+                    val dal: IDAL = NeptuneLiteUser.getInstance().getDal(context)
+                    val prn = dal.printer
+                    prn.init()
+
+                    prn.fontSet(EFontTypeAscii.FONT_24_48, EFontTypeExtCode.FONT_24_48)
+                    prn.leftIndent(110)
 //            prn.spaceSet(50.toByte(), 50.toByte())
-        prn.printStr(ticketName, null)
-        prn.printStr("\n", null)
-        prn.leftIndent(100)
+                    prn.printStr(oneTicket.name, null)
+                    prn.printStr("\n", null)
+                    prn.leftIndent(100)
 
-        prn.printStr("£$ticketPrice", null)
-        prn.leftIndent(0)
-        prn.printStr("----------------", null)
+                    prn.printStr("£${oneTicket.price}", null)
+                    prn.leftIndent(0)
+                    prn.printStr("----------------", null)
 
-        prn.fontSet(EFontTypeAscii.FONT_16_32, EFontTypeExtCode.FONT_16_32)
-        prn.leftIndent(20)
-        prn.spaceSet(0.toByte(), 0.toByte())
-        prn.printStr(DateFormat.getDateTimeInstance().format(Date()), null)
-        prn.printStr("\n", null)
+                    prn.fontSet(EFontTypeAscii.FONT_16_32, EFontTypeExtCode.FONT_16_32)
+                    prn.leftIndent(20)
+                    prn.spaceSet(0.toByte(), 0.toByte())
+                    prn.printStr(DateFormat.getDateTimeInstance().format(Date()), null)
+                    prn.printStr("\n", null)
 
-        prn.leftIndent(20)
-        prn.printStr("Receipt only", null)
-        prn.printStr("\n", null)
+                    prn.leftIndent(20)
+                    prn.printStr("Receipt only", null)
+                    prn.printStr("\n", null)
 
-        prn.printStr("Not valid for entry", null)
-        prn.printStr("\n", null)
+                    prn.printStr("Not valid for entry", null)
+                    prn.printStr("\n", null)
 
-        prn.fontSet(EFontTypeAscii.FONT_8_16, EFontTypeExtCode.FONT_16_16)
-        prn.leftIndent(20)
-        prn.dotLine
-        prn.printStr("Retain ticket as a proof", null)
+                    prn.fontSet(EFontTypeAscii.FONT_8_16, EFontTypeExtCode.FONT_16_16)
+                    prn.leftIndent(20)
+                    prn.dotLine
+                    prn.printStr("Retain ticket as a proof", null)
 
-        prn.step(10)
-        prn.leftIndent(100)
+                    prn.step(10)
+                    prn.leftIndent(100)
 //        prn.invert(true)
-        prn.printBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.qrcode))
-        prn.step(100)
+                    prn.printBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.qrcode))
+                    prn.step(100)
 
-        startPrinting(dal)
+                    startPrinting(dal)
+                }
+            }
+        }
     }
 
     private fun startPrinting(dal: IDAL) {

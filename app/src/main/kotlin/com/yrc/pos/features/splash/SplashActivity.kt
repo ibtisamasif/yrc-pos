@@ -2,11 +2,10 @@ package com.yrc.pos.features.splash
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import com.yrc.pos.R
-import com.yrc.pos.core.Prices
+import com.yrc.pos.core.TicketData
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.enums.Enclosure
 import com.yrc.pos.core.providers.TicketModel
@@ -45,7 +44,7 @@ class SplashActivity : YrcBaseActivity() {
             }
             is TicketModel -> {
                 apiResponse.tickets?.let {
-                    Prices.tickets = apiResponse.tickets
+                    TicketData.originalTickets = apiResponse.tickets
                     apiResponse.enclosure?.let { moveToDashboardActivity(it) }
                 }
             }

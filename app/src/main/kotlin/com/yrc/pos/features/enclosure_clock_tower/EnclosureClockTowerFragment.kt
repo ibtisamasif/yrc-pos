@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.yrc.pos.R
-import com.yrc.pos.core.Prices
+import com.yrc.pos.core.TicketData
 import com.yrc.pos.core.YrcBaseFragment
 import com.yrc.pos.core.bus.RxBus
 import com.yrc.pos.core.bus.RxEvent
@@ -30,8 +30,8 @@ class EnclosureClockTowerFragment : YrcBaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        button_Adult.text = "${Prices.tickets[0].name} £ ${Prices.tickets[0].price}"
-        button_Over65.text = "${Prices.tickets[1].name} £ ${Prices.tickets[1].price}"
+        button_Adult.text = "${TicketData.originalTickets[0].name} £ ${TicketData.originalTickets[0].price}"
+        button_Over65.text = "${TicketData.originalTickets[1].name} £ ${TicketData.originalTickets[1].price}"
 
         setAdultButtonListener()
         setOver65ButtonListener()
@@ -56,8 +56,8 @@ class EnclosureClockTowerFragment : YrcBaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        val adultPrice = Prices.tickets[0].price?.toDouble()?.toInt()
-        val over65 = Prices.tickets[1].price?.toDouble()?.toInt()
+        val adultPrice = TicketData.originalTickets[0].price?.toDouble()?.toInt()
+        val over65 = TicketData.originalTickets[1].price?.toDouble()?.toInt()
         button_total.text = button1Count.plus(button2Count).toString().plus(" ")
             .plus(
                 "x Ticket £".plus(

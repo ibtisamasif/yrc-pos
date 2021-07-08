@@ -4,10 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.pax.dal.exceptions.PrinterDevException
 import com.yrc.pos.R
-import com.yrc.pos.core.Prices
-import com.yrc.pos.core.TicketPrintUtils
+import com.yrc.pos.core.TicketData
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.bus.RxBus
 import com.yrc.pos.core.bus.RxEvent
@@ -105,22 +103,22 @@ class EnclosureGrandStandPrintingActivity : YrcBaseActivity() {
             }
         }
         button_cash?.setOnClickListener {
-            try {
-                for (n in 1..button1Count)
-                    TicketPrintUtils.printTicket(this, Prices.tickets[0].name, Prices.tickets[0].price)
-                for (n in 1..button2Count)
-                    TicketPrintUtils.printTicket(this, Prices.tickets[1].name, Prices.tickets[1].price)
-                for (n in 1..button3Count)
-                    TicketPrintUtils.printTicket(this, Prices.tickets[2].name, Prices.tickets[2].price)
-                for (n in 1..button4Count)
-                    TicketPrintUtils.printTicket(this, Prices.tickets[3].name, Prices.tickets[3].price)
-                for (n in 1..button5Count)
-                    TicketPrintUtils.printTicket(this, Prices.tickets[4].name, Prices.tickets[4].price)
-                for (n in 1..button6Count)
-                    TicketPrintUtils.printTicket(this, Prices.tickets[5].name, Prices.tickets[5].price)
-            } catch (ex: PrinterDevException) {
-                ex.printStackTrace()
-            }
+//            try {
+//                for (n in 1..button1Count)
+//                    TicketPrintUtils.printTicket(this, Prices.tickets[0].name, Prices.tickets[0].price)
+//                for (n in 1..button2Count)
+//                    TicketPrintUtils.printTicket(this, Prices.tickets[1].name, Prices.tickets[1].price)
+//                for (n in 1..button3Count)
+//                    TicketPrintUtils.printTicket(this, Prices.tickets[2].name, Prices.tickets[2].price)
+//                for (n in 1..button4Count)
+//                    TicketPrintUtils.printTicket(this, Prices.tickets[3].name, Prices.tickets[3].price)
+//                for (n in 1..button5Count)
+//                    TicketPrintUtils.printTicket(this, Prices.tickets[4].name, Prices.tickets[4].price)
+//                for (n in 1..button6Count)
+//                    TicketPrintUtils.printTicket(this, Prices.tickets[5].name, Prices.tickets[5].price)
+//            } catch (ex: PrinterDevException) {
+//                ex.printStackTrace()
+//            }
         }
         updateUi()
     }
@@ -292,12 +290,12 @@ class EnclosureGrandStandPrintingActivity : YrcBaseActivity() {
     }
 
     private fun updateUi() {
-        val adult = Prices.tickets[0].price?.toDouble()?.toInt()
-        val price1822 = Prices.tickets[1].price?.toDouble()?.toInt()
-        val over65 = Prices.tickets[2].price?.toDouble()?.toInt()
-        val racegoer = Prices.tickets[3].price?.toDouble()?.toInt()
-        val brVoucher = Prices.tickets[4].price?.toDouble()?.toInt()
-        val u18s = Prices.tickets[5].price?.toDouble()?.toInt()
+        val adult = TicketData.originalTickets[0].price?.toDouble()?.toInt()
+        val price1822 = TicketData.originalTickets[1].price?.toDouble()?.toInt()
+        val over65 = TicketData.originalTickets[2].price?.toDouble()?.toInt()
+        val racegoer = TicketData.originalTickets[3].price?.toDouble()?.toInt()
+        val brVoucher = TicketData.originalTickets[4].price?.toDouble()?.toInt()
+        val u18s = TicketData.originalTickets[5].price?.toDouble()?.toInt()
         adult?.let { adultPrice ->
             price1822?.let { price1822 ->
                 over65?.let { over65Price ->

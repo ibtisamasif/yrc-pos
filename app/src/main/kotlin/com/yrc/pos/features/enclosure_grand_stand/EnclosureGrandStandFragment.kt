@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.yrc.pos.R
-import com.yrc.pos.core.Prices
+import com.yrc.pos.core.TicketData
 import com.yrc.pos.core.YrcBaseFragment
 import com.yrc.pos.core.bus.RxBus
 import com.yrc.pos.core.bus.RxEvent
@@ -36,12 +36,12 @@ class EnclosureGrandStandFragment : YrcBaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        button_Adult?.text = "${Prices.tickets[0].name} £ ${Prices.tickets[0].price}"
-        button_1822?.text = "${Prices.tickets[1].name} £ ${Prices.tickets[1].price}"
-        button_Over65?.text = "${Prices.tickets[2].name} £ ${Prices.tickets[2].price}"
-        button_racegoer?.text = "${Prices.tickets[3].name} £ ${Prices.tickets[3].price}"
-        button_BR_Voucher?.text = "${Prices.tickets[4].name} £ ${Prices.tickets[4].price}"
-        button_U18s?.text = "${Prices.tickets[5].name} £ ${Prices.tickets[5].price}"
+        button_Adult?.text = "${TicketData.originalTickets[0].name} £ ${TicketData.originalTickets[0].price}"
+        button_1822?.text = "${TicketData.originalTickets[1].name} £ ${TicketData.originalTickets[1].price}"
+        button_Over65?.text = "${TicketData.originalTickets[2].name} £ ${TicketData.originalTickets[2].price}"
+        button_racegoer?.text = "${TicketData.originalTickets[3].name} £ ${TicketData.originalTickets[3].price}"
+        button_BR_Voucher?.text = "${TicketData.originalTickets[4].name} £ ${TicketData.originalTickets[4].price}"
+        button_U18s?.text = "${TicketData.originalTickets[5].name} £ ${TicketData.originalTickets[5].price}"
 
         setAdultButtonListener()
         setOver65ButtonListener()
@@ -86,12 +86,12 @@ class EnclosureGrandStandFragment : YrcBaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        val adult = Prices.tickets[0].price?.toDouble()?.toInt()
-        val price1822 = Prices.tickets[1].price?.toDouble()?.toInt()
-        val over65 = Prices.tickets[2].price?.toDouble()?.toInt()
-        val racegoer = Prices.tickets[3].price?.toDouble()?.toInt()
-        val brVoucher = Prices.tickets[4].price?.toDouble()?.toInt()
-        val u18s = Prices.tickets[5].price?.toDouble()?.toInt()
+        val adult = TicketData.originalTickets[0].price?.toDouble()?.toInt()
+        val price1822 = TicketData.originalTickets[1].price?.toDouble()?.toInt()
+        val over65 = TicketData.originalTickets[2].price?.toDouble()?.toInt()
+        val racegoer = TicketData.originalTickets[3].price?.toDouble()?.toInt()
+        val brVoucher = TicketData.originalTickets[4].price?.toDouble()?.toInt()
+        val u18s = TicketData.originalTickets[5].price?.toDouble()?.toInt()
         adult?.let { adultPrice ->
             price1822?.let { price1822 ->
                 over65?.let { over65Price ->
