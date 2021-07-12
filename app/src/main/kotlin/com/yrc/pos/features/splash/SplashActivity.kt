@@ -6,9 +6,8 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import com.yrc.pos.R
-import com.yrc.pos.core.TicketData
+import com.yrc.pos.core.TicketVM
 import com.yrc.pos.core.YrcBaseActivity
-import com.yrc.pos.core.enums.Enclosure
 import com.yrc.pos.core.providers.TicketModel
 import com.yrc.pos.core.services.APiManager
 import com.yrc.pos.core.services.YrcBaseApiResponse
@@ -45,9 +44,9 @@ class SplashActivity : YrcBaseActivity() {
             }
             is TicketModel -> {
                 apiResponse.tickets?.let {
-                    TicketData.originalTickets = apiResponse.tickets
+                    TicketVM.originalTickets = apiResponse.tickets
                     apiResponse.enclosure?.let {
-                        TicketData.enclosure = it
+                        TicketVM.enclosure = it
                         moveToDashboardActivity()
                     }
                 }

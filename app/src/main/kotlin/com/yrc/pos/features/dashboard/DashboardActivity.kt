@@ -8,7 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.yrc.pos.R
-import com.yrc.pos.core.TicketData
+import com.yrc.pos.core.TicketVM
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.enums.Enclosure
 import com.yrc.pos.core.views.YrcTextView
@@ -36,13 +36,13 @@ class DashboardActivity : YrcBaseActivity() {
     }
 
     private fun setEnclosure() {
-        when (TicketData.enclosure) {
+        when (TicketVM.enclosure) {
             Enclosure.grandstand -> {
-                TicketData.enclosure = Enclosure.grandstand
+                TicketVM.enclosure = Enclosure.grandstand
                 showGrandStand()
             }
             Enclosure.clocktower -> {
-                TicketData.enclosure = Enclosure.clocktower
+                TicketVM.enclosure = Enclosure.clocktower
                 showClockTower()
             }
             else -> {

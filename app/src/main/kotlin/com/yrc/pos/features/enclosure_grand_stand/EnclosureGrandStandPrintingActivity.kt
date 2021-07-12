@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.yrc.pos.R
-import com.yrc.pos.core.TicketData
+import com.yrc.pos.core.TicketVM
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.bus.RxBus
 import com.yrc.pos.core.bus.RxEvent
 import com.yrc.pos.features.payment.views.PaymentActivity
-import com.yrc.pos.features.voucher.views.VoucherActivity
+import com.yrc.pos.features.voucher.views.NewVoucherActivity
 import kotlinx.android.synthetic.main.activity_enclosure_grand_stand_printing.*
 
 
@@ -279,7 +279,7 @@ class EnclosureGrandStandPrintingActivity : YrcBaseActivity() {
     }
 
     fun onGVNewButtonClicked(view: View) {
-        startActivity(Intent(this, VoucherActivity::class.java))
+        startActivity(Intent(this, NewVoucherActivity::class.java))
     }
 
     fun onCardButtonClicked(view: View) {
@@ -291,12 +291,12 @@ class EnclosureGrandStandPrintingActivity : YrcBaseActivity() {
     }
 
     private fun updateUi() {
-        val adult = TicketData.originalTickets[0].price?.toDouble()?.toInt()
-        val price1822 = TicketData.originalTickets[1].price?.toDouble()?.toInt()
-        val over65 = TicketData.originalTickets[2].price?.toDouble()?.toInt()
-        val racegoer = TicketData.originalTickets[3].price?.toDouble()?.toInt()
-        val brVoucher = TicketData.originalTickets[4].price?.toDouble()?.toInt()
-        val u18s = TicketData.originalTickets[5].price?.toDouble()?.toInt()
+        val adult = TicketVM.originalTickets[0].price?.toDouble()?.toInt()
+        val price1822 = TicketVM.originalTickets[1].price?.toDouble()?.toInt()
+        val over65 = TicketVM.originalTickets[2].price?.toDouble()?.toInt()
+        val racegoer = TicketVM.originalTickets[3].price?.toDouble()?.toInt()
+        val brVoucher = TicketVM.originalTickets[4].price?.toDouble()?.toInt()
+        val u18s = TicketVM.originalTickets[5].price?.toDouble()?.toInt()
         adult?.let { adultPrice ->
             price1822?.let { price1822 ->
                 over65?.let { over65Price ->

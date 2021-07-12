@@ -1,6 +1,7 @@
 package com.yrc.pos.features.payment.payment_service
 
 import com.google.gson.annotations.SerializedName
+import com.yrc.pos.core.PaymentMethod
 import com.yrc.pos.core.providers.models.Ticket
 
 
@@ -11,7 +12,7 @@ data class RegisterOrderRequest (
     val enclosure: String,
 
     @SerializedName("payment_method")
-    val paymentMethod: String,
+    val paymentMethod: PaymentMethod,
 
     @SerializedName("order_sub_total")
     val orderSubTotal: String,
