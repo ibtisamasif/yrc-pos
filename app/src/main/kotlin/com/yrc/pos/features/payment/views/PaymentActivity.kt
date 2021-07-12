@@ -17,9 +17,11 @@ class PaymentActivity : YrcBaseActivity() {
     }
 
     private fun setListeners() {
+
         buttonReturnToBasket.setOnClickListener {
             finish()
         }
+
         buttonPayNow.setOnClickListener {
 //            TicketPrintUtils.printTicket(this, )
             startActivity(Intent(this, OrderSuccessfulActivity::class.java))

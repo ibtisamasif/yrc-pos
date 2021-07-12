@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class Ticket(
-    val name: String? = null,
-    val price: String? = null,
+    var name: String? = null,
+    var price: String? = null,
 
     @SerializedName("ticket_price_id")
-    val ticketPriceID: Int? = null,
+    var ticketPriceID: Int? = null,
 
-    val quantity: Int? = 0
+    var quantity: Int = 1
 ) : Serializable

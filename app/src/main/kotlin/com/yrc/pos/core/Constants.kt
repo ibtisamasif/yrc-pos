@@ -1,6 +1,7 @@
 package com.yrc.pos.core
 
 import com.yrc.pos.core.providers.models.Ticket
+import java.util.*
 
 
 object Constants {
@@ -22,9 +23,4 @@ object EndPoints {
     const val API_POST_VALIDATE_NEW_VOUCHER = "/api/vouchers/validateNewVoucher"
     const val API_POST_REGISTER_ORDER = "/api/orders/registerOrder"
     const val API_POST_COMPLETE_ORDER = "/api/orders/completeOrder"
-}
-
-object TicketData {
-    var originalTickets = listOf<Ticket>()
-    var selectedTickets = listOf<Ticket>()
 }

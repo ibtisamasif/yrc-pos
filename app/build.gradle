@@ -6,7 +6,7 @@ android {
     compileSdkVersion 30
     defaultConfig {
         applicationId "com.yrc.pos"
-        minSdkVersion 19
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 4
         versionName "1.0.3"

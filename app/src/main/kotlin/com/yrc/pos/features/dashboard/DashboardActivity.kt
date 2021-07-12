@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.yrc.pos.R
+import com.yrc.pos.core.TicketData
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.enums.Enclosure
 import com.yrc.pos.core.views.YrcTextView
@@ -35,16 +36,16 @@ class DashboardActivity : YrcBaseActivity() {
     }
 
     private fun setEnclosure() {
-        intent.extras?.let {
-            when (it.getSerializable(ENCLOSURE) as Enclosure?) {
-                Enclosure.grandstand -> {
-                    showGrandStand()
-                }
-                Enclosure.clocktower -> {
-                    showClockTower()
-                }
-                else -> {
-                }
+        when (TicketData.enclosure) {
+            Enclosure.grandstand -> {
+                TicketData.enclosure = Enclosure.grandstand
+                showGrandStand()
+            }
+            Enclosure.clocktower -> {
+                TicketData.enclosure = Enclosure.clocktower
+                showClockTower()
+            }
+            else -> {
             }
         }
     }
@@ -71,9 +72,5 @@ class DashboardActivity : YrcBaseActivity() {
         if (navGraph != null) {
             navController?.graph = navGraph
         }
-    }
-
-    companion object {
-        const val ENCLOSURE = "enclosure"
     }
 }

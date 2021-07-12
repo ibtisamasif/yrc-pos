@@ -46,15 +46,17 @@ class SplashActivity : YrcBaseActivity() {
             is TicketModel -> {
                 apiResponse.tickets?.let {
                     TicketData.originalTickets = apiResponse.tickets
-                    apiResponse.enclosure?.let { moveToDashboardActivity(it) }
+                    apiResponse.enclosure?.let {
+                        TicketData.enclosure = it
+                        moveToDashboardActivity()
+                    }
                 }
             }
         }
     }
 
-    private fun moveToDashboardActivity(enclosure: Enclosure) {
+    private fun moveToDashboardActivity() {
         val dashboardIntent = Intent(this, DashboardActivity::class.java)
-        dashboardIntent.putExtra(DashboardActivity.ENCLOSURE, enclosure)
         startActivity(dashboardIntent)
         finish()
     }

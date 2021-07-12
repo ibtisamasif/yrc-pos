@@ -6,7 +6,7 @@ import com.yrc.pos.core.providers.models.Ticket
 import com.yrc.pos.core.services.YrcBaseApiResponse
 
 data class TicketModel(
-    val tickets: List<Ticket>? = null,
+    val tickets: ArrayList<Ticket>? = null,
     @SerializedName("meet_day_name")
     val meetDayName: String? = null,
     @SerializedName("meet_day_date")
