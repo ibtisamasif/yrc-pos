@@ -69,4 +69,8 @@ object TicketVM {
             null
         }
     }
+
+    fun clear(){
+        selectedTickets.clear()
+    }
 }

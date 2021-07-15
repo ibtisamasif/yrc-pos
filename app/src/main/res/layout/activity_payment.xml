@@ -45,6 +45,20 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewPaymentMethodLabel" />
 
     <TextView
+        android:id="@+id/textViewSubtotalAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewSubtotalLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewSubtotalLabel"
+        tools:text="£58.00" />
+
+    <TextView
         android:id="@+id/textViewVoucherAppliedLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,6 +69,20 @@
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/textViewSubtotalLabel"
         app:layout_constraintTop_toBottomOf="@+id/textViewSubtotalLabel" />
+
+    <TextView
+        android:id="@+id/textViewVouchersAppliedAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewVoucherAppliedLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewVoucherAppliedLabel"
+        tools:text="-£25.00" />
 
     <TextView
         android:id="@+id/textViewTotalLabel"
@@ -68,34 +96,6 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textViewVoucherAppliedLabel"
         app:layout_constraintTop_toBottomOf="@+id/textViewVoucherAppliedLabel" />
-
-    <TextView
-        android:id="@+id/textViewSubtotalAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:fontFamily="@font/roboto"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewSubtotalLabel"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@+id/textViewSubtotalLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="£58.00" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:fontFamily="@font/roboto"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewVoucherAppliedLabel"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@+id/textViewVoucherAppliedLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="-£25.00" />
 
     <TextView
         android:id="@+id/textViewTotalAmount"

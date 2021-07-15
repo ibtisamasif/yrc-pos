@@ -9,7 +9,10 @@ import com.yrc.pos.core.PaymentMethod
 import com.yrc.pos.core.PaymentVM
 import com.yrc.pos.core.TicketVM
 import com.yrc.pos.core.YrcBaseActivity
+import com.yrc.pos.features.payment.payment_service.GiftVouchers
 import com.yrc.pos.features.payment.views.PaymentActivity
+import com.yrc.pos.features.voucher.viewmodels.NewVouchersVM
+import com.yrc.pos.features.voucher.viewmodels.OldVoucherVM
 import com.yrc.pos.features.voucher.views.NewVoucherActivity
 import com.yrc.pos.features.voucher.views.OldVoucherActivity
 import kotlinx.android.synthetic.main.activity_enclosure_clock_tower_printing.*
@@ -104,6 +107,10 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
 
         button_cash.setOnClickListener {
             PaymentVM.paymentMethod = PaymentMethod.cash
+            PaymentVM.orderSubTotal = TicketVM.getSubtotal()
+            PaymentVM.giftVouchers = GiftVouchers(OldVoucherVM.oldVoucherRedeemedTotal.toString(), NewVouchersVM.newVouchersRedeemedTotal.toString(), NewVouchersVM.newVouchersRedeemed)
+            PaymentVM.tickets = TicketVM.selectedTickets
+            PaymentVM.orderTotal = (TicketVM.getSubtotal() - (OldVoucherVM.oldVoucherRedeemedTotal + NewVouchersVM.newVouchersRedeemedTotal))
             startActivity(Intent(this, PaymentActivity::class.java))
         }
     }

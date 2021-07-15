@@ -7,6 +7,7 @@ import com.yrc.pos.core.TicketVM
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.services.APiManager
 import com.yrc.pos.core.services.YrcBaseApiResponse
+import com.yrc.pos.features.voucher.viewmodels.OldVoucherVM
 import com.yrc.pos.features.voucher.voucher_service.ValidateOldVoucherRequest
 import com.yrc.pos.features.voucher.voucher_service.ValidateOldVoucherResponse
 import kotlinx.android.synthetic.main.activity_old_voucher.*
@@ -26,7 +27,8 @@ class OldVoucherActivity : YrcBaseActivity() {
 
     private fun initViews() {
         textViewSubtotalAmount.text = "£${TicketVM.getSubtotal()}"
-        textViewTotalAmount.text = "£${TicketVM.getSubtotal()}"
+        textViewVouchersAppliedAmount.text = "£${OldVoucherVM.oldVoucherRedeemedTotal}"
+        textViewTotalAmount.text = "£${TicketVM.getSubtotal() - OldVoucherVM.oldVoucherRedeemedTotal}"
     }
 
     private fun setListeners() {
@@ -50,8 +52,10 @@ class OldVoucherActivity : YrcBaseActivity() {
         super.onApiSuccess(apiResponse)
         when (apiResponse) {
             is ValidateOldVoucherResponse -> {
-                textViewVouchersAppliedAmount.text = "£${editTextVoucherField.text.toString().toDouble()}"
+                OldVoucherVM.oldVoucherRedeemedTotal = editTextVoucherField.text.toString().toDouble()
+                textViewVouchersAppliedAmount.text = "£${OldVoucherVM.oldVoucherRedeemedTotal}"
                 textViewTotalAmount.text = "£${apiResponse.newOrderTotal?.toDouble()}"
+                editTextVoucherField.setText("")
             }
         }
     }
