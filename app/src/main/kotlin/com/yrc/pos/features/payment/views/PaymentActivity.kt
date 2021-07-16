@@ -70,7 +70,9 @@ class PaymentActivity : YrcBaseActivity() {
                 apiResponse.orderId?.let { APiManager.postCompleteOrder(this, this, CompleteOrderRequest(Build.SERIAL, it, "PAID")) }
             }
             is CompleteOrderResponse -> {
-                startActivity(Intent(this, OrderSuccessfulActivity::class.java))
+                val intent = Intent(this, OrderSuccessfulActivity::class.java)
+                intent.putExtra(OrderSuccessfulActivity.ORDER_ID, apiResponse.orderId)
+                startActivity(intent)
             }
         }
     }

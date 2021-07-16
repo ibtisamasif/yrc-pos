@@ -14,9 +14,16 @@ class OrderSuccessfulActivity : YrcBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_successful)
 
+        initViews()
         setListeners()
 
         TicketPrintUtils.printTicket(this, TicketVM.selectedTickets)
+    }
+
+    private fun initViews() {
+        intent.extras?.getString(ORDER_ID)?.let {
+            textView.text = "Order Successful : #$it"
+        }
     }
 
     private fun setListeners() {
@@ -31,5 +38,9 @@ class OrderSuccessfulActivity : YrcBaseActivity() {
             finish()
         }
 
+    }
+
+    companion object {
+        const val ORDER_ID = "order_id"
     }
 }

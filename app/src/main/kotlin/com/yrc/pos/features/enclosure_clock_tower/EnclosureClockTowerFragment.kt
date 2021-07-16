@@ -22,8 +22,11 @@ class EnclosureClockTowerFragment : YrcBaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        button_Adult.text = "${TicketVM.originalTickets[0].name} £ ${TicketVM.originalTickets[0].price}"
-        button_Over65.text = "${TicketVM.originalTickets[1].name} £ ${TicketVM.originalTickets[1].price}"
+        try {
+            button_Adult.text = "${TicketVM.originalTickets[0].name} £ ${TicketVM.originalTickets[0].price}"
+            button_Over65.text = "${TicketVM.originalTickets[1].name} £ ${TicketVM.originalTickets[1].price}"
+        } catch (e: Exception) {
+        }
 
         setAdultButtonListener()
         setOver65ButtonListener()
