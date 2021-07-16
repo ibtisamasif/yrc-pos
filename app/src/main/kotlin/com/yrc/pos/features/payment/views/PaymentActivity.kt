@@ -67,7 +67,7 @@ class PaymentActivity : YrcBaseActivity() {
 
         when (apiResponse) {
             is RegisterOrderResponse -> {
-                APiManager.postCompleteOrder(this, this, CompleteOrderRequest(Build.SERIAL, "14", "PAID"))
+                apiResponse.orderId?.let { APiManager.postCompleteOrder(this, this, CompleteOrderRequest(Build.SERIAL, it, "PAID")) }
             }
             is CompleteOrderResponse -> {
                 startActivity(Intent(this, OrderSuccessfulActivity::class.java))

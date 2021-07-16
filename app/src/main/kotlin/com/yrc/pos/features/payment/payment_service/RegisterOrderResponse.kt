@@ -5,5 +5,5 @@ import com.yrc.pos.core.services.YrcBaseApiResponse
 
 class RegisterOrderResponse(
     @SerializedName("order_id")
-    val orderId: Int
+    val orderId: Int?
 ) : YrcBaseApiResponse()

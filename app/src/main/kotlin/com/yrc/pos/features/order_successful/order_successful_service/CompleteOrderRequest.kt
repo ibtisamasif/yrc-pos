@@ -7,7 +7,7 @@ data class CompleteOrderRequest (
     val deviceID: String,
 
     @SerializedName("order_id")
-    val orderID: String,
+    val orderID: Int,
 
     val status: String
 )
