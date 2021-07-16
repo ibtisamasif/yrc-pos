@@ -21,7 +21,7 @@ class OrderSuccessfulActivity : YrcBaseActivity() {
     }
 
     private fun initViews() {
-        intent.extras?.getString(ORDER_ID)?.let {
+        intent.extras?.getInt(ORDER_ID)?.let {
             textView.text = "Order Successful : #$it"
         }
     }
