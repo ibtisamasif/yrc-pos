@@ -19,7 +19,7 @@ object TicketPrintUtils {
         tickets.forEach { oneTicket ->
             oneTicket.quantity?.let {
 
-                for (i in 0..it) {
+                for (i in 1..it) {
 
                     val dal: IDAL = NeptuneLiteUser.getInstance().getDal(context)
                     val prn = dal.printer

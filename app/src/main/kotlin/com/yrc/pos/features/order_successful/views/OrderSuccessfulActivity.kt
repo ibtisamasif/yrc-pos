@@ -13,17 +13,28 @@ class OrderSuccessfulActivity : YrcBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_successful)
-
-        initViews()
         setListeners()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        updateUI()
         TicketPrintUtils.printTicket(this, TicketVM.selectedTickets)
     }
 
-    private fun initViews() {
+    private fun updateUI() {
         intent.extras?.getInt(ORDER_ID)?.let {
             textView.text = "Order Successful : #$it"
         }
+        updatePaymentDetailSection()
+    }
+
+    private fun updatePaymentDetailSection() {
+        textViewPaymentMethodValue.text = PaymentVM.paymentMethod.name.toUpperCase()
+        textViewSubtotalAmount.text = "£${PaymentVM.orderSubTotal}"
+        textViewVouchersAppliedAmount.text = "£${PaymentVM.giftVouchers.oldVouchersRedeemedTotal.toDouble() + PaymentVM.giftVouchers.newVouchersRedeemedTotal.toDouble()}"
+        textViewTotalAmount.text = "£${(PaymentVM.orderSubTotal - (PaymentVM.giftVouchers.oldVouchersRedeemedTotal.toDouble() + PaymentVM.giftVouchers.newVouchersRedeemedTotal.toDouble()))}"
+
     }
 
     private fun setListeners() {

@@ -36,12 +36,12 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/textViewPaymentMethodValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="@font/roboto"
-        android:text="CARD"
+        tools:text="CARD"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="24sp"
@@ -87,12 +87,12 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textViewSubtotalAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="64dp"
         android:fontFamily="@font/roboto"
-        android:text=" £58.00"
+        tools:text=" £58.00"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -101,12 +101,12 @@
         app:layout_constraintTop_toTopOf="@+id/textView7" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textViewVouchersAppliedAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="64dp"
         android:fontFamily="@font/roboto"
-        android:text="-£25.00"
+        tools:text="-£25.00"
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -115,12 +115,12 @@
         app:layout_constraintTop_toTopOf="@+id/textView6" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewTotalAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="64dp"
         android:fontFamily="@font/roboto"
-        android:text=" £33.00"
+        tools:text=" £33.00"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"

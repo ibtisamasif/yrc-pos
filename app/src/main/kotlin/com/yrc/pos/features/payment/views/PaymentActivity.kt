@@ -19,24 +19,23 @@ import kotlinx.android.synthetic.main.activity_payment.*
 
 class PaymentActivity : YrcBaseActivity() {
 
-    var vouchersApplied = PaymentVM.giftVouchers.oldVouchersRedeemedTotal.toDouble() + PaymentVM.giftVouchers.newVouchersRedeemedTotal.toDouble()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
-        setUp()
-        initViews()
         setListeners()
     }
 
-    private fun setUp() {
+    override fun onResume() {
+        super.onResume()
+        updatePaymentDetailSection()
     }
 
-    private fun initViews() {
+    private fun updatePaymentDetailSection() {
         textViewPaymentMethodValue.text = PaymentVM.paymentMethod.name.toUpperCase()
         textViewSubtotalAmount.text = "£${PaymentVM.orderSubTotal}"
-        textViewVouchersAppliedAmount.text = "£${vouchersApplied}"
-        textViewTotalAmount.text = "£${(PaymentVM.orderSubTotal - vouchersApplied)}"
+        textViewVouchersAppliedAmount.text = "£${PaymentVM.giftVouchers.oldVouchersRedeemedTotal.toDouble() + PaymentVM.giftVouchers.newVouchersRedeemedTotal.toDouble()}"
+        textViewTotalAmount.text = "£${(PaymentVM.orderSubTotal - (PaymentVM.giftVouchers.oldVouchersRedeemedTotal.toDouble() + PaymentVM.giftVouchers.newVouchersRedeemedTotal.toDouble()))}"
+
     }
 
     private fun setListeners() {
