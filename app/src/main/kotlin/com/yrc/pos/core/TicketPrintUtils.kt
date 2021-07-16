@@ -1,15 +1,18 @@
 package com.yrc.pos.core
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import androidmads.library.qrgenearator.QRGContents
+import androidmads.library.qrgenearator.QRGEncoder
 import com.pax.dal.IDAL
 import com.pax.dal.IPrinter
 import com.pax.dal.entity.EFontTypeAscii
 import com.pax.dal.entity.EFontTypeExtCode
 import com.pax.dal.exceptions.PrinterDevException
 import com.pax.neptunelite.api.NeptuneLiteUser
-import com.yrc.pos.R
 import com.yrc.pos.core.providers.models.Ticket
+import java.io.ByteArrayOutputStream
 import java.text.DateFormat
 import java.util.*
 
@@ -18,13 +21,10 @@ object TicketPrintUtils {
     internal fun printTicket(context: Context, tickets: List<Ticket>) {
         tickets.forEach { oneTicket ->
             oneTicket.quantity?.let {
-
                 for (i in 1..it) {
-
                     val dal: IDAL = NeptuneLiteUser.getInstance().getDal(context)
                     val prn = dal.printer
                     prn.init()
-
                     prn.fontSet(EFontTypeAscii.FONT_24_48, EFontTypeExtCode.FONT_24_48)
                     prn.leftIndent(110)
 //            prn.spaceSet(50.toByte(), 50.toByte())
@@ -57,13 +57,34 @@ object TicketPrintUtils {
                     prn.step(10)
                     prn.leftIndent(100)
 //        prn.invert(true)
-                    prn.printBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.qrcode))
+                    prn.printBitmap(bitmapToPng(oneTicket.qrCode))
                     prn.step(100)
-
                     startPrinting(dal)
                 }
             }
         }
+    }
+
+    private fun bitmapToPng(qrCode: String?): Bitmap {
+        val qrgEncoder = QRGEncoder(qrCode, null, QRGContents.Type.TEXT, 140)
+        lateinit var bitmap: Bitmap
+        try {
+            bitmap = qrgEncoder.bitmap
+            return codec(bitmap, Bitmap.CompressFormat.PNG, 100)
+        } catch (e: PrinterDevException) {
+            e.printStackTrace()
+        }
+        return bitmap
+    }
+
+    private fun codec(
+        src: Bitmap, format: Bitmap.CompressFormat,
+        quality: Int
+    ): Bitmap {
+        val os = ByteArrayOutputStream()
+        src.compress(format, quality, os)
+        val array: ByteArray = os.toByteArray()
+        return BitmapFactory.decodeByteArray(array, 0, array.size)
     }
 
     private fun startPrinting(dal: IDAL) {
