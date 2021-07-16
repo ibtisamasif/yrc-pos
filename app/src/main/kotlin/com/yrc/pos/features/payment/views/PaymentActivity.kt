@@ -1,12 +1,12 @@
 package com.yrc.pos.features.payment.views
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import com.yrc.pos.R
 import com.yrc.pos.core.PaymentVM
 import com.yrc.pos.core.TicketVM
+import com.yrc.pos.core.TicketVM.deviceSerial
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.services.APiManager
 import com.yrc.pos.core.services.YrcBaseApiResponse
@@ -33,8 +33,10 @@ class PaymentActivity : YrcBaseActivity() {
     private fun updatePaymentDetailSection() {
         textViewPaymentMethodValue.text = PaymentVM.paymentMethod.name.toUpperCase()
         textViewSubtotalAmount.text = "£${PaymentVM.orderSubTotal}"
-        textViewVouchersAppliedAmount.text = "£${PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal}"
-        textViewTotalAmount.text = "£${(PaymentVM.orderSubTotal - (PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal.toDouble()))}"
+        textViewVouchersAppliedAmount.text =
+            "£${PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal}"
+        textViewTotalAmount.text =
+            "£${(PaymentVM.orderSubTotal - (PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal.toDouble()))}"
 
     }
 
@@ -54,7 +56,7 @@ class PaymentActivity : YrcBaseActivity() {
 
     private fun getRegisterOrderRequest(): RegisterOrderRequest {
         return RegisterOrderRequest(
-            Build.SERIAL,
+            deviceSerial,
             TicketVM.enclosure.name,
             PaymentVM.paymentMethod,
             PaymentVM.orderSubTotal.toString(),
@@ -69,7 +71,13 @@ class PaymentActivity : YrcBaseActivity() {
 
         when (apiResponse) {
             is RegisterOrderResponse -> {
-                apiResponse.orderId?.let { APiManager.postCompleteOrder(this, this, CompleteOrderRequest(Build.SERIAL, it, "PAID")) }
+                apiResponse.orderId?.let {
+                    APiManager.postCompleteOrder(
+                        this,
+                        this,
+                        CompleteOrderRequest(deviceSerial, it, "PAID")
+                    )
+                }
             }
             is CompleteOrderResponse -> {
                 val intent = Intent(this, OrderSuccessfulActivity::class.java)

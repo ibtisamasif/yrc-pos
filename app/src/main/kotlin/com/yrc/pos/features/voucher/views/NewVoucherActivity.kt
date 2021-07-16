@@ -1,9 +1,9 @@
 package com.yrc.pos.features.voucher.views
 
-import android.os.Build
 import android.os.Bundle
 import com.yrc.pos.R
 import com.yrc.pos.core.TicketVM
+import com.yrc.pos.core.TicketVM.deviceSerial
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.services.APiManager
 import com.yrc.pos.core.services.YrcBaseApiResponse
@@ -33,7 +33,16 @@ class NewVoucherActivity : YrcBaseActivity() {
 
         buttonApplyNewVoucher.setOnClickListener {
             val orderTotal = TicketVM.getSubtotal()
-            APiManager.postValidateNewVoucher(this, this, ValidateNewVoucherRequest(Build.SERIAL, editTextVoucherCodeField.text.toString(), editTextVoucherPinField.text.toString(), orderTotal.toString()))
+            APiManager.postValidateNewVoucher(
+                this,
+                this,
+                ValidateNewVoucherRequest(
+                    deviceSerial,
+                    editTextVoucherCodeField.text.toString(),
+                    editTextVoucherPinField.text.toString(),
+                    orderTotal.toString()
+                )
+            )
         }
 
         buttonClearVouchers.setOnClickListener {

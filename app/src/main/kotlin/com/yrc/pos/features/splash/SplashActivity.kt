@@ -2,11 +2,11 @@ package com.yrc.pos.features.splash
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import com.yrc.pos.R
 import com.yrc.pos.core.TicketVM
+import com.yrc.pos.core.TicketVM.deviceSerial
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.providers.TicketModel
 import com.yrc.pos.core.services.APiManager
@@ -31,7 +31,7 @@ class SplashActivity : YrcBaseActivity() {
 
     private val mRunnable: Runnable = Runnable {
         if (!isFinishing) {
-            APiManager.loginApi(this, this, LoginRequest(Build.SERIAL))
+            APiManager.loginApi(this, this, LoginRequest(deviceSerial))
         }
     }
 
@@ -40,7 +40,9 @@ class SplashActivity : YrcBaseActivity() {
         super.onApiSuccess(apiResponse)
         when (apiResponse) {
             is LoginResponse -> {
-                apiResponse.enclosure?.let { APiManager.getTicketInfo(this, this, it, Build.SERIAL) }
+                apiResponse.enclosure?.let {
+                    APiManager.getTicketInfo(this, this, it, deviceSerial)
+                }
             }
             is TicketModel -> {
                 apiResponse.tickets?.let {

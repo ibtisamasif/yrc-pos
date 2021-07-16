@@ -1,28 +1,32 @@
 package com.yrc.pos.core
 
+import android.os.Build
 import com.yrc.pos.core.enums.Enclosure
 import com.yrc.pos.core.providers.models.Ticket
 import java.util.*
 
 object TicketVM {
+    var deviceSerial = "0822163315" // "0822163315"
     var enclosure: Enclosure = Enclosure.none
     var originalTickets = arrayListOf<Ticket>()
     var selectedTickets = arrayListOf<Ticket>()
 
-    fun getTotalText() : String {
+    fun getTotalText(): String {
         var ticket1Quantity = 0
         var ticket2Quantity = 0
         var ticket1Price = 0
         var ticket2Price = 0
 
-        val matchingObjectInSelectedTicketList1: Optional<Ticket> = selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(33) == true }.findFirst()
+        val matchingObjectInSelectedTicketList1: Optional<Ticket> =
+            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(33) == true }.findFirst()
         if (matchingObjectInSelectedTicketList1.isPresent) {
             val ticket1 = matchingObjectInSelectedTicketList1.get()
             ticket1Quantity = ticket1.quantity!!
             ticket1Price = ticket1.price?.toDouble()?.toInt()!!
         }
 
-        val matchingObjectInSelectedTicketList2: Optional<Ticket> = selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(34) == true }.findFirst()
+        val matchingObjectInSelectedTicketList2: Optional<Ticket> =
+            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(34) == true }.findFirst()
         if (matchingObjectInSelectedTicketList2.isPresent) {
             val ticket2 = matchingObjectInSelectedTicketList2.get()
             ticket2Quantity = ticket2.quantity!!
@@ -33,7 +37,8 @@ object TicketVM {
             .plus(
                 "x Ticket £".plus(" ")
                     .plus(
-                        ticket1Quantity.times(ticket1Price).plus(ticket2Quantity.times(ticket2Price))
+                        ticket1Quantity.times(ticket1Price)
+                            .plus(ticket2Quantity.times(ticket2Price))
                     )
             )
     }
@@ -44,25 +49,30 @@ object TicketVM {
         var ticket1Price = 0
         var ticket2Price = 0
 
-        val matchingObjectInSelectedTicketList1: Optional<Ticket> = selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(33) == true }.findFirst()
+        val matchingObjectInSelectedTicketList1: Optional<Ticket> =
+            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(33) == true }.findFirst()
         if (matchingObjectInSelectedTicketList1.isPresent) {
             val ticket1 = matchingObjectInSelectedTicketList1.get()
             ticket1Quantity = ticket1.quantity!!
             ticket1Price = ticket1.price?.toDouble()?.toInt()!!
         }
 
-        val matchingObjectInSelectedTicketList2: Optional<Ticket> = selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(34) == true }.findFirst()
+        val matchingObjectInSelectedTicketList2: Optional<Ticket> =
+            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(34) == true }.findFirst()
         if (matchingObjectInSelectedTicketList2.isPresent) {
             val ticket2 = matchingObjectInSelectedTicketList2.get()
             ticket2Quantity = ticket2.quantity!!
             ticket2Price = ticket2.price?.toDouble()?.toInt()!!
         }
 
-        return ticket1Quantity.times(ticket1Price).plus(ticket2Quantity.times(ticket2Price)).toDouble()
+        return ticket1Quantity.times(ticket1Price).plus(ticket2Quantity.times(ticket2Price))
+            .toDouble()
     }
 
-    fun getTicketByTicketPriceIdFromSelectedTicketList(ticketPriceID: Int) : Ticket? {
-        val matchingObjectInSelectedTicketList: Optional<Ticket> = selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(ticketPriceID) == true }.findFirst()
+    fun getTicketByTicketPriceIdFromSelectedTicketList(ticketPriceID: Int): Ticket? {
+        val matchingObjectInSelectedTicketList: Optional<Ticket> =
+            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(ticketPriceID) == true }
+                .findFirst()
         return if (matchingObjectInSelectedTicketList.isPresent) {
             matchingObjectInSelectedTicketList.get()
         } else {
@@ -70,7 +80,7 @@ object TicketVM {
         }
     }
 
-    fun clear(){
+    fun clear() {
         selectedTickets.clear()
     }
 }

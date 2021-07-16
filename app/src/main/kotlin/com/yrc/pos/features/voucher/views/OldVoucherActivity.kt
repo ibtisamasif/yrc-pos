@@ -1,9 +1,9 @@
 package com.yrc.pos.features.voucher.views
 
-import android.os.Build
 import android.os.Bundle
 import com.yrc.pos.R
 import com.yrc.pos.core.TicketVM
+import com.yrc.pos.core.TicketVM.deviceSerial
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.services.APiManager
 import com.yrc.pos.core.services.YrcBaseApiResponse
@@ -28,14 +28,23 @@ class OldVoucherActivity : YrcBaseActivity() {
     private fun initViews() {
         textViewSubtotalAmount.text = "£${TicketVM.getSubtotal()}"
         textViewVouchersAppliedAmount.text = "£${OldVoucherVM.oldVoucherRedeemedTotal}"
-        textViewTotalAmount.text = "£${TicketVM.getSubtotal() - OldVoucherVM.oldVoucherRedeemedTotal}"
+        textViewTotalAmount.text =
+            "£${TicketVM.getSubtotal() - OldVoucherVM.oldVoucherRedeemedTotal}"
     }
 
     private fun setListeners() {
 
         buttonApplyOldVoucher.setOnClickListener {
             val orderTotal = TicketVM.getSubtotal()
-            APiManager.postValidateOldVoucher(this, this, ValidateOldVoucherRequest(Build.SERIAL, editTextVoucherField.text.toString(), orderTotal.toString()))
+            APiManager.postValidateOldVoucher(
+                this,
+                this,
+                ValidateOldVoucherRequest(
+                    deviceSerial,
+                    editTextVoucherField.text.toString(),
+                    orderTotal.toString()
+                )
+            )
         }
 
         buttonClearVouchers.setOnClickListener {
@@ -52,7 +61,8 @@ class OldVoucherActivity : YrcBaseActivity() {
         super.onApiSuccess(apiResponse)
         when (apiResponse) {
             is ValidateOldVoucherResponse -> {
-                OldVoucherVM.oldVoucherRedeemedTotal = editTextVoucherField.text.toString().toDouble()
+                OldVoucherVM.oldVoucherRedeemedTotal =
+                    editTextVoucherField.text.toString().toDouble()
                 textViewVouchersAppliedAmount.text = "£${OldVoucherVM.oldVoucherRedeemedTotal}"
                 textViewTotalAmount.text = "£${apiResponse.newOrderTotal?.toDouble()}"
                 editTextVoucherField.setText("")
