@@ -28,10 +28,10 @@ data class RegisterOrderRequest (
 
 data class GiftVouchers (
     @SerializedName("old_vouchers_redeemed_total")
-    val oldVouchersRedeemedTotal: String,
+    val oldVouchersRedeemedTotal: Double,
 
     @SerializedName("new_vouchers_redeemed_total")
-    val newVouchersRedeemedTotal: String,
+    val newVouchersRedeemedTotal: Double,
 
     @SerializedName("new_vouchers_redeemed")
     val newVouchersRedeemed: List<NewVouchersRedeemed>

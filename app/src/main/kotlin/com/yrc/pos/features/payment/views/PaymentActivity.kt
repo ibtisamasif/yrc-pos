@@ -33,8 +33,8 @@ class PaymentActivity : YrcBaseActivity() {
     private fun updatePaymentDetailSection() {
         textViewPaymentMethodValue.text = PaymentVM.paymentMethod.name.toUpperCase()
         textViewSubtotalAmount.text = "£${PaymentVM.orderSubTotal}"
-        textViewVouchersAppliedAmount.text = "£${PaymentVM.giftVouchers.oldVouchersRedeemedTotal.toDouble() + PaymentVM.giftVouchers.newVouchersRedeemedTotal.toDouble()}"
-        textViewTotalAmount.text = "£${(PaymentVM.orderSubTotal - (PaymentVM.giftVouchers.oldVouchersRedeemedTotal.toDouble() + PaymentVM.giftVouchers.newVouchersRedeemedTotal.toDouble()))}"
+        textViewVouchersAppliedAmount.text = "£${PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal}"
+        textViewTotalAmount.text = "£${(PaymentVM.orderSubTotal - (PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal.toDouble()))}"
 
     }
 
@@ -45,7 +45,10 @@ class PaymentActivity : YrcBaseActivity() {
         }
 
         buttonPayNow.setOnClickListener {
-            APiManager.postRegisterOrder(this, this, getRegisterOrderRequest())
+            if (TicketVM.selectedTickets.size > 0)
+                APiManager.postRegisterOrder(this, this, getRegisterOrderRequest())
+            else
+                Toast.makeText(this, "Please select ticket first", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -70,7 +73,7 @@ class PaymentActivity : YrcBaseActivity() {
             }
             is CompleteOrderResponse -> {
                 val intent = Intent(this, OrderSuccessfulActivity::class.java)
-                intent.putExtra(OrderSuccessfulActivity.ORDER_ID, apiResponse.orderId)
+                intent.putExtra(OrderSuccessfulActivity.ORDER_ID, apiResponse)
                 startActivity(intent)
             }
         }

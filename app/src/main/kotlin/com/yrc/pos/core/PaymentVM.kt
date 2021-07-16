@@ -14,7 +14,7 @@ object PaymentVM {
 
     fun clear() {
         orderSubTotal = 0.0
-        giftVouchers = GiftVouchers("", "", arrayListOf(NewVouchersRedeemed("", "")))
+        giftVouchers = GiftVouchers(0.0, 0.0, arrayListOf(NewVouchersRedeemed("", "")))
         tickets = arrayListOf()
         orderTotal = 0.0
     }

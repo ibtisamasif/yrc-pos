@@ -22,12 +22,6 @@ class EnclosureClockTowerFragment : YrcBaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        try {
-            button_Adult.text = "${TicketVM.originalTickets[0].name} £ ${TicketVM.originalTickets[0].price}"
-            button_Over65.text = "${TicketVM.originalTickets[1].name} £ ${TicketVM.originalTickets[1].price}"
-        } catch (e: Exception) {
-        }
-
         setAdultButtonListener()
         setOver65ButtonListener()
         setTotalButtonListener()
@@ -35,6 +29,11 @@ class EnclosureClockTowerFragment : YrcBaseFragment() {
 
     override fun onResume() {
         super.onResume()
+        try {
+            button_Adult.text = "${TicketVM.originalTickets[0].name} £ ${TicketVM.originalTickets[0].price}"
+            button_Over65.text = "${TicketVM.originalTickets[1].name} £ ${TicketVM.originalTickets[1].price}"
+        } catch (e: Exception) {
+        }
         button_total.text = TicketVM.getTotalText()
     }
 
