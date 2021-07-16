@@ -7,6 +7,8 @@ import com.yrc.pos.core.TicketPrintUtils
 import com.yrc.pos.core.TicketVM
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.features.order_successful.order_successful_service.CompleteOrderResponse
+import com.yrc.pos.features.voucher.viewmodels.NewVouchersVM
+import com.yrc.pos.features.voucher.viewmodels.OldVoucherVM
 import kotlinx.android.synthetic.main.activity_order_successful.*
 
 class OrderSuccessfulActivity : YrcBaseActivity() {
@@ -24,7 +26,8 @@ class OrderSuccessfulActivity : YrcBaseActivity() {
 
     private fun updateUI() {
 
-        val completeOrderResponse = intent.extras?.getSerializable(ORDER_ID) as CompleteOrderResponse?
+        val completeOrderResponse =
+            intent.extras?.getSerializable(ORDER_ID) as CompleteOrderResponse?
         completeOrderResponse?.let {
             textView.text = "Order Successful : #${it.orderId}"
             it.qrs?.let { qrs -> fillQrCodesInSelectedTickets(qrs) }
@@ -47,8 +50,10 @@ class OrderSuccessfulActivity : YrcBaseActivity() {
     private fun updatePaymentDetailSection() {
         textViewPaymentMethodValue.text = PaymentVM.paymentMethod.name.toUpperCase()
         textViewSubtotalAmount.text = "£${PaymentVM.orderSubTotal}"
-        textViewVouchersAppliedAmount.text = "£${PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal}"
-        textViewTotalAmount.text = "£${(PaymentVM.orderSubTotal - (PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal))}"
+        textViewVouchersAppliedAmount.text =
+            "£${PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal}"
+        textViewTotalAmount.text =
+            "£${(PaymentVM.orderSubTotal - (PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal))}"
 
     }
 
@@ -60,6 +65,8 @@ class OrderSuccessfulActivity : YrcBaseActivity() {
 
         buttonNewOrder.setOnClickListener {
             TicketVM.clear()
+            OldVoucherVM.clear()
+            NewVouchersVM.clear()
             PaymentVM.clear()
             finish()
         }

@@ -9,6 +9,7 @@ import com.yrc.pos.core.services.APiManager
 import com.yrc.pos.core.services.YrcBaseApiResponse
 import com.yrc.pos.features.payment.payment_service.NewVouchersRedeemed
 import com.yrc.pos.features.voucher.viewmodels.NewVouchersVM
+import com.yrc.pos.features.voucher.viewmodels.OldVoucherVM
 import com.yrc.pos.features.voucher.voucher_service.ValidateNewVoucherRequest
 import com.yrc.pos.features.voucher.voucher_service.ValidateNewVoucherResponse
 import kotlinx.android.synthetic.main.activity_new_voucher.*
@@ -72,16 +73,22 @@ class NewVoucherActivity : YrcBaseActivity() {
                     )
                 )
 
-                updateUI()
+                updateUI(true)
             }
         }
     }
 
-    private fun updateUI() {
+    private fun updateUI(resetFields: Boolean = false) {
         textViewSubtotalAmount.text = "£${TicketVM.getSubtotal()}"
-        textViewVouchersAppliedAmount.text = "£${NewVouchersVM.newVouchersRedeemedTotal}"
+        textViewVouchersAppliedAmount.text =
+            "£${NewVouchersVM.newVouchersRedeemedTotal + OldVoucherVM.oldVoucherRedeemedTotal}"
         textViewTotalAmount.text =
-            "£${TicketVM.getSubtotal() - NewVouchersVM.newVouchersRedeemedTotal}"
+            "£${TicketVM.getSubtotal() - (NewVouchersVM.newVouchersRedeemedTotal + OldVoucherVM.oldVoucherRedeemedTotal)}"
+
+        if (resetFields) {
+            editTextVoucherCodeField.setText("")
+            editTextVoucherPinField.setText("")
+        }
     }
 
 }

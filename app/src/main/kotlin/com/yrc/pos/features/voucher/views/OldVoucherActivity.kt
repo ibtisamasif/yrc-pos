@@ -7,6 +7,7 @@ import com.yrc.pos.core.TicketVM.deviceSerial
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.services.APiManager
 import com.yrc.pos.core.services.YrcBaseApiResponse
+import com.yrc.pos.features.voucher.viewmodels.NewVouchersVM
 import com.yrc.pos.features.voucher.viewmodels.OldVoucherVM
 import com.yrc.pos.features.voucher.voucher_service.ValidateOldVoucherRequest
 import com.yrc.pos.features.voucher.voucher_service.ValidateOldVoucherResponse
@@ -28,7 +29,9 @@ class OldVoucherActivity : YrcBaseActivity() {
     private fun setListeners() {
 
         buttonApplyOldVoucher.setOnClickListener {
+
             val orderTotal = TicketVM.getSubtotal()
+
             APiManager.postValidateOldVoucher(
                 this,
                 this,
@@ -38,6 +41,7 @@ class OldVoucherActivity : YrcBaseActivity() {
                     orderTotal.toString()
                 )
             )
+
         }
 
         buttonClearVouchers.setOnClickListener {
@@ -53,21 +57,26 @@ class OldVoucherActivity : YrcBaseActivity() {
     override fun onApiSuccess(apiResponse: YrcBaseApiResponse) {
         super.onApiSuccess(apiResponse)
         when (apiResponse) {
+
             is ValidateOldVoucherResponse -> {
+
                 OldVoucherVM.oldVoucherRedeemedTotal =
                     editTextVoucherField.text.toString().toDouble()
-                textViewVouchersAppliedAmount.text = "£${OldVoucherVM.oldVoucherRedeemedTotal}"
-                textViewTotalAmount.text = "£${apiResponse.newOrderTotal?.toDouble()}"
-                editTextVoucherField.setText("")
+
+                updateUI(true)
             }
         }
     }
 
-    private fun updateUI() {
+    private fun updateUI(resetFields: Boolean = false) {
         textViewSubtotalAmount.text = "£${TicketVM.getSubtotal()}"
-        textViewVouchersAppliedAmount.text = "£${OldVoucherVM.oldVoucherRedeemedTotal}"
+        textViewVouchersAppliedAmount.text =
+            "£${OldVoucherVM.oldVoucherRedeemedTotal + NewVouchersVM.newVouchersRedeemedTotal}"
         textViewTotalAmount.text =
-            "£${TicketVM.getSubtotal() - OldVoucherVM.oldVoucherRedeemedTotal}"
+            "£${TicketVM.getSubtotal() - (OldVoucherVM.oldVoucherRedeemedTotal + NewVouchersVM.newVouchersRedeemedTotal)}"
+
+        if (resetFields)
+            editTextVoucherField.setText("")
     }
 
 }
