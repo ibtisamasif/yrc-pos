@@ -17,19 +17,12 @@ class OldVoucherActivity : YrcBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_old_voucher)
-        setUp()
-        initViews()
         setListeners()
     }
 
-    private fun setUp() {
-    }
-
-    private fun initViews() {
-        textViewSubtotalAmount.text = "£${TicketVM.getSubtotal()}"
-        textViewVouchersAppliedAmount.text = "£${OldVoucherVM.oldVoucherRedeemedTotal}"
-        textViewTotalAmount.text =
-            "£${TicketVM.getSubtotal() - OldVoucherVM.oldVoucherRedeemedTotal}"
+    override fun onResume() {
+        super.onResume()
+        updateUI()
     }
 
     private fun setListeners() {
@@ -48,8 +41,8 @@ class OldVoucherActivity : YrcBaseActivity() {
         }
 
         buttonClearVouchers.setOnClickListener {
-            textViewVouchersAppliedAmount.text = "£0.0"
-            textViewTotalAmount.text = "£${TicketVM.getSubtotal()}"
+            OldVoucherVM.clear()
+            updateUI()
         }
 
         buttonReturnToBasket.setOnClickListener {
@@ -68,6 +61,13 @@ class OldVoucherActivity : YrcBaseActivity() {
                 editTextVoucherField.setText("")
             }
         }
+    }
+
+    private fun updateUI() {
+        textViewSubtotalAmount.text = "£${TicketVM.getSubtotal()}"
+        textViewVouchersAppliedAmount.text = "£${OldVoucherVM.oldVoucherRedeemedTotal}"
+        textViewTotalAmount.text =
+            "£${TicketVM.getSubtotal() - OldVoucherVM.oldVoucherRedeemedTotal}"
     }
 
 }

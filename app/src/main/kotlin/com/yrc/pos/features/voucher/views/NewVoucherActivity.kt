@@ -7,6 +7,8 @@ import com.yrc.pos.core.TicketVM.deviceSerial
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.services.APiManager
 import com.yrc.pos.core.services.YrcBaseApiResponse
+import com.yrc.pos.features.payment.payment_service.NewVouchersRedeemed
+import com.yrc.pos.features.voucher.viewmodels.NewVouchersVM
 import com.yrc.pos.features.voucher.voucher_service.ValidateNewVoucherRequest
 import com.yrc.pos.features.voucher.voucher_service.ValidateNewVoucherResponse
 import kotlinx.android.synthetic.main.activity_new_voucher.*
@@ -16,23 +18,20 @@ class NewVoucherActivity : YrcBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_voucher)
-        setUp()
-        initViews()
         setListeners()
     }
 
-    private fun setUp() {
-    }
-
-    private fun initViews() {
-        textViewSubtotalAmount.text = "£${TicketVM.getSubtotal()}"
-        textViewTotalAmount.text = "£${TicketVM.getSubtotal()}"
+    override fun onResume() {
+        super.onResume()
+        updateUI()
     }
 
     private fun setListeners() {
 
         buttonApplyNewVoucher.setOnClickListener {
+
             val orderTotal = TicketVM.getSubtotal()
+
             APiManager.postValidateNewVoucher(
                 this,
                 this,
@@ -43,11 +42,12 @@ class NewVoucherActivity : YrcBaseActivity() {
                     orderTotal.toString()
                 )
             )
+
         }
 
         buttonClearVouchers.setOnClickListener {
-            textViewVouchersAppliedAmount.text = "£0.0"
-            textViewTotalAmount.text = "£${TicketVM.getSubtotal()}"
+            NewVouchersVM.clear()
+            updateUI()
         }
 
         buttonReturnToBasket.setOnClickListener {
@@ -57,12 +57,31 @@ class NewVoucherActivity : YrcBaseActivity() {
 
     override fun onApiSuccess(apiResponse: YrcBaseApiResponse) {
         super.onApiSuccess(apiResponse)
+
         when (apiResponse) {
+
             is ValidateNewVoucherResponse -> {
-                textViewVouchersAppliedAmount.text = "£${apiResponse.voucherAmount.toDouble()}"
-                textViewTotalAmount.text = "£${apiResponse.newOrderTotal.toDouble()}"
+
+                NewVouchersVM.newVouchersRedeemedTotal =
+                    NewVouchersVM.newVouchersRedeemedTotal + apiResponse.voucherAmount
+
+                NewVouchersVM.newVouchersRedeemed.add(
+                    NewVouchersRedeemed(
+                        editTextVoucherCodeField.text.toString(),
+                        apiResponse.voucherAmount.toString()
+                    )
+                )
+
+                updateUI()
             }
         }
+    }
+
+    private fun updateUI() {
+        textViewSubtotalAmount.text = "£${TicketVM.getSubtotal()}"
+        textViewVouchersAppliedAmount.text = "£${NewVouchersVM.newVouchersRedeemedTotal}"
+        textViewTotalAmount.text =
+            "£${TicketVM.getSubtotal() - NewVouchersVM.newVouchersRedeemedTotal}"
     }
 
 }
