@@ -9,6 +9,7 @@ import com.yrc.pos.core.PaymentMethod
 import com.yrc.pos.core.PaymentVM
 import com.yrc.pos.core.TicketVM
 import com.yrc.pos.core.YrcBaseActivity
+import com.yrc.pos.core.providers.models.Ticket
 import com.yrc.pos.features.payment.payment_service.GiftVouchers
 import com.yrc.pos.features.payment.views.PaymentActivity
 import com.yrc.pos.features.voucher.viewmodels.NewVouchersVM
@@ -20,7 +21,6 @@ import kotlinx.android.synthetic.main.activity_enclosure_clock_tower_printing.*
 
 class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
 
-    private var selectedButton: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,24 +31,30 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        selectedButton = 0
+        removeTemporarySelection()
         updateUI()
+    }
+
+    private fun removeTemporarySelection() {
+        TicketVM.selectedTickets.forEach {
+            it.isTemporarySelected = false
+        }
     }
 
     private fun setListeners() {
         button_adult?.setOnClickListener {
-            selectedButton = 1
             if (button_adult.isPressed) {
                 button_adult?.setBackgroundColor(resources.getColor(R.color.colorGrayLight))
                 button_over65?.setBackgroundColor(resources.getColor(R.color.colorWhite))
             }
+            setTemporarySelection(33)
         }
         button_over65?.setOnClickListener {
-            selectedButton = 2
             if (button_over65.isPressed) {
                 button_over65?.setBackgroundColor(resources.getColor(R.color.colorGrayLight))
                 button_adult?.setBackgroundColor(resources.getColor(R.color.colorWhite))
             }
+            setTemporarySelection(34)
         }
 
         button_back.setOnClickListener {
@@ -56,33 +62,23 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
         }
 
         button_minus.setOnClickListener {
-            when (selectedButton) {
-                0 -> {
-                    Toast.makeText(this, "Please select ticket", Toast.LENGTH_SHORT).show()
-                }
-                1 -> {
-                    if (TicketVM.selectedTickets[0].quantity > 0)
-                        TicketVM.selectedTickets[0].quantity -= 1
-                }
-                2 -> {
-                    if (TicketVM.selectedTickets[1].quantity > 0)
-                        TicketVM.selectedTickets[1].quantity -= 1
-                }
+            getTemporarySelectedTicket()?.let {
+                if (it.quantity > 0) {
+                    it.quantity -= 1
+                } else Toast.makeText(this, "Reached max limit", Toast.LENGTH_SHORT).show()
+            } ?: kotlin.run {
+                Toast.makeText(this, "Please select ticket", Toast.LENGTH_SHORT).show()
             }
             updateUI()
         }
 
         button_plus.setOnClickListener {
-            when (selectedButton) {
-                0 -> {
-                    Toast.makeText(this, "Please select ticket", Toast.LENGTH_SHORT).show()
-                }
-                1 -> {
-                    TicketVM.selectedTickets[0].quantity += 1
-                }
-                2 -> {
-                    TicketVM.selectedTickets[1].quantity += 1
-                }
+            getTemporarySelectedTicket()?.let {
+                if (it.quantity < 10) {
+                    it.quantity += 1
+                } else Toast.makeText(this, "Reached max limit", Toast.LENGTH_SHORT).show()
+            } ?: kotlin.run {
+                Toast.makeText(this, "Please select ticket", Toast.LENGTH_SHORT).show()
             }
             updateUI()
         }
@@ -113,6 +109,19 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
             PaymentVM.tickets = TicketVM.selectedTickets
             PaymentVM.orderTotal = (TicketVM.getSubtotal() - (OldVoucherVM.oldVoucherRedeemedTotal + NewVouchersVM.newVouchersRedeemedTotal))
             startActivity(Intent(this, PaymentActivity::class.java))
+        }
+    }
+
+    private fun getTemporarySelectedTicket(): Ticket? {
+        TicketVM.selectedTickets.forEach {
+            if (it.isTemporarySelected) return it
+        }
+        return null
+    }
+
+    private fun setTemporarySelection(ticketId: Int) {
+        TicketVM.selectedTickets.forEach {
+            it.isTemporarySelected = it.ticketPriceID == ticketId
         }
     }
 
