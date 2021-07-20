@@ -31,6 +31,7 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        selectedButton = 0
         updateUI()
     }
 
