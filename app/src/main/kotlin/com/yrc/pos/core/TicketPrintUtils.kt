@@ -11,6 +11,7 @@ import com.pax.dal.entity.EFontTypeAscii
 import com.pax.dal.entity.EFontTypeExtCode
 import com.pax.dal.exceptions.PrinterDevException
 import com.pax.neptunelite.api.NeptuneLiteUser
+import com.yrc.pos.R
 import com.yrc.pos.core.providers.models.Ticket
 import java.io.ByteArrayOutputStream
 import java.text.DateFormat
@@ -18,7 +19,7 @@ import java.util.*
 
 object TicketPrintUtils {
 
-    internal fun printTicket(context: Context, tickets: List<Ticket>) {
+    internal fun printTicket(context: Context, tickets: List<Ticket>, orderId: Int) {
         tickets.forEach { oneTicket ->
             for (i in 1..oneTicket.quantity) {
                 val dal: IDAL = NeptuneLiteUser.getInstance().getDal(context)
@@ -41,10 +42,7 @@ object TicketPrintUtils {
                 prn.printStr("\n", null)
 
                 prn.leftIndent(20)
-                prn.printStr("Receipt only", null)
-                prn.printStr("\n", null)
-
-                prn.printStr("Not valid for entry", null)
+                prn.printStr(context.resources.getString(R.string.order_successful, orderId), null)
                 prn.printStr("\n", null)
 
                 prn.fontSet(EFontTypeAscii.FONT_8_16, EFontTypeExtCode.FONT_16_16)
@@ -63,7 +61,7 @@ object TicketPrintUtils {
     }
 
     private fun bitmapToPng(qrCode: String?): Bitmap {
-        val qrgEncoder = QRGEncoder(qrCode, null, QRGContents.Type.TEXT, 140)
+        val qrgEncoder = QRGEncoder(qrCode, null, QRGContents.Type.TEXT, 200)
         lateinit var bitmap: Bitmap
         try {
             bitmap = qrgEncoder.bitmap

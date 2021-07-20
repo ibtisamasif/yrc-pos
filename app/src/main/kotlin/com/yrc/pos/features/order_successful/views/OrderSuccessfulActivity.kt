@@ -17,24 +17,24 @@ class OrderSuccessfulActivity : YrcBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_successful)
         setListeners()
-    }
-
-    override fun onResume() {
-        super.onResume()
         updateUI()
     }
 
     private fun updateUI() {
 
+        printTicketAndShowOrderId()
+        updatePaymentDetailSection()
+
+    }
+
+    private fun printTicketAndShowOrderId() {
         val completeOrderResponse =
             intent.extras?.getSerializable(ORDER_ID) as CompleteOrderResponse?
         completeOrderResponse?.let {
-            textView.text = "Order Successful : #${it.orderId}"
             it.qrs?.let { qrs -> fillQrCodesInSelectedTickets(qrs) }
-            TicketPrintUtils.printTicket(this, TicketVM.selectedTickets)
+            it.orderId?.let { it1 -> TicketPrintUtils.printTicket(this, TicketVM.selectedTickets, it1) }
+            textView.text = resources.getString(R.string.order_successful, it.orderId)
         }
-        updatePaymentDetailSection()
-
     }
 
     private fun fillQrCodesInSelectedTickets(qrs: List<String>) { // TODO replace with actual QR code
@@ -60,7 +60,7 @@ class OrderSuccessfulActivity : YrcBaseActivity() {
     private fun setListeners() {
 
         buttonReprintQRs.setOnClickListener {
-            TicketPrintUtils.printTicket(this, TicketVM.selectedTickets)
+            printTicketAndShowOrderId()
         }
 
         buttonNewOrder.setOnClickListener {

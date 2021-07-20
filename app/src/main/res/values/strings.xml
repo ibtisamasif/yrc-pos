@@ -2,9 +2,6 @@
     <string name="app_name">YRC POS</string>
     <string name="copyrights_notice">Copyright © 2019 YRC POS. All Rights Reserved</string>
 
-    <!--User Module Content-->
-    <string name="enter_mobile_number">Enter mobile no</string>
-    <string name="login_with_gmail">Login with gmail</string>
     <string name="done">Done</string>
     <string name="counter_text">%1$d/12</string>
 
@@ -18,7 +15,6 @@
     <string name="no_network_available">No Network Available</string>
 
     <!--User Profile Content-->
-    <string name="female">Female</string>
     <string name="support_number">+447405291492</string>
     <string name="support_email">support@yrc.io</string>
     <string name="customer_support_required">Customer Support Required</string>
@@ -26,4 +22,7 @@
     <string name="tel">tel:</string>
     <string name="title_enclosure_g_and_p"><![CDATA[G & P]]></string>
     <string name="title_enclosure_clocktower">Clock Tower</string>
+
+    <!--Order successful Content-->
+    <string name="order_successful">"Order Successful : #%d"</string>
 </resources>
