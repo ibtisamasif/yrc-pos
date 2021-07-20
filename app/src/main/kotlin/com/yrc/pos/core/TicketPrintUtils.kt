@@ -36,22 +36,22 @@ object TicketPrintUtils {
                 prn.printStr("----------------", null)
 
                 prn.fontSet(EFontTypeAscii.FONT_16_32, EFontTypeExtCode.FONT_16_32)
-                prn.leftIndent(20)
+                prn.leftIndent(30)
                 prn.spaceSet(0.toByte(), 0.toByte())
                 prn.printStr(DateFormat.getDateTimeInstance().format(Date()), null)
                 prn.printStr("\n", null)
 
-                prn.leftIndent(20)
+                prn.leftIndent(30)
                 prn.printStr(context.resources.getString(R.string.order_successful, orderId), null)
                 prn.printStr("\n", null)
 
                 prn.fontSet(EFontTypeAscii.FONT_8_16, EFontTypeExtCode.FONT_16_16)
-                prn.leftIndent(20)
+                prn.leftIndent(30)
                 prn.dotLine
                 prn.printStr("Retain ticket as a proof", null)
 
                 prn.step(10)
-                prn.leftIndent(100)
+                prn.leftIndent(90)
                 //        prn.invert(true)
                 prn.printBitmap(bitmapToPng(oneTicket.qrCode))
                 prn.step(100)
