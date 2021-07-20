@@ -99,4 +99,5 @@ dependencies {
 
     implementation 'com.google.zxing:core:3.3.3'
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.4'
+    implementation(name:'eftservicelib-2.12-release', ext:'aar')
 }
