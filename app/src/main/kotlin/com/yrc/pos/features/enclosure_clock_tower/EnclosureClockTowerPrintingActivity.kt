@@ -119,11 +119,16 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
         TicketVM.getTicketByTicketPriceIdFromSelectedTicketList(33)?.let { ticket ->
             button_adult.visibility = View.VISIBLE
             button_adult.text = ticket.quantity.toString().plus(" ").plus("x ${ticket.name} £".plus(" ").plus(ticket.quantity.times(ticket.price?.toDouble()!!)))
+        } ?: kotlin.run {
+            button_adult.visibility = View.GONE
         }
 
         TicketVM.getTicketByTicketPriceIdFromSelectedTicketList(34)?.let { ticket ->
             button_over65.visibility = View.VISIBLE
             button_over65.text = ticket.quantity.toString().plus(" ").plus("x ${ticket.name} £".plus(" ").plus(ticket.quantity.times(ticket.price?.toDouble()!!)))
+        } ?: kotlin.run {
+            button_over65.visibility = View.GONE
+            button_over65.invalidate()
         }
 
         button_total.text = TicketVM.getTotalText()
