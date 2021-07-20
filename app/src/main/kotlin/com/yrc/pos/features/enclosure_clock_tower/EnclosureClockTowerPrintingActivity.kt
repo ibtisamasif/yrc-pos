@@ -99,6 +99,10 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
 
         button_card.setOnClickListener {
             PaymentVM.paymentMethod = PaymentMethod.card
+            PaymentVM.orderSubTotal = TicketVM.getSubtotal()
+            PaymentVM.giftVouchers = GiftVouchers(OldVoucherVM.oldVoucherRedeemedTotal, NewVouchersVM.newVouchersRedeemedTotal, NewVouchersVM.newVouchersRedeemed)
+            PaymentVM.tickets = TicketVM.selectedTickets
+            PaymentVM.orderTotal = (TicketVM.getSubtotal() - (OldVoucherVM.oldVoucherRedeemedTotal + NewVouchersVM.newVouchersRedeemedTotal))
             startActivity(Intent(this, PaymentActivity::class.java))
         }
 

@@ -3,7 +3,9 @@ package com.yrc.pos.features.payment.views
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.yrc.pos.R
+import com.yrc.pos.core.PaymentMethod
 import com.yrc.pos.core.PaymentVM
 import com.yrc.pos.core.TicketVM
 import com.yrc.pos.core.TicketVM.deviceSerial
@@ -15,9 +17,14 @@ import com.yrc.pos.features.order_successful.order_successful_service.CompleteOr
 import com.yrc.pos.features.order_successful.views.OrderSuccessfulActivity
 import com.yrc.pos.features.payment.payment_service.RegisterOrderRequest
 import com.yrc.pos.features.payment.payment_service.RegisterOrderResponse
+import eft.com.eftservicelib.EFTServiceLib
 import kotlinx.android.synthetic.main.activity_payment.*
 
+
 class PaymentActivity : YrcBaseActivity() {
+
+    private var orderId: Int? = null
+    private var isCardPaymentFlowInitiated: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +35,27 @@ class PaymentActivity : YrcBaseActivity() {
     override fun onResume() {
         super.onResume()
         updatePaymentDetailSection()
+        showCardPaymentConfirmationDialogIfNeeded()
+    }
+
+    private fun showCardPaymentConfirmationDialogIfNeeded() {
+        if (isCardPaymentFlowInitiated) {
+            AlertDialog.Builder(this)
+                .setTitle("Payment confirmation")
+                .setMessage("Have you taken the payment?")
+                .setPositiveButton(android.R.string.yes) { dialog, which ->
+                    orderId?.let {
+                        APiManager.postCompleteOrder(
+                            this,
+                            this,
+                            CompleteOrderRequest(deviceSerial, it, "PAID")
+                        )
+                    }
+                }
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show()
+        }
     }
 
     private fun updatePaymentDetailSection() {
@@ -37,7 +65,6 @@ class PaymentActivity : YrcBaseActivity() {
             "£${PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal}"
         textViewTotalAmount.text =
             "£${(PaymentVM.orderSubTotal - (PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal.toDouble()))}"
-
     }
 
     private fun setListeners() {
@@ -72,11 +99,23 @@ class PaymentActivity : YrcBaseActivity() {
         when (apiResponse) {
             is RegisterOrderResponse -> {
                 apiResponse.orderId?.let {
-                    APiManager.postCompleteOrder(
-                        this,
-                        this,
-                        CompleteOrderRequest(deviceSerial, it, "PAID")
-                    )
+                    when (PaymentVM.paymentMethod) {
+                        PaymentMethod.cash -> {
+                            APiManager.postCompleteOrder(
+                                this,
+                                this,
+                                CompleteOrderRequest(deviceSerial, it, "PAID")
+                            )
+                        }
+                        PaymentMethod.card -> {
+                            isCardPaymentFlowInitiated = true
+                            orderId = it
+                            EFTServiceLib.runTrans(this, 100, EFTServiceLib.TRANSACTION_TYPE_SALE)
+                        }
+                        else -> {
+                            Toast.makeText(this, "Payment method missing", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
             }
             is CompleteOrderResponse -> {
