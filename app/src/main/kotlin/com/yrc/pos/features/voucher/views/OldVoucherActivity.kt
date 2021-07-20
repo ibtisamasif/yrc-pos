@@ -32,15 +32,17 @@ class OldVoucherActivity : YrcBaseActivity() {
 
             val orderTotal = TicketVM.getSubtotal()
 
-            APiManager.postValidateOldVoucher(
-                this,
-                this,
-                ValidateOldVoucherRequest(
-                    deviceSerial,
-                    editTextVoucherField.text.toString(),
-                    orderTotal.toString()
+            if (checkValidations()) {
+                APiManager.postValidateOldVoucher(
+                    this,
+                    this,
+                    ValidateOldVoucherRequest(
+                        deviceSerial,
+                        editTextVoucherField.text.toString(),
+                        orderTotal.toString()
+                    )
                 )
-            )
+            }
 
         }
 
@@ -77,6 +79,16 @@ class OldVoucherActivity : YrcBaseActivity() {
 
         if (resetFields)
             editTextVoucherField.setText("")
+    }
+
+    private fun checkValidations(): Boolean {
+
+        if (editTextVoucherField.text.isEmpty()) {
+            editTextVoucherField.error = "Please enter gift voucher"
+            return false
+        }
+
+        return true
     }
 
 }

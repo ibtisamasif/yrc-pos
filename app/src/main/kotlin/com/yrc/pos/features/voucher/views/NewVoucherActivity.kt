@@ -31,18 +31,20 @@ class NewVoucherActivity : YrcBaseActivity() {
 
         buttonApplyNewVoucher.setOnClickListener {
 
-            val orderTotal = TicketVM.getSubtotal()
+            val orderTotal = TicketVM.getSubtotal() - (NewVouchersVM.newVouchersRedeemedTotal + OldVoucherVM.oldVoucherRedeemedTotal)
 
-            APiManager.postValidateNewVoucher(
-                this,
-                this,
-                ValidateNewVoucherRequest(
-                    deviceSerial,
-                    editTextVoucherCodeField.text.toString(),
-                    editTextVoucherPinField.text.toString(),
-                    orderTotal.toString()
+            if (checkValidations()) {
+                APiManager.postValidateNewVoucher(
+                    this,
+                    this,
+                    ValidateNewVoucherRequest(
+                        deviceSerial,
+                        editTextVoucherCodeField.text.toString(),
+                        editTextVoucherPinField.text.toString(),
+                        orderTotal.toString()
+                    )
                 )
-            )
+            }
 
         }
 
@@ -74,6 +76,7 @@ class NewVoucherActivity : YrcBaseActivity() {
                 )
 
                 updateUI(true)
+
             }
         }
     }
@@ -89,6 +92,21 @@ class NewVoucherActivity : YrcBaseActivity() {
             editTextVoucherCodeField.setText("")
             editTextVoucherPinField.setText("")
         }
+    }
+
+    private fun checkValidations(): Boolean {
+
+        if (editTextVoucherCodeField.text.isEmpty()) {
+            editTextVoucherCodeField.error = "Please enter Voucher code"
+            return false
+        }
+
+        if (editTextVoucherPinField.text.isEmpty()) {
+            editTextVoucherPinField.error = "Please enter Pin"
+            return false
+        }
+
+        return true
     }
 
 }
