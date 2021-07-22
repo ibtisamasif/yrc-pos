@@ -110,7 +110,7 @@ class PaymentActivity : YrcBaseActivity() {
                         PaymentMethod.card -> {
                             isCardPaymentFlowInitiated = true
                             orderId = it
-                            EFTServiceLib.runTrans(this, 100, EFTServiceLib.TRANSACTION_TYPE_SALE)
+                            EFTServiceLib.runTrans(this, PaymentVM.orderTotal.toInt() * 100, EFTServiceLib.TRANSACTION_TYPE_SALE, "", "", "", orderId.toString(), false)
                         }
                         else -> {
                             Toast.makeText(this, "Payment method missing", Toast.LENGTH_SHORT).show()

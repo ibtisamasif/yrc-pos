@@ -82,6 +82,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".core.receiver.TestLaunchReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="eft.com.TRANSACTION_RESULT" />
+                <action android:name="eft.com.TRANSACTION_RECEIPT_EVENT" />
+                <action android:name="eft.com.TRANS_IN_BATCH_RESPONSE_EVENT" />
+            </intent-filter>
+        </receiver>
 
         <meta-data
             android:name="preloaded_fonts"
