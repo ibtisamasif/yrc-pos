@@ -39,14 +39,14 @@ class EnclosureClockTowerFragment : YrcBaseFragment() {
 
     private fun setAdultButtonListener() {
         button_Adult.setOnClickListener {
-            addTicketOrIncreaseCountIfItAlreadyExistsInList(33)
+            TicketVM.originalTickets[0].ticketPriceID?.let { it1 -> addTicketOrIncreaseCountIfItAlreadyExistsInList(it1) }
             moveToClockTowerCheckoutScreen()
         }
     }
 
     private fun setOver65ButtonListener() {
         button_Over65.setOnClickListener {
-            addTicketOrIncreaseCountIfItAlreadyExistsInList(34)
+            TicketVM.originalTickets[1].ticketPriceID?.let { it1 -> addTicketOrIncreaseCountIfItAlreadyExistsInList(it1) }
             moveToClockTowerCheckoutScreen()
         }
     }

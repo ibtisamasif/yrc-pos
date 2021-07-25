@@ -18,7 +18,7 @@ object TicketVM {
         var ticket2Price = 0
 
         val matchingObjectInSelectedTicketList1: Optional<Ticket> =
-            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(33) == true }.findFirst()
+            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(originalTickets[0].ticketPriceID) == true }.findFirst()
         if (matchingObjectInSelectedTicketList1.isPresent) {
             val ticket1 = matchingObjectInSelectedTicketList1.get()
             ticket1Quantity = ticket1.quantity!!
@@ -26,7 +26,7 @@ object TicketVM {
         }
 
         val matchingObjectInSelectedTicketList2: Optional<Ticket> =
-            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(34) == true }.findFirst()
+            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(originalTickets[1].ticketPriceID) == true }.findFirst()
         if (matchingObjectInSelectedTicketList2.isPresent) {
             val ticket2 = matchingObjectInSelectedTicketList2.get()
             ticket2Quantity = ticket2.quantity!!
@@ -50,7 +50,7 @@ object TicketVM {
         var ticket2Price = 0
 
         val matchingObjectInSelectedTicketList1: Optional<Ticket> =
-            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(33) == true }.findFirst()
+            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(originalTickets[0].ticketPriceID) == true }.findFirst()
         if (matchingObjectInSelectedTicketList1.isPresent) {
             val ticket1 = matchingObjectInSelectedTicketList1.get()
             ticket1Quantity = ticket1.quantity!!
@@ -58,7 +58,7 @@ object TicketVM {
         }
 
         val matchingObjectInSelectedTicketList2: Optional<Ticket> =
-            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(34) == true }.findFirst()
+            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(originalTickets[1].ticketPriceID) == true }.findFirst()
         if (matchingObjectInSelectedTicketList2.isPresent) {
             val ticket2 = matchingObjectInSelectedTicketList2.get()
             ticket2Quantity = ticket2.quantity!!

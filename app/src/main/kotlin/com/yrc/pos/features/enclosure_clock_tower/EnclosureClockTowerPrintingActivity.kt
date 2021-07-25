@@ -47,14 +47,14 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
                 button_adult?.setBackgroundColor(resources.getColor(R.color.colorGrayLight))
                 button_over65?.setBackgroundColor(resources.getColor(R.color.colorWhite))
             }
-            setTemporarySelection(33)
+            TicketVM.originalTickets[0].ticketPriceID?.let { it1 -> setTemporarySelection(it1) }
         }
         button_over65?.setOnClickListener {
             if (button_over65.isPressed) {
                 button_over65?.setBackgroundColor(resources.getColor(R.color.colorGrayLight))
                 button_adult?.setBackgroundColor(resources.getColor(R.color.colorWhite))
             }
-            setTemporarySelection(34)
+            TicketVM.originalTickets[1].ticketPriceID?.let { it1 -> setTemporarySelection(it1) }
         }
 
         button_back.setOnClickListener {
@@ -130,16 +130,20 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
     }
 
     private fun updateUI() {
-        TicketVM.getTicketByTicketPriceIdFromSelectedTicketList(33)?.let { ticket ->
-            button_adult.visibility = View.VISIBLE
-            button_adult.text = ticket.quantity.toString().plus(" ").plus("x ${ticket.name} £".plus(" ").plus(ticket.quantity.times(ticket.price?.toDouble()!!)))
+        TicketVM.originalTickets[0].ticketPriceID?.let {
+            TicketVM.getTicketByTicketPriceIdFromSelectedTicketList(it)?.let { ticket ->
+                button_adult.visibility = View.VISIBLE
+                button_adult.text = ticket.quantity.toString().plus(" ").plus("x ${ticket.name} £".plus(" ").plus(ticket.quantity.times(ticket.price?.toDouble()!!)))
+            }
         } ?: kotlin.run {
             button_adult.visibility = View.GONE
         }
 
-        TicketVM.getTicketByTicketPriceIdFromSelectedTicketList(34)?.let { ticket ->
-            button_over65.visibility = View.VISIBLE
-            button_over65.text = ticket.quantity.toString().plus(" ").plus("x ${ticket.name} £".plus(" ").plus(ticket.quantity.times(ticket.price?.toDouble()!!)))
+        TicketVM.originalTickets[1].ticketPriceID?.let {
+            TicketVM.getTicketByTicketPriceIdFromSelectedTicketList(it)?.let { ticket ->
+                button_over65.visibility = View.VISIBLE
+                button_over65.text = ticket.quantity.toString().plus(" ").plus("x ${ticket.name} £".plus(" ").plus(ticket.quantity.times(ticket.price?.toDouble()!!)))
+            }
         } ?: kotlin.run {
             button_over65.visibility = View.GONE
             button_over65.invalidate()
