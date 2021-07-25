@@ -9,6 +9,7 @@ import com.yrc.pos.R
 import com.yrc.pos.core.TicketVM
 import com.yrc.pos.core.YrcBaseFragment
 import com.yrc.pos.core.providers.models.Ticket
+import com.yrc.pos.features.enclosure_clock_tower.adapter.MenuTicketButtonAdapter
 import kotlinx.android.synthetic.main.fragment_enclosure_clock_tower.*
 import java.util.*
 
@@ -23,15 +24,8 @@ class EnclosureClockTowerFragment : YrcBaseFragment() {
         super.onResume()
         try {
 
-            button_1.text = "${TicketVM.originalTickets[0].name} £ ${TicketVM.originalTickets[0].price}"
-            button_1.setOnClickListener {
-                TicketVM.originalTickets[0].ticketPriceID?.let { it1 -> addTicketOrIncreaseCountIfItAlreadyExistsInList(it1) }
-                moveToClockTowerCheckoutScreen()
-            }
-
-            button_2.text = "${TicketVM.originalTickets[1].name} £ ${TicketVM.originalTickets[1].price}"
-            button_2.setOnClickListener {
-                TicketVM.originalTickets[1].ticketPriceID?.let { it1 -> addTicketOrIncreaseCountIfItAlreadyExistsInList(it1) }
+            recyclerViewMenuButtons.adapter = MenuTicketButtonAdapter(TicketVM.originalTickets) {
+                it.ticketPriceID?.let { it1 -> addTicketOrIncreaseCountIfItAlreadyExistsInList(it1) }
                 moveToClockTowerCheckoutScreen()
             }
 
