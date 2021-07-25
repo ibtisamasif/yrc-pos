@@ -19,41 +19,28 @@ class EnclosureClockTowerFragment : YrcBaseFragment() {
         return inflater.inflate(R.layout.fragment_enclosure_clock_tower, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setAdultButtonListener()
-        setOver65ButtonListener()
-        setTotalButtonListener()
-    }
-
     override fun onResume() {
         super.onResume()
         try {
-            button_Adult.text = "${TicketVM.originalTickets[0].name} £ ${TicketVM.originalTickets[0].price}"
-            button_Over65.text = "${TicketVM.originalTickets[1].name} £ ${TicketVM.originalTickets[1].price}"
+
+            button_1.text = "${TicketVM.originalTickets[0].name} £ ${TicketVM.originalTickets[0].price}"
+            button_1.setOnClickListener {
+                TicketVM.originalTickets[0].ticketPriceID?.let { it1 -> addTicketOrIncreaseCountIfItAlreadyExistsInList(it1) }
+                moveToClockTowerCheckoutScreen()
+            }
+
+            button_2.text = "${TicketVM.originalTickets[1].name} £ ${TicketVM.originalTickets[1].price}"
+            button_2.setOnClickListener {
+                TicketVM.originalTickets[1].ticketPriceID?.let { it1 -> addTicketOrIncreaseCountIfItAlreadyExistsInList(it1) }
+                moveToClockTowerCheckoutScreen()
+            }
+
+            button_total.text = TicketVM.getTotalText()
+            button_total.setOnClickListener {
+                moveToClockTowerCheckoutScreen()
+            }
+
         } catch (e: Exception) {
-        }
-        button_total.text = TicketVM.getTotalText()
-    }
-
-    private fun setAdultButtonListener() {
-        button_Adult.setOnClickListener {
-            TicketVM.originalTickets[0].ticketPriceID?.let { it1 -> addTicketOrIncreaseCountIfItAlreadyExistsInList(it1) }
-            moveToClockTowerCheckoutScreen()
-        }
-    }
-
-    private fun setOver65ButtonListener() {
-        button_Over65.setOnClickListener {
-            TicketVM.originalTickets[1].ticketPriceID?.let { it1 -> addTicketOrIncreaseCountIfItAlreadyExistsInList(it1) }
-            moveToClockTowerCheckoutScreen()
-        }
-    }
-
-    private fun setTotalButtonListener() {
-        button_total.setOnClickListener {
-            moveToClockTowerCheckoutScreen()
         }
     }
 

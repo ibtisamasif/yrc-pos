@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.yrc.pos.core.views.YrcButton
-        android:id="@+id/button_Adult"
+        android:id="@+id/button_1"
         style="@style/MenuButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_55sdp"
@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView_currentLocation" />
 
     <com.yrc.pos.core.views.YrcButton
-        android:id="@+id/button_Over65"
+        android:id="@+id/button_2"
         style="@style/MenuButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_55sdp"
@@ -52,7 +52,7 @@
         app:fontType="Regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_Adult" />
+        app:layout_constraintTop_toBottomOf="@+id/button_1" />
 
     <com.yrc.pos.core.views.YrcButton
         android:id="@+id/button_total"
