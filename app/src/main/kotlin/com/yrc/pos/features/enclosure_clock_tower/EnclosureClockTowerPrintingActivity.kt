@@ -146,7 +146,6 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
             }
         } ?: kotlin.run {
             button_over65.visibility = View.GONE
-            button_over65.invalidate()
         }
 
         button_total.text = TicketVM.getTotalText()
