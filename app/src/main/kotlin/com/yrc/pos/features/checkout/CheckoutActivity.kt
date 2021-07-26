@@ -1,8 +1,7 @@
-package com.yrc.pos.features.enclosure_clock_tower
+package com.yrc.pos.features.checkout
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import com.yrc.pos.R
 import com.yrc.pos.core.PaymentMethod
@@ -10,21 +9,22 @@ import com.yrc.pos.core.PaymentVM
 import com.yrc.pos.core.TicketVM
 import com.yrc.pos.core.YrcBaseActivity
 import com.yrc.pos.core.providers.models.Ticket
+import com.yrc.pos.features.checkout.adapter.CheckoutTicketButtonAdapter
 import com.yrc.pos.features.payment.payment_service.GiftVouchers
 import com.yrc.pos.features.payment.views.PaymentActivity
 import com.yrc.pos.features.voucher.viewmodels.NewVouchersVM
 import com.yrc.pos.features.voucher.viewmodels.OldVoucherVM
 import com.yrc.pos.features.voucher.views.NewVoucherActivity
 import com.yrc.pos.features.voucher.views.OldVoucherActivity
-import kotlinx.android.synthetic.main.activity_enclosure_clock_tower_printing.*
+import kotlinx.android.synthetic.main.activity_checkout.*
 
 
-class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
+class CheckoutActivity : YrcBaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_enclosure_clock_tower_printing)
+        setContentView(R.layout.activity_checkout)
 
         setListeners()
     }
@@ -42,20 +42,6 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
     }
 
     private fun setListeners() {
-        button_adult?.setOnClickListener {
-            if (button_adult.isPressed) {
-                button_adult?.setBackgroundColor(resources.getColor(R.color.colorGrayLight))
-                button_over65?.setBackgroundColor(resources.getColor(R.color.colorWhite))
-            }
-            TicketVM.originalTickets[0].ticketPriceID?.let { it1 -> setTemporarySelection(it1) }
-        }
-        button_over65?.setOnClickListener {
-            if (button_over65.isPressed) {
-                button_over65?.setBackgroundColor(resources.getColor(R.color.colorGrayLight))
-                button_adult?.setBackgroundColor(resources.getColor(R.color.colorWhite))
-            }
-            TicketVM.originalTickets[1].ticketPriceID?.let { it1 -> setTemporarySelection(it1) }
-        }
 
         button_back.setOnClickListener {
             onBackPressed()
@@ -123,30 +109,8 @@ class EnclosureClockTowerPrintingActivity : YrcBaseActivity() {
         return null
     }
 
-    private fun setTemporarySelection(ticketId: Int) {
-        TicketVM.selectedTickets.forEach {
-            it.isTemporarySelected = it.ticketPriceID == ticketId
-        }
-    }
-
     private fun updateUI() {
-        TicketVM.originalTickets[0].ticketPriceID?.let {
-            TicketVM.getTicketByTicketPriceIdFromSelectedTicketList(it)?.let { ticket ->
-                button_adult.visibility = View.VISIBLE
-                button_adult.text = ticket.quantity.toString().plus(" ").plus("x ${ticket.name} £".plus(" ").plus(ticket.quantity.times(ticket.price?.toDouble()!!)))
-            }
-        } ?: kotlin.run {
-            button_adult.visibility = View.GONE
-        }
-
-        TicketVM.originalTickets[1].ticketPriceID?.let {
-            TicketVM.getTicketByTicketPriceIdFromSelectedTicketList(it)?.let { ticket ->
-                button_over65.visibility = View.VISIBLE
-                button_over65.text = ticket.quantity.toString().plus(" ").plus("x ${ticket.name} £".plus(" ").plus(ticket.quantity.times(ticket.price?.toDouble()!!)))
-            }
-        } ?: kotlin.run {
-            button_over65.visibility = View.GONE
-        }
+        recyclerViewCheckoutTicketButtons.adapter = CheckoutTicketButtonAdapter(TicketVM.selectedTickets)
 
         button_total.text = TicketVM.getTotalText()
     }

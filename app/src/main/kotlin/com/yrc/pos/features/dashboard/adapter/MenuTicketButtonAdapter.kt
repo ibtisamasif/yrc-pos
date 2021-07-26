@@ -1,4 +1,4 @@
-package com.yrc.pos.features.enclosure_clock_tower.adapter
+package com.yrc.pos.features.dashboard.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +26,7 @@ class MenuTicketButtonAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: MenuTicketViewHolder, position: Int) {
-        val ticket = list[position] as Ticket
+        val ticket = list[position]
         viewHolder.textViewTicketNameAndPrice.text = "${ticket.name} £ ${ticket.price}"
         viewHolder.itemView.setOnClickListener {
             onClick.invoke(ticket)
@@ -34,9 +34,4 @@ class MenuTicketButtonAdapter(
     }
 
     override fun getItemCount() = list.size
-
-    fun updateList(list: List<Ticket>) {
-        this.list = list
-        notifyDataSetChanged()
-    }
 }

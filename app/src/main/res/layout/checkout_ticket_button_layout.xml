@@ -4,19 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayoutRow"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:layout_marginVertical="8dp"
-    android:background="@drawable/login_button_background">
+    android:layout_height="30dp"
+    android:layout_marginVertical="4dp">
 
-    <TextView
-        android:id="@+id/textViewTicketNameAndPrice"
-        style="@style/MenuButtonStyle"
-        android:layout_width="wrap_content"
+    <com.yrc.pos.core.views.YrcTextView
+        android:id="@+id/textViewTicket"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/colorGreenLight"
+        android:textSize="@dimen/_16sdp"
+        app:fontType="Bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Racegoer Voucher   £30.00" />
+        tools:text="2 x Adult £ 30.00" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

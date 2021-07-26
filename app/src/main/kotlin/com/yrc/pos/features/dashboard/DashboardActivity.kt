@@ -1,28 +1,24 @@
 package com.yrc.pos.features.dashboard
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.yrc.pos.R
 import com.yrc.pos.core.TicketVM
 import com.yrc.pos.core.YrcBaseActivity
-import com.yrc.pos.core.enums.Enclosure
-import com.yrc.pos.core.views.YrcTextView
-import kotlinx.android.synthetic.main.content_main.*
+import com.yrc.pos.core.providers.models.Ticket
+import com.yrc.pos.features.dashboard.adapter.MenuTicketButtonAdapter
+import com.yrc.pos.features.checkout.CheckoutActivity
+import kotlinx.android.synthetic.main.activity_dashboard.*
+import java.util.*
 
 class DashboardActivity : YrcBaseActivity() {
-
-    private var textViewHeaderTitle: YrcTextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
-
-        setEnclosure()
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -30,47 +26,43 @@ class DashboardActivity : YrcBaseActivity() {
         supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
         supportActionBar?.setCustomView(R.layout.abs_layout)
         supportActionBar?.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.header_background))
-        textViewHeaderTitle = supportActionBar?.customView?.findViewById(R.id.textViewTitle)
 
-        bottom_nav_view.setupWithNavController(findNavController(R.id.nav_host_fragment))
     }
 
-    private fun setEnclosure() {
-        when (TicketVM.enclosure) {
-            Enclosure.grandstand -> {
-                TicketVM.enclosure = Enclosure.grandstand
-                showGrandStand()
+    override fun onResume() {
+        super.onResume()
+        try {
+
+            recyclerViewMenuTicketButtons.adapter = MenuTicketButtonAdapter(TicketVM.originalTickets) {
+                it.ticketPriceID?.let { it1 -> addTicketOrIncreaseCountIfItAlreadyExistsInList(it1) }
+                moveToClockTowerCheckoutScreen()
             }
-            Enclosure.clocktower -> {
-                TicketVM.enclosure = Enclosure.clocktower
-                showClockTower()
+
+            button_total.text = TicketVM.getTotalText()
+            button_total.setOnClickListener {
+                moveToClockTowerCheckoutScreen()
             }
-            else -> {
+
+        } catch (e: Exception) {
+        }
+    }
+
+    private fun addTicketOrIncreaseCountIfItAlreadyExistsInList(ticketPriceID: Int) {
+        val matchingObjectInSelectedTicketList: Optional<Ticket> = TicketVM.selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(ticketPriceID) == true }.findFirst()
+        if (matchingObjectInSelectedTicketList.isPresent) {
+            matchingObjectInSelectedTicketList.get().quantity = matchingObjectInSelectedTicketList.get().quantity?.plus(1)
+        } else {
+            val matchingObjectInOriginalTicketList: Optional<Ticket> = TicketVM.originalTickets.stream().filter { p -> p.ticketPriceID?.equals(ticketPriceID) == true }.findFirst()
+            if (matchingObjectInOriginalTicketList.isPresent) {
+                val originalTicket = matchingObjectInOriginalTicketList.get()
+                originalTicket.quantity = 1
+                TicketVM.selectedTickets.add(originalTicket)
             }
         }
     }
 
-    private fun showGrandStand() {
-        bottom_nav_view?.menu?.clear()
-        bottom_nav_view?.inflateMenu(R.menu.bottom_nav_menu_grand_stand)
-        setNavigationStartDestination(R.id.navigation_enclosure_grand_stand)
+    private fun moveToClockTowerCheckoutScreen() {
+        startActivity(Intent(this, CheckoutActivity::class.java))
     }
 
-    private fun showClockTower() {
-        bottom_nav_view?.menu?.clear()
-        bottom_nav_view?.inflateMenu(R.menu.bottom_nav_menu_clock_tower)
-        setNavigationStartDestination(R.id.navigation_enclosure_clock_tower)
-    }
-
-    private fun setNavigationStartDestination(destination: Int) {
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
-        val graphInflater = navHostFragment?.navController?.navInflater
-        val navGraph = graphInflater?.inflate(R.navigation.dashboard_nav_graph)
-        val navController = navHostFragment?.navController
-        navGraph?.startDestination = destination
-        if (navGraph != null) {
-            navController?.graph = navGraph
-        }
-    }
 }

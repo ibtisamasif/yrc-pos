@@ -7,7 +7,8 @@ import java.util.*
 
 object TicketVM {
     var deviceSerial: String = Build.SERIAL // Rob="0822163315" Ibt="0821180033"
-    var enclosure: Enclosure = Enclosure.none
+//    var deviceSerial: String = Build.SERIAL // Rob="0822163315" Ibt="0821180033"
+var enclosure: Enclosure = Enclosure.none
     var originalTickets = arrayListOf<Ticket>()
     var selectedTickets = arrayListOf<Ticket>()
 
@@ -67,17 +68,6 @@ object TicketVM {
 
         return ticket1Quantity.times(ticket1Price).plus(ticket2Quantity.times(ticket2Price))
             .toDouble()
-    }
-
-    fun getTicketByTicketPriceIdFromSelectedTicketList(ticketPriceID: Int): Ticket? {
-        val matchingObjectInSelectedTicketList: Optional<Ticket> =
-            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(ticketPriceID) == true }
-                .findFirst()
-        return if (matchingObjectInSelectedTicketList.isPresent) {
-            matchingObjectInSelectedTicketList.get()
-        } else {
-            null
-        }
     }
 
     fun clear() {

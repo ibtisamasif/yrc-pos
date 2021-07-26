@@ -16,10 +16,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="CurrentLocationTextStyle">
-<!--        <item name="android:drawableStart">@drawable/ic_map_marker</item>-->
-<!--        <item name="android:drawableLeft">@drawable/ic_map_marker</item>-->
-<!--        <item name="android:drawablePadding">@dimen/_4sdp</item>-->
+    <style name="SelectTicketTextStyle">
         <item name="android:textColor">@color/colorGreenLight</item>
         <item name="android:textSize">@dimen/_10sdp</item>
         <item name="android:gravity">center</item>
