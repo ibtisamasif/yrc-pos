@@ -3,7 +3,6 @@ package com.yrc.pos.core
 import android.os.Build
 import com.yrc.pos.core.enums.Enclosure
 import com.yrc.pos.core.providers.models.Ticket
-import java.util.*
 
 object TicketVM {
     var deviceSerial: String = Build.SERIAL // Rob="0822163315" Ibt="0821180033"
@@ -13,61 +12,22 @@ var enclosure: Enclosure = Enclosure.none
     var selectedTickets = arrayListOf<Ticket>()
 
     fun getTotalText(): String {
-        var ticket1Quantity = 0
-        var ticket2Quantity = 0
-        var ticket1Price = 0
-        var ticket2Price = 0
-
-        val matchingObjectInSelectedTicketList1: Optional<Ticket> =
-            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(originalTickets[0].ticketPriceID) == true }.findFirst()
-        if (matchingObjectInSelectedTicketList1.isPresent) {
-            val ticket1 = matchingObjectInSelectedTicketList1.get()
-            ticket1Quantity = ticket1.quantity!!
-            ticket1Price = ticket1.price?.toDouble()?.toInt()!!
+        var totalQuantity = 0
+        var totalPrice = 0.0
+        selectedTickets.forEach {
+            totalQuantity += it.quantity
+            totalPrice += (it.price?.toDouble() ?: 0.0) * it.quantity
         }
 
-        val matchingObjectInSelectedTicketList2: Optional<Ticket> =
-            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(originalTickets[1].ticketPriceID) == true }.findFirst()
-        if (matchingObjectInSelectedTicketList2.isPresent) {
-            val ticket2 = matchingObjectInSelectedTicketList2.get()
-            ticket2Quantity = ticket2.quantity!!
-            ticket2Price = ticket2.price?.toDouble()?.toInt()!!
-        }
-
-        return ticket1Quantity.plus(ticket2Quantity).toString().plus(" ")
-            .plus(
-                "x Ticket £".plus(" ")
-                    .plus(
-                        ticket1Quantity.times(ticket1Price)
-                            .plus(ticket2Quantity.times(ticket2Price))
-                    )
-            )
+        return totalQuantity.toString().plus(" ").plus("x Ticket £".plus(" ").plus(totalPrice))
     }
 
     fun getSubtotal(): Double {
-        var ticket1Quantity = 0
-        var ticket2Quantity = 0
-        var ticket1Price = 0
-        var ticket2Price = 0
-
-        val matchingObjectInSelectedTicketList1: Optional<Ticket> =
-            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(originalTickets[0].ticketPriceID) == true }.findFirst()
-        if (matchingObjectInSelectedTicketList1.isPresent) {
-            val ticket1 = matchingObjectInSelectedTicketList1.get()
-            ticket1Quantity = ticket1.quantity!!
-            ticket1Price = ticket1.price?.toDouble()?.toInt()!!
+        var subtotal = 0.0
+        selectedTickets.forEach {
+            subtotal += (it.price?.toDouble() ?: 0.0) * it.quantity
         }
-
-        val matchingObjectInSelectedTicketList2: Optional<Ticket> =
-            selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(originalTickets[1].ticketPriceID) == true }.findFirst()
-        if (matchingObjectInSelectedTicketList2.isPresent) {
-            val ticket2 = matchingObjectInSelectedTicketList2.get()
-            ticket2Quantity = ticket2.quantity!!
-            ticket2Price = ticket2.price?.toDouble()?.toInt()!!
-        }
-
-        return ticket1Quantity.times(ticket1Price).plus(ticket2Quantity.times(ticket2Price))
-            .toDouble()
+        return subtotal
     }
 
     fun clear() {
