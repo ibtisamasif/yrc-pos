@@ -70,7 +70,10 @@ class CheckoutActivity : YrcBaseActivity() {
         }
 
         button_clear.setOnClickListener {
-            TicketVM.selectedTickets.clear()
+            TicketVM.clear()
+            OldVoucherVM.clear()
+            NewVouchersVM.clear()
+            PaymentVM.clear()
             Toast.makeText(this, "Cleared all selections and reset", Toast.LENGTH_SHORT).show()
             finish()
         }
