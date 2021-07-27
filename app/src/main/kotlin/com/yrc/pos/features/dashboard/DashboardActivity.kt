@@ -1,7 +1,9 @@
 package com.yrc.pos.features.dashboard
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -27,8 +29,11 @@ class DashboardActivity : YrcBaseActivity() {
         supportActionBar?.setCustomView(R.layout.abs_layout)
         supportActionBar?.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.header_background))
 
+        textView_race_day_title.text = intent.getStringExtra("race_day_title")
+        textView_race_day_date.text = intent.getStringExtra("race_day_date")
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onResume() {
         super.onResume()
         try {
@@ -47,6 +52,7 @@ class DashboardActivity : YrcBaseActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun addTicketOrIncreaseCountIfItAlreadyExistsInList(ticketPriceID: Int) {
         val matchingObjectInSelectedTicketList: Optional<Ticket> = TicketVM.selectedTickets.stream().filter { p -> p.ticketPriceID?.equals(ticketPriceID) == true }.findFirst()
         if (matchingObjectInSelectedTicketList.isPresent) {

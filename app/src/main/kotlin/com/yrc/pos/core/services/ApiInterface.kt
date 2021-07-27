@@ -2,7 +2,7 @@ package com.yrc.pos.core.services
 
 import com.yrc.pos.core.EndPoints
 import com.yrc.pos.core.enums.Enclosure
-import com.yrc.pos.core.providers.TicketModel
+import com.yrc.pos.core.providers.models.TicketModel
 import com.yrc.pos.features.login.login_service.LoginRequest
 import com.yrc.pos.features.login.login_service.LoginResponse
 import com.yrc.pos.features.order_successful.order_successful_service.CompleteOrderRequest

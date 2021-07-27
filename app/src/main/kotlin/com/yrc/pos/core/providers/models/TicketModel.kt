@@ -1,4 +1,4 @@
-package com.yrc.pos.core.providers
+package com.yrc.pos.core.providers.models
 
 import com.google.gson.annotations.SerializedName
 import com.yrc.pos.core.enums.Enclosure

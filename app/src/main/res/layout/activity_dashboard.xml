@@ -11,12 +11,40 @@
         style="@style/SelectTicketTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:text="Select Ticket"
         app:fontType="Bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_race_day_title" />
+
+    <com.yrc.pos.core.views.YrcTextView
+        android:id="@+id/textView_race_day_title"
+        style="@style/SelectTicketTextStyle"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="start"
+        android:paddingStart="@dimen/_10sdp"
+        app:fontType="Bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Race Day" />
+
+    <com.yrc.pos.core.views.YrcTextView
+        android:id="@+id/textView_race_day_date"
+        style="@style/SelectTicketTextStyle"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="end"
+        android:paddingEnd="@dimen/_10sdp"
+        app:fontType="Bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_race_day_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="21/12/2021" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMenuTicketButtons"
