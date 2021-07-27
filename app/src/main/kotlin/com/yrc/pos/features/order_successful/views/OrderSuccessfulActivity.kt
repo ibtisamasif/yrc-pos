@@ -1,11 +1,13 @@
 package com.yrc.pos.features.order_successful.views
 
+import android.content.Intent
 import android.os.Bundle
 import com.yrc.pos.R
 import com.yrc.pos.core.PaymentVM
 import com.yrc.pos.core.TicketPrintUtils
 import com.yrc.pos.core.TicketVM
 import com.yrc.pos.core.YrcBaseActivity
+import com.yrc.pos.features.dashboard.DashboardActivity
 import com.yrc.pos.features.order_successful.order_successful_service.CompleteOrderResponse
 import com.yrc.pos.features.voucher.viewmodels.NewVouchersVM
 import com.yrc.pos.features.voucher.viewmodels.OldVoucherVM
@@ -39,7 +41,7 @@ class OrderSuccessfulActivity : YrcBaseActivity() {
 
     private fun fillQrCodesInSelectedTickets(qrs: List<String>) { // TODO replace with actual QR code
         TicketVM.selectedTickets.forEach { oneTicket ->
-            oneTicket.quantity?.let {
+            oneTicket.quantity.let {
                 for (i in 1..it) {
                     oneTicket.qrCode = "0157820702387"
                 }
@@ -68,6 +70,9 @@ class OrderSuccessfulActivity : YrcBaseActivity() {
             OldVoucherVM.clear()
             NewVouchersVM.clear()
             PaymentVM.clear()
+            val intent = Intent(this, DashboardActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
             finish()
         }
 
