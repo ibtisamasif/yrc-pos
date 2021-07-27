@@ -66,6 +66,7 @@ object APiManager {
         ApiExecutor<RegisterOrderResponse>().addCallToQueue(context, yrcServices.postRegisterOrder(registerOrderRequest), apiCallbacks)
     }
 
+    @JvmStatic
     fun postCompleteOrder(context: Context, apiCallbacks: ApiCallbacks, completeOrderRequest: CompleteOrderRequest) {
         ApiExecutor<CompleteOrderResponse>().addCallToQueue(context, yrcServices.postCompleteOrder(completeOrderRequest), apiCallbacks)
     }

@@ -4,15 +4,24 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.pax.dal.IDAL;
 import com.pax.dal.IPrinter;
 import com.pax.dal.exceptions.PrinterDevException;
 import com.pax.neptunelite.api.NeptuneLiteUser;
+import com.yrc.pos.core.TicketVM;
+import com.yrc.pos.core.services.APiManager;
+import com.yrc.pos.core.services.ApiCallbacks;
+import com.yrc.pos.core.services.YrcBaseApiResponse;
+import com.yrc.pos.features.order_successful.order_successful_service.CompleteOrderRequest;
+import com.yrc.pos.features.order_successful.order_successful_service.CompleteOrderResponse;
 import com.yrc.pos.features.order_successful.views.OrderSuccessfulActivity;
+import com.yrc.pos.features.payment.views.PaymentActivity;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import eft.com.eftservicelib.EFTServiceLib;
@@ -31,7 +40,7 @@ import eft.com.eftservicelib.HistoryTransResult;
 /**************************************************************************************************/
 
 /**************************************************************************************************/
-public class TestLaunchReceiver extends BroadcastReceiver {
+public class TestLaunchReceiver extends BroadcastReceiver implements ApiCallbacks {
 
     public static final String TRANSACTION_RESULT_EVENT = "eft.com.TRANSACTION_RESULT";
     public static final String TRANSACTION_RECEIPT_EVENT = "eft.com.TRANSACTION_RECEIPT_EVENT";
@@ -42,19 +51,21 @@ public class TestLaunchReceiver extends BroadcastReceiver {
     String resultType;
     private final String HISTORY_REPORTS = "History Reports";
     private final String REPORTS = "Reports";
+    private Context mContext = null;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (TRANSACTION_RECEIPT_EVENT.equals(intent.getAction())) {
-
-            Bitmap merchant = BitmapFactory.decodeByteArray(intent.getByteArrayExtra("ReceiptDataMerchant"), 0, intent.getByteArrayExtra("ReceiptDataMerchant").length);
-            Bitmap cardholder = BitmapFactory.decodeByteArray(intent.getByteArrayExtra("ReceiptDataCardholder"), 0, intent.getByteArrayExtra("ReceiptDataCardholder").length);
-
-            //Bitmap merchant = intent.getParcelableExtra("ReceiptDataMerchant");
-            //Bitmap cardholder = intent.getParcelableExtra("ReceiptDataCardholder");
-            printBitmap(context, merchant);
-            printBitmap(context, cardholder);
-        }
+        mContext = context;
+//        if (TRANSACTION_RECEIPT_EVENT.equals(intent.getAction())) {
+//
+//            Bitmap merchant = BitmapFactory.decodeByteArray(intent.getByteArrayExtra("ReceiptDataMerchant"), 0, intent.getByteArrayExtra("ReceiptDataMerchant").length);
+//            Bitmap cardholder = BitmapFactory.decodeByteArray(intent.getByteArrayExtra("ReceiptDataCardholder"), 0, intent.getByteArrayExtra("ReceiptDataCardholder").length);
+//
+//            //Bitmap merchant = intent.getParcelableExtra("ReceiptDataMerchant");
+//            //Bitmap cardholder = intent.getParcelableExtra("ReceiptDataCardholder");
+//            printBitmap(context, merchant);
+//            printBitmap(context, cardholder);
+//        }
 
         if (TRANS_IN_BATCH_RESPONSE_EVENT.equals(intent.getAction())) {
             if (intent != null) {
@@ -111,6 +122,7 @@ public class TestLaunchReceiver extends BroadcastReceiver {
                         Log.i(TAG, "Mid = " + intent.getStringExtra("Mid"));
                         Log.i(TAG, "Version = " + intent.getStringExtra("Version"));
                         Log.i(TAG, "Reference = " + result.getReference());
+
                         if (intent.hasExtra("TestConnectStatus"))
                             Log.i(TAG, "TestConnectStatus = " + intent.getStringExtra("TestConnectStatus"));
 
@@ -148,7 +160,8 @@ public class TestLaunchReceiver extends BroadcastReceiver {
                         } else {
                             Log.i(TAG, "Transaction not found");
                         }
-//                        bringToFront(context);
+
+                        bringToFront(context, result, intent);
                     }
                 }
             }
@@ -195,12 +208,23 @@ public class TestLaunchReceiver extends BroadcastReceiver {
 
     }
 
-    public void bringToFront(Context context) {
+    public void bringToFront(Context context, EFTServiceTransResult reference, Intent intent) {
         /* Bring this application back into the foreground */
-        final Intent notificationIntent = new Intent(context, OrderSuccessfulActivity.class);
-        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(notificationIntent);
-        Log.i(TAG, "Bring OrderSuccessfulActivity to the front");
+
+        if (intent.getBooleanExtra("Approved", false)) {
+            APiManager.postCompleteOrder(
+                    context,
+                    this,
+                    new CompleteOrderRequest(TicketVM.INSTANCE.getDeviceSerial(), Integer.parseInt(reference.getReference()), "PAID")
+            );
+        }
+
+        if (intent.getBooleanExtra("Cancelled", false)) {
+            final Intent notificationIntent = new Intent(context, PaymentActivity.class);
+//            notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(notificationIntent);
+            Log.i(TAG, "Bring PaymentActivity to the front");
+        }
     }
 
     public String byteArrayToHexString(final byte[] byteArray) {
@@ -306,5 +330,27 @@ public class TestLaunchReceiver extends BroadcastReceiver {
         return status;
     }
 
+
+    @Override
+    public void doBeforeApiCall() {
+    }
+
+    @Override
+    public void doAfterApiCall() {
+    }
+
+    @Override
+    public void onApiFailure(int errorCode) {
+    }
+
+    @Override
+    public void onApiSuccess(@NotNull YrcBaseApiResponse apiResponse) {
+        if (apiResponse instanceof CompleteOrderResponse) {
+            Intent notificationIntent = new Intent(mContext, OrderSuccessfulActivity.class);
+            notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            notificationIntent.putExtra(OrderSuccessfulActivity.ORDER_ID, (Serializable) apiResponse);
+            mContext.startActivity(notificationIntent);
+        }
+    }
 
 }
