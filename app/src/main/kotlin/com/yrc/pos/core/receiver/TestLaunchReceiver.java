@@ -220,7 +220,7 @@ public class TestLaunchReceiver extends BroadcastReceiver implements ApiCallback
         }
 
         if (intent.getBooleanExtra("Cancelled", false)) {
-            final Intent notificationIntent = new Intent(context, PaymentActivity.class);
+            final Intent notificationIntent = new Intent(context, OrderSuccessfulActivity.class);
 //            notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(notificationIntent);
             Log.i(TAG, "Bring PaymentActivity to the front");
@@ -348,7 +348,7 @@ public class TestLaunchReceiver extends BroadcastReceiver implements ApiCallback
         if (apiResponse instanceof CompleteOrderResponse) {
             Intent notificationIntent = new Intent(mContext, OrderSuccessfulActivity.class);
             notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            notificationIntent.putExtra(OrderSuccessfulActivity.ORDER_ID, (Serializable) apiResponse);
+            notificationIntent.putExtra(OrderSuccessfulActivity.COMPLETE_ORDER_RESPONSE, (Serializable) apiResponse);
             mContext.startActivity(notificationIntent);
         }
     }

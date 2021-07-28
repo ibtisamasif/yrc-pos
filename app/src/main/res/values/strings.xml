@@ -25,4 +25,6 @@
 
     <!--Order successful Content-->
     <string name="order_successful">"Order Successful:#%d"</string>
+
+    <string name="order_unsuccessful">"Order Unsuccessful"</string>
 </resources>

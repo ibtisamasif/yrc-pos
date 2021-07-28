@@ -3,7 +3,6 @@ package com.yrc.pos.features.payment.views
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.yrc.pos.R
 import com.yrc.pos.core.PaymentMethod
 import com.yrc.pos.core.PaymentVM
@@ -87,7 +86,7 @@ class PaymentActivity : YrcBaseActivity() {
                         }
                         PaymentMethod.card -> {
                             orderId = it
-                            EFTServiceLib.runTrans(this, PaymentVM.orderTotal.toInt() * 100, EFTServiceLib.TRANSACTION_TYPE_SALE, "", "", "", orderId.toString(), false)
+                            EFTServiceLib.runTrans(this, (PaymentVM.orderTotal * 100).toInt(), EFTServiceLib.TRANSACTION_TYPE_SALE, "", "", "", orderId.toString(), false)
                         }
                         else -> {
                             Toast.makeText(this, "Payment method missing", Toast.LENGTH_SHORT).show()
@@ -99,7 +98,7 @@ class PaymentActivity : YrcBaseActivity() {
                 when (PaymentVM.paymentMethod) {
                     PaymentMethod.cash -> {
                         val intent = Intent(this, OrderSuccessfulActivity::class.java)
-                        intent.putExtra(OrderSuccessfulActivity.ORDER_ID, apiResponse)
+                        intent.putExtra(OrderSuccessfulActivity.COMPLETE_ORDER_RESPONSE, apiResponse)
                         startActivity(intent)
                     }
                 }

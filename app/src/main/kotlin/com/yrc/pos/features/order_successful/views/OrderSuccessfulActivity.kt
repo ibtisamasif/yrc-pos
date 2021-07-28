@@ -2,6 +2,7 @@ package com.yrc.pos.features.order_successful.views
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.yrc.pos.R
 import com.yrc.pos.core.PaymentVM
 import com.yrc.pos.core.TicketPrintUtils
@@ -31,21 +32,37 @@ class OrderSuccessfulActivity : YrcBaseActivity() {
 
     private fun printTicketAndShowOrderId() {
         val completeOrderResponse =
-            intent.extras?.getSerializable(ORDER_ID) as CompleteOrderResponse?
+            intent.extras?.getSerializable(COMPLETE_ORDER_RESPONSE) as CompleteOrderResponse?
         completeOrderResponse?.let {
             it.qrs?.let { qrs -> fillQrCodesInSelectedTickets(qrs) }
-            it.orderId?.let { it1 -> TicketPrintUtils.printTicket(this, TicketVM.selectedTickets, it1) }
+            it.orderId?.let { it1 ->
+                TicketPrintUtils.printTicket(
+                    this,
+                    TicketVM.selectedTickets,
+                    it1
+                )
+            }
             textView.text = resources.getString(R.string.order_successful, it.orderId)
+        } ?: kotlin.run {
+            textView.setBackgroundColor(resources.getColor(R.color.colorRedError))
+            textView.setTextColor(resources.getColor(R.color.colorWhite))
+            textView.text = resources.getString(R.string.order_unsuccessful)
+            buttonReprintQRs.visibility = View.GONE
         }
     }
 
     private fun fillQrCodesInSelectedTickets(qrs: List<String>) { // TODO replace with actual QR code
-        TicketVM.selectedTickets.forEach { oneTicket ->
-            oneTicket.quantity.let {
-                for (i in 1..it) {
-                    oneTicket.qrCode = "0157820702387"
+        try {
+            var count = 0
+            TicketVM.selectedTickets.forEach { oneTicket ->
+                oneTicket.quantity.let {
+                    for (i in 1..it) {
+                        oneTicket.qrCode = qrs[count]
+                        count++
+                    }
                 }
             }
+        } catch (e: Exception) {
         }
     }
 
@@ -79,6 +96,6 @@ class OrderSuccessfulActivity : YrcBaseActivity() {
     }
 
     companion object {
-        const val ORDER_ID = "order_id"
+        const val COMPLETE_ORDER_RESPONSE = "complete_order_response"
     }
 }
