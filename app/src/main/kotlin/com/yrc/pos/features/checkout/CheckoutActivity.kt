@@ -31,7 +31,7 @@ class CheckoutActivity : YrcBaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        removeTemporarySelection()
+//        removeTemporarySelection()
         updateUI()
     }
 
@@ -112,9 +112,8 @@ class CheckoutActivity : YrcBaseActivity() {
         return null
     }
 
-    private fun updateUI() {
+     private fun updateUI() {
         recyclerViewCheckoutTicketButtons.adapter = CheckoutTicketButtonAdapter(TicketVM.selectedTickets)
-
         button_total.text = TicketVM.getTotalText()
     }
 

@@ -12,6 +12,7 @@ import com.yrc.pos.core.providers.models.TicketModel
 import com.yrc.pos.core.services.APiManager
 import com.yrc.pos.core.services.YrcBaseApiResponse
 import com.yrc.pos.features.dashboard.DashboardActivity
+import com.yrc.pos.features.dashboard.viewmodel.DashboardVM
 import com.yrc.pos.features.login.login_service.LoginRequest
 import com.yrc.pos.features.login.login_service.LoginResponse
 
@@ -49,17 +50,21 @@ class SplashActivity : YrcBaseActivity() {
                     TicketVM.originalTickets = apiResponse.tickets
                     apiResponse.enclosure?.let {
                         TicketVM.enclosure = it
-                        moveToDashboardActivity(apiResponse)
+                        moveToDashboardActivity()
+                    }
+                    apiResponse.meetDayDate?.let {
+                        DashboardVM.meetDayDate = it
+                    }
+                    apiResponse.meetDayName?.let {
+                        DashboardVM.meetDayName = it
                     }
                 }
             }
         }
     }
 
-    private fun moveToDashboardActivity(apiResponse: TicketModel) {
+    private fun moveToDashboardActivity() {
         val dashboardIntent = Intent(this, DashboardActivity::class.java)
-        dashboardIntent.putExtra("race_day_title", apiResponse.meetDayName)
-        dashboardIntent.putExtra("race_day_date", apiResponse.meetDayDate)
         startActivity(dashboardIntent)
         finish()
     }

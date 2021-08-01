@@ -9,6 +9,7 @@ import com.yrc.pos.R
 import com.yrc.pos.core.TicketVM
 import com.yrc.pos.core.providers.models.Ticket
 
+
 class CheckoutTicketButtonAdapter(
     private var list: List<Ticket>
 ) :
@@ -27,23 +28,28 @@ class CheckoutTicketButtonAdapter(
 
     override fun onBindViewHolder(viewHolder: CheckoutTicketViewHolder, position: Int) {
         val ticket = list[position]
-        viewHolder.textViewTicket.text = ticket.quantity.toString().plus(" ").plus("x ${ticket.name} £".plus(" ").plus(ticket.quantity.times(ticket.price?.toDouble()!!)))
+        if (ticket.isTemporarySelected) {
+            viewHolder.textViewTicket.setBackgroundColor(viewHolder.itemView.resources.getColor(R.color.colorGrayLight))
+        } else {
+            viewHolder.textViewTicket.setBackgroundColor(viewHolder.itemView.resources.getColor(R.color.colorWhite))
+        }
+
+        viewHolder.textViewTicket.text = ticket.quantity.toString().plus(" ").plus(
+            "x ${ticket.name} £".plus(" ").plus(ticket.quantity.times(ticket.price?.toDouble()!!))
+        )
 
         viewHolder.itemView.setOnClickListener {
-//            if (viewHolder.itemView.isPressed) {
-//                viewHolder.itemView.setBackgroundColor(viewHolder.itemView.resources.getColor(R.color.colorGrayLight))
-//                button_over65?.setBackgroundColor(viewHolder.itemView.resources.getColor(R.color.colorWhite))
-//            }
             ticket.ticketPriceID?.let { it1 -> setTemporarySelection(it1) }
-//            onClick.invoke(ticket)
+            updateList(TicketVM.selectedTickets)
         }
     }
 
     override fun getItemCount() = list.size
 
-    private fun setTemporarySelection(ticketId: Int) {
+     private fun setTemporarySelection(ticketId: Int) {
         TicketVM.selectedTickets.forEach {
             it.isTemporarySelected = it.ticketPriceID == ticketId
+            notifyDataSetChanged()
         }
     }
 

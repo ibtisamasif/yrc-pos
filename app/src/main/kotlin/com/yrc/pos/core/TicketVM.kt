@@ -7,7 +7,7 @@ import com.yrc.pos.core.providers.models.Ticket
 object TicketVM {
     var deviceSerial: String = Build.SERIAL // Rob="0822163315" Ibt="0821180033"
 //    var deviceSerial: String = Build.SERIAL // Rob="0822163315" Ibt="0821180033"
-var enclosure: Enclosure = Enclosure.none
+    var enclosure: Enclosure = Enclosure.none
     var originalTickets = arrayListOf<Ticket>()
     var selectedTickets = arrayListOf<Ticket>()
 
