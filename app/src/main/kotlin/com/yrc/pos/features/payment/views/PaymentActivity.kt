@@ -19,6 +19,8 @@ import com.yrc.pos.features.payment.payment_service.RegisterOrderResponse
 import eft.com.eftservicelib.EFTServiceLib
 import kotlinx.android.synthetic.main.activity_payment.*
 import java.text.DecimalFormat
+import kotlin.math.round
+import kotlin.math.roundToInt
 
 
 class PaymentActivity : YrcBaseActivity() {
@@ -91,7 +93,7 @@ class PaymentActivity : YrcBaseActivity() {
                             orderId = it
                             EFTServiceLib.runTrans(
                                 this,
-                                (PaymentVM.orderTotal * 100).toInt(),
+                                (PaymentVM.orderTotal * 100).roundToInt(),
                                 EFTServiceLib.TRANSACTION_TYPE_SALE,
                                 "",
                                 "",
