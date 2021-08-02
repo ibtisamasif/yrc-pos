@@ -18,6 +18,7 @@ import com.yrc.pos.features.payment.payment_service.RegisterOrderRequest
 import com.yrc.pos.features.payment.payment_service.RegisterOrderResponse
 import eft.com.eftservicelib.EFTServiceLib
 import kotlinx.android.synthetic.main.activity_payment.*
+import java.text.DecimalFormat
 
 
 class PaymentActivity : YrcBaseActivity() {
@@ -37,11 +38,13 @@ class PaymentActivity : YrcBaseActivity() {
 
     private fun updatePaymentDetailSection() {
         textViewPaymentMethodValue.text = PaymentVM.paymentMethod.name.toUpperCase()
-        textViewSubtotalAmount.text = "£${PaymentVM.orderSubTotal}"
+        textViewSubtotalAmount.text = "£${DecimalFormat("##.##").format(PaymentVM.orderSubTotal)}"
         textViewVouchersAppliedAmount.text =
-            "£${PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal}"
+            "£${
+                DecimalFormat("##.##").format(PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal)
+            }"
         textViewTotalAmount.text =
-            "£${(PaymentVM.orderSubTotal - (PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal.toDouble()))}"
+            "£${(DecimalFormat("##.##").format(PaymentVM.orderSubTotal - (PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal)))}"
     }
 
     private fun setListeners() {
@@ -86,10 +89,20 @@ class PaymentActivity : YrcBaseActivity() {
                         }
                         PaymentMethod.card -> {
                             orderId = it
-                            EFTServiceLib.runTrans(this, (PaymentVM.orderTotal * 100).toInt(), EFTServiceLib.TRANSACTION_TYPE_SALE, "", "", "", orderId.toString(), false)
+                            EFTServiceLib.runTrans(
+                                this,
+                                (PaymentVM.orderTotal * 100).toInt(),
+                                EFTServiceLib.TRANSACTION_TYPE_SALE,
+                                "",
+                                "",
+                                "",
+                                orderId.toString(),
+                                false
+                            )
                         }
                         else -> {
-                            Toast.makeText(this, "Payment method missing", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Payment method missing", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
                 }
@@ -98,7 +111,10 @@ class PaymentActivity : YrcBaseActivity() {
                 when (PaymentVM.paymentMethod) {
                     PaymentMethod.cash -> {
                         val intent = Intent(this, OrderSuccessfulActivity::class.java)
-                        intent.putExtra(OrderSuccessfulActivity.COMPLETE_ORDER_RESPONSE, apiResponse)
+                        intent.putExtra(
+                            OrderSuccessfulActivity.COMPLETE_ORDER_RESPONSE,
+                            apiResponse
+                        )
                         startActivity(intent)
                     }
                 }

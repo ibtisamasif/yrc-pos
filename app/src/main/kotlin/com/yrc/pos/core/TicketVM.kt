@@ -3,6 +3,7 @@ package com.yrc.pos.core
 import android.os.Build
 import com.yrc.pos.core.enums.Enclosure
 import com.yrc.pos.core.providers.models.Ticket
+import java.text.DecimalFormat
 
 object TicketVM {
     var deviceSerial: String = Build.SERIAL // Rob="0822163315" Ibt="0821180033"
@@ -19,7 +20,7 @@ object TicketVM {
             totalPrice += (it.price?.toDouble() ?: 0.0) * it.quantity
         }
 
-        return totalQuantity.toString().plus(" ").plus("x Ticket £".plus(" ").plus(totalPrice))
+        return totalQuantity.toString().plus(" ").plus("x Ticket £".plus(" ").plus(DecimalFormat("##.##").format(totalPrice)))
     }
 
     fun getSubtotal(): Double {

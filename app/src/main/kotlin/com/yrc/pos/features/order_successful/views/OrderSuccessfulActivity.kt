@@ -13,6 +13,7 @@ import com.yrc.pos.features.order_successful.order_successful_service.CompleteOr
 import com.yrc.pos.features.voucher.viewmodels.NewVouchersVM
 import com.yrc.pos.features.voucher.viewmodels.OldVoucherVM
 import kotlinx.android.synthetic.main.activity_order_successful.*
+import java.text.DecimalFormat
 
 class OrderSuccessfulActivity : YrcBaseActivity() {
 
@@ -34,13 +35,16 @@ class OrderSuccessfulActivity : YrcBaseActivity() {
         val completeOrderResponse =
             intent.extras?.getSerializable(COMPLETE_ORDER_RESPONSE) as CompleteOrderResponse?
         completeOrderResponse?.let {
-            it.qrs?.let { qrs -> fillQrCodesInSelectedTickets(qrs) }
+//            it.qrs?.let { qrs -> fillQrCodesInSelectedTickets(qrs) }
             it.orderId?.let { it1 ->
-                TicketPrintUtils.printTicket(
-                    this,
-                    TicketVM.selectedTickets,
-                    it1
-                )
+                it.qrs?.let { it2 ->
+                    TicketPrintUtils.printTicket(
+                        this,
+                        TicketVM.selectedTickets,
+                        it1,
+                        it2
+                    )
+                }
             }
             textView.text = resources.getString(R.string.order_successful, it.orderId)
         } ?: kotlin.run {
@@ -51,28 +55,28 @@ class OrderSuccessfulActivity : YrcBaseActivity() {
         }
     }
 
-    private fun fillQrCodesInSelectedTickets(qrs: List<String>) { // TODO replace with actual QR code
-        try {
-            var count = 0
-            TicketVM.selectedTickets.forEach { oneTicket ->
-                oneTicket.quantity.let {
-                    for (i in 1..it) {
-                        oneTicket.qrCode = qrs[count]
-                        count++
-                    }
-                }
-            }
-        } catch (e: Exception) {
-        }
-    }
+//    private fun fillQrCodesInSelectedTickets(qrs: List<String>) { // TODO replace with actual QR code
+//        try {
+//            var count = 0
+//            TicketVM.selectedTickets.forEach { oneTicket ->
+//                oneTicket.quantity.let {
+//                    for (i in 1..it) {
+//                        oneTicket.qrCode = qrs[count]
+//                        count++
+//                    }
+//                }
+//            }
+//        } catch (e: Exception) {
+//        }
+//    }
 
     private fun updatePaymentDetailSection() {
         textViewPaymentMethodValue.text = PaymentVM.paymentMethod.name.toUpperCase()
-        textViewSubtotalAmount.text = "£${PaymentVM.orderSubTotal}"
+        textViewSubtotalAmount.text = "£${DecimalFormat("##.##").format(PaymentVM.orderSubTotal)}"
         textViewVouchersAppliedAmount.text =
-            "£${PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal}"
+            "£${DecimalFormat("##.##").format(PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal)}"
         textViewTotalAmount.text =
-            "£${(PaymentVM.orderSubTotal - (PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal))}"
+            "£${(DecimalFormat("##.##").format(PaymentVM.orderSubTotal - (PaymentVM.giftVouchers.oldVouchersRedeemedTotal + PaymentVM.giftVouchers.newVouchersRedeemedTotal)))}"
 
     }
 

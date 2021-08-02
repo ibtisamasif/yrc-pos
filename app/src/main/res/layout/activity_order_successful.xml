@@ -16,12 +16,12 @@
         android:fontFamily="@font/roboto"
         android:gravity="center"
         android:padding="20dp"
-        tools:text="Order Successful : #10000123"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Order Successful : #10000123" />
 
     <TextView
         android:id="@+id/textView9"
@@ -41,13 +41,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="@font/roboto"
-        tools:text="CARD"
-        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView9"
         app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toTopOf="@+id/textView9" />
+        app:layout_constraintTop_toTopOf="@+id/textView9"
+        tools:text="CARD" />
 
     <TextView
         android:id="@+id/textView7"
@@ -88,17 +88,22 @@
 
     <TextView
         android:id="@+id/textViewSubtotalAmount"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="64dp"
+        android:ellipsize="end"
         android:fontFamily="@font/roboto"
-        tools:text=" £58.00"
+        android:gravity="end"
+        android:singleLine="true"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView7"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView7" />
+        app:layout_constraintStart_toEndOf="@+id/textView7"
+        app:layout_constraintTop_toTopOf="@+id/textView7"
+        tools:text=" £58.00" />
 
     <TextView
         android:id="@+id/textViewVouchersAppliedAmount"
@@ -106,27 +111,32 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="64dp"
         android:fontFamily="@font/roboto"
-        tools:text="-£25.00"
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView6"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView6" />
+        app:layout_constraintTop_toTopOf="@+id/textView6"
+        tools:text="-£25.00" />
 
     <TextView
         android:id="@+id/textViewTotalAmount"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="64dp"
+        android:ellipsize="end"
         android:fontFamily="@font/roboto"
-        tools:text=" £33.00"
+        android:gravity="end"
+        android:singleLine="true"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView5" />
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toTopOf="@+id/textView5"
+        tools:text=" £33.00" />
 
     <Button
         android:id="@+id/buttonReprintQRs"

@@ -9,6 +9,5 @@ data class Ticket(
     @SerializedName("ticket_price_id")
     var ticketPriceID: Int? = null,
     var quantity: Int = 1,
-    var qrCode: String? = null,
     var isTemporarySelected: Boolean = false
 ) : Serializable

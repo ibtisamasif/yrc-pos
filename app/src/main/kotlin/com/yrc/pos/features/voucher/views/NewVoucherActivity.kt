@@ -13,6 +13,7 @@ import com.yrc.pos.features.voucher.viewmodels.OldVoucherVM
 import com.yrc.pos.features.voucher.voucher_service.ValidateNewVoucherRequest
 import com.yrc.pos.features.voucher.voucher_service.ValidateNewVoucherResponse
 import kotlinx.android.synthetic.main.activity_new_voucher.*
+import java.text.DecimalFormat
 
 class NewVoucherActivity : YrcBaseActivity() {
 
@@ -31,7 +32,8 @@ class NewVoucherActivity : YrcBaseActivity() {
 
         buttonApplyNewVoucher.setOnClickListener {
 
-            val orderTotal = TicketVM.getSubtotal() - (NewVouchersVM.newVouchersRedeemedTotal + OldVoucherVM.oldVoucherRedeemedTotal)
+            val orderTotal =
+                TicketVM.getSubtotal() - (NewVouchersVM.newVouchersRedeemedTotal + OldVoucherVM.oldVoucherRedeemedTotal)
 
             if (checkValidations()) {
                 APiManager.postValidateNewVoucher(
@@ -82,11 +84,11 @@ class NewVoucherActivity : YrcBaseActivity() {
     }
 
     private fun updateUI(resetFields: Boolean = false) {
-        textViewSubtotalAmount.text = "£${TicketVM.getSubtotal()}"
+        textViewSubtotalAmount.text = "£${DecimalFormat("##.##").format(TicketVM.getSubtotal())}"
         textViewVouchersAppliedAmount.text =
-            "£${NewVouchersVM.newVouchersRedeemedTotal + OldVoucherVM.oldVoucherRedeemedTotal}"
+            "£${DecimalFormat("##.##").format(NewVouchersVM.newVouchersRedeemedTotal + OldVoucherVM.oldVoucherRedeemedTotal)}"
         textViewTotalAmount.text =
-            "£${TicketVM.getSubtotal() - (NewVouchersVM.newVouchersRedeemedTotal + OldVoucherVM.oldVoucherRedeemedTotal)}"
+            "£${DecimalFormat("##.##").format(TicketVM.getSubtotal() - (NewVouchersVM.newVouchersRedeemedTotal + OldVoucherVM.oldVoucherRedeemedTotal))}"
 
         if (resetFields) {
             editTextVoucherCodeField.setText("")

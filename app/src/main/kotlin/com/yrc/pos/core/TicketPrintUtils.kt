@@ -19,7 +19,13 @@ import java.util.*
 
 object TicketPrintUtils {
 
-    internal fun printTicket(context: Context, tickets: List<Ticket>, orderId: Int) {
+    internal fun printTicket(
+        context: Context,
+        tickets: List<Ticket>,
+        orderId: Int,
+        qrCode: List<String>
+    ) {
+        var count = 0
         tickets.forEach { oneTicket ->
             for (i in 1..oneTicket.quantity) {
                 val dal: IDAL = NeptuneLiteUser.getInstance().getDal(context)
@@ -53,9 +59,15 @@ object TicketPrintUtils {
                 prn.step(10)
                 prn.leftIndent(90)
                 //        prn.invert(true)
-                prn.printBitmap(bitmapToPng(oneTicket.qrCode))
-                prn.step(100)
-                startPrinting(dal)
+                try {
+                    prn.printBitmap(bitmapToPng(qrCode[count]))
+                    prn.step(100)
+                    startPrinting(dal)
+                    if (count < qrCode.size) {
+                        count++
+                    }
+                } catch (e: Exception) {
+                }
             }
         }
     }

@@ -12,6 +12,7 @@ import com.yrc.pos.features.voucher.viewmodels.OldVoucherVM
 import com.yrc.pos.features.voucher.voucher_service.ValidateOldVoucherRequest
 import com.yrc.pos.features.voucher.voucher_service.ValidateOldVoucherResponse
 import kotlinx.android.synthetic.main.activity_old_voucher.*
+import java.text.DecimalFormat
 
 class OldVoucherActivity : YrcBaseActivity() {
 
@@ -71,11 +72,11 @@ class OldVoucherActivity : YrcBaseActivity() {
     }
 
     private fun updateUI(resetFields: Boolean = false) {
-        textViewSubtotalAmount.text = "£${TicketVM.getSubtotal()}"
+        textViewSubtotalAmount.text = "£${DecimalFormat("##.##").format(TicketVM.getSubtotal())}"
         textViewVouchersAppliedAmount.text =
-            "£${OldVoucherVM.oldVoucherRedeemedTotal + NewVouchersVM.newVouchersRedeemedTotal}"
+            "£${DecimalFormat("##.##").format(OldVoucherVM.oldVoucherRedeemedTotal + NewVouchersVM.newVouchersRedeemedTotal)}"
         textViewTotalAmount.text =
-            "£${TicketVM.getSubtotal() - (OldVoucherVM.oldVoucherRedeemedTotal + NewVouchersVM.newVouchersRedeemedTotal)}"
+            "£${DecimalFormat("##.##").format(TicketVM.getSubtotal() - (OldVoucherVM.oldVoucherRedeemedTotal + NewVouchersVM.newVouchersRedeemedTotal))}"
 
         if (resetFields)
             editTextVoucherField.setText("")
