@@ -3,6 +3,7 @@ package com.yrc.pos.core
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.BitmapFactory.decodeResource
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import com.pax.dal.IDAL
@@ -31,6 +32,12 @@ object TicketPrintUtils {
                 val dal: IDAL = NeptuneLiteUser.getInstance().getDal(context)
                 val prn = dal.printer
                 prn.init()
+                prn.fontSet(EFontTypeAscii.FONT_24_48, EFontTypeExtCode.FONT_24_48)
+                prn.leftIndent(50)
+                prn.printBitmapWithMonoThreshold(decodeResource(context.resources, R.drawable.logo),1)
+                prn.printStr("\n", null)
+                prn.leftIndent(50)
+
                 prn.fontSet(EFontTypeAscii.FONT_24_48, EFontTypeExtCode.FONT_24_48)
                 prn.leftIndent(110)
                 prn.printStr(oneTicket.name, null)
