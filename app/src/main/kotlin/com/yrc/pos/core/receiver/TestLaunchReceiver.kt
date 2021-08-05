@@ -10,6 +10,7 @@ import com.pax.dal.IPrinter
 import com.pax.dal.exceptions.PrinterDevException
 import com.pax.neptunelite.api.NeptuneLiteUser
 import com.yrc.pos.core.TicketVM.deviceSerial
+import com.yrc.pos.core.providers.models.YrcError
 import com.yrc.pos.core.services.APiManager.postCompleteOrder
 import com.yrc.pos.core.services.ApiCallbacks
 import com.yrc.pos.core.services.YrcBaseApiResponse
@@ -312,7 +313,7 @@ class TestLaunchReceiver : BroadcastReceiver(), ApiCallbacks {
 
     override fun doBeforeApiCall() {}
     override fun doAfterApiCall() {}
-    override fun onApiFailure(errorCode: Int) {
+    override fun onApiFailure(errorCode: YrcError) {
         moveToOrderSuccessfulScreen()
     }
 

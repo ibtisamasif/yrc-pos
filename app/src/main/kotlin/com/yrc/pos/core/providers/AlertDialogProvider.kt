@@ -11,8 +11,10 @@ import androidx.appcompat.app.AlertDialog
 import com.yrc.pos.R
 import com.yrc.pos.core.enums.DialogTheme
 import com.yrc.pos.core.listeners.DialogButtonClickListener
+import com.yrc.pos.core.providers.models.YrcError
 import com.yrc.pos.core.views.YrcButton
 import com.yrc.pos.core.views.YrcTextView
+import java.lang.Error
 
 @SuppressLint("StaticFieldLeak")
 object AlertDialogProvider {
@@ -22,11 +24,11 @@ object AlertDialogProvider {
     private var textViewTitle: YrcTextView? = null
     private var textViewMessage: YrcTextView? = null
 
-    fun showFailureDialog(context: Context, theme: DialogTheme){
+    fun showFailureDialog(context: Context, error: YrcError, theme: DialogTheme){
         val dialogView = getView(context, theme)
         initializeViews(dialogView)
         textViewTitle!!.text = context.getString(R.string.error)
-        textViewMessage!!.text = context.getString(R.string.sorry_something_went_wrong)
+        textViewMessage!!.text = error.message
         val alertDialog = createAlertDialog(context, dialogView)
         positiveButton!!.setOnClickListener { alertDialog.dismiss() }
     }

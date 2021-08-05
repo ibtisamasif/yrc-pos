@@ -9,6 +9,7 @@ import com.yrc.pos.core.PaymentVM
 import com.yrc.pos.core.TicketVM
 import com.yrc.pos.core.TicketVM.deviceSerial
 import com.yrc.pos.core.YrcBaseActivity
+import com.yrc.pos.core.providers.models.YrcError
 import com.yrc.pos.core.services.APiManager
 import com.yrc.pos.core.services.YrcBaseApiResponse
 import com.yrc.pos.features.order_successful.order_successful_service.CompleteOrderRequest
@@ -19,7 +20,6 @@ import com.yrc.pos.features.payment.payment_service.RegisterOrderResponse
 import eft.com.eftservicelib.EFTServiceLib
 import kotlinx.android.synthetic.main.activity_payment.*
 import java.text.DecimalFormat
-import kotlin.math.round
 import kotlin.math.roundToInt
 
 
@@ -124,7 +124,7 @@ class PaymentActivity : YrcBaseActivity() {
         }
     }
 
-    override fun onApiFailure(errorCode: Int) {
+    override fun onApiFailure(errorCode: YrcError) {
         super.onApiFailure(errorCode)
         Toast.makeText(this, "error code: $errorCode", Toast.LENGTH_SHORT).show()
     }
